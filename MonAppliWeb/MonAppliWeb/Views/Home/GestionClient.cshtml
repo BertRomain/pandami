@@ -1,0 +1,36 @@
+﻿@model MonAppliWeb.Models.Client
+
+@{ 
+    ViewBag.Title = "Gestion CLient";
+    string disableForm = "disabled";
+    string cacheElement = "";
+    string message = String.Empty;
+    if (Model.NoClient == 0)
+    {
+        disableForm = "";
+        cacheElement = "hidden";
+    }
+    if (String.IsNullOrEmpty(Model.Nom))
+    {
+        Model.Nom = "Client inconnu";
+    }
+
+    if (IsPost)
+    {
+        MonAppliWeb.Models.Client newCli = new MonAppliWeb.Models.Client();
+        newCli.Nom = Request.Form["NomCli"];
+        newCli.Adresse = Request.Form["AdrCli"];
+        newCli.NoClient = Model.NoClient;
+        newCli.EnregistrerModif();
+        message = "Enregistrement effectué avec succès";
+    }
+}
+
+<h2>GestionClient</h2>
+<form method="post">
+    <p>Numéro du client : <input id="NumCli" name="NumCli" type="text" value="@Model.NoClient" disabled/></p>
+    <p @cacheElement>Nom : <input id="NomCli" name="NomCli" type="text" value="@Model.Nom" /></p>
+    <p @cacheElement>Adresse : <input id="AdrCli" name="AdrCli" type="text" value="@Model.Adresse" /></p>
+    <p @cacheElement>Région : <input id="RegCli" name="RegCli" type="text" value="@Model.Region" /></p>
+    <input type="submit" value="Enregistrer" /> @message
+</form>

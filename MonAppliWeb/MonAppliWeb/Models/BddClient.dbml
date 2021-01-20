@@ -1,0 +1,26 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddEQL" Class="BddClientDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=IG-PF2A4GNN\SQLEXPRESS;Initial Catalog=bddEQL;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddEQLConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.clientregion" Member="clientregion">
+    <Type Name="clientregion">
+      <Column Name="noclient" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="adresse" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="nomregion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.TelephoneSet" Member="TelephoneSet">
+    <Type Name="TelephoneSet">
+      <Column Name="IdTelephone" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="NumeroTel" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+      <Column Name="TypeNumero" Type="System.String" DbType="NVarChar(MAX) NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+  <Table Name="dbo.client" Member="clientbdd">
+    <Type Name="clientbdd">
+      <Column Name="noclient" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="adresse" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="noregion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>
