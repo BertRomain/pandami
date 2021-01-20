@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddEQL" Class="ClientLinqDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="AppSettings" ConnectionString="Data Source=IG-PF2A4GNN\SQLEXPRESS;Initial Catalog=bddEQL;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="LibrairieClient.Properties.Settings" SettingsPropertyName="bddEQLConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.client" Member="client">
+    <Type Name="client">
+      <Column Name="noclient" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nom" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="adresse" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+      <Column Name="noregion" Type="System.Int32" DbType="Int" CanBeNull="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.region" Member="region">
+    <Type Name="region">
+      <Column Name="idregion" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="nomregion" Type="System.String" DbType="NVarChar(50)" CanBeNull="true" />
+    </Type>
+  </Table>
+</Database>

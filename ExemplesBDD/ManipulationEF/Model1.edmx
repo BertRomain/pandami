@@ -1,0 +1,141 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<edmx:Edmx Version="3.0" xmlns:edmx="http://schemas.microsoft.com/ado/2009/11/edmx">
+  <!-- EF Runtime content -->
+  <edmx:Runtime>
+    <!-- SSDL content -->
+    <edmx:StorageModels>
+    <Schema Namespace="bddEQLModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="noclient" />
+          </Key>
+          <Property Name="noclient" Type="int" Nullable="false" />
+          <Property Name="nom" Type="nvarchar" MaxLength="50" />
+          <Property Name="adresse" Type="nvarchar" MaxLength="50" />
+          <Property Name="noregion" Type="int" />
+        </EntityType>
+        <EntityType Name="region">
+          <Key>
+            <PropertyRef Name="idregion" />
+          </Key>
+          <Property Name="idregion" Type="int" Nullable="false" />
+          <Property Name="nomregion" Type="nvarchar" MaxLength="50" />
+        </EntityType>
+        <EntityType Name="TelephoneSet">
+          <Key>
+            <PropertyRef Name="IdTelephone" />
+          </Key>
+          <Property Name="IdTelephone" Type="int" Nullable="false" StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroTel" Type="nvarchar(max)" Nullable="false" />
+          <Property Name="TypeNumero" Type="nvarchar(max)" Nullable="false" />
+        </EntityType>
+        <Function Name="GetClientAndRegion" Aggregate="false" BuiltIn="false" NiladicFunction="false" IsComposable="false" ParameterTypeSemantics="AllowImplicitConversion" Schema="dbo" />
+        <EntityContainer Name="bddEQLModelStoreContainer">
+          <EntitySet Name="client" EntityType="Self.client" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="region" EntityType="Self.region" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="TelephoneSet" EntityType="Self.TelephoneSet" Schema="dbo" store:Type="Tables" />
+        </EntityContainer>
+      </Schema></edmx:StorageModels>
+    <!-- CSDL content -->
+    <edmx:ConceptualModels>
+      <Schema Namespace="bddEQLModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
+        <EntityType Name="client">
+          <Key>
+            <PropertyRef Name="noclient" />
+          </Key>
+          <Property Name="noclient" Type="Int32" Nullable="false" />
+          <Property Name="nom" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="adresse" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="noregion" Type="Int32" />
+        </EntityType>
+        <EntityType Name="region">
+          <Key>
+            <PropertyRef Name="idregion" />
+          </Key>
+          <Property Name="idregion" Type="Int32" Nullable="false" />
+          <Property Name="nomregion" Type="String" MaxLength="50" FixedLength="false" Unicode="true" />
+        </EntityType>
+        <EntityContainer Name="bddEQLEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="client" EntityType="Self.client" />
+          <EntitySet Name="region" EntityType="Self.region" />
+          <EntitySet Name="TelephoneSet" EntityType="bddEQLModel.Telephone" />
+          <FunctionImport Name="GetClientAndRegion" ReturnType="Collection(bddEQLModel.GetClientAndRegion_Result)" />
+        </EntityContainer>
+        <EntityType Name="Telephone">
+          <Key>
+            <PropertyRef Name="IdTelephone" />
+          </Key>
+          <Property Name="IdTelephone" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="NumeroTel" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+          <Property Name="TypeNumero" Type="String" Nullable="false" MaxLength="Max" Unicode="true" FixedLength="false" />
+        </EntityType>
+        <ComplexType Name="GetClientAndRegion_Result">
+          <Property Type="String" Name="nom" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="adresse" Nullable="true" MaxLength="50" />
+          <Property Type="String" Name="nomregion" Nullable="true" MaxLength="50" />
+        </ComplexType>
+      </Schema>
+    </edmx:ConceptualModels>
+    <!-- C-S mapping content -->
+    <edmx:Mappings>
+    <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="bddEQLModelStoreContainer" CdmEntityContainer="bddEQLEntities">
+    <EntitySetMapping Name="client">
+      <EntityTypeMapping TypeName="IsTypeOf(bddEQLModel.client)">
+        <MappingFragment StoreEntitySet="client">
+          <ScalarProperty Name="noclient" ColumnName="noclient" />
+          <ScalarProperty Name="nom" ColumnName="nom" />
+          <ScalarProperty Name="adresse" ColumnName="adresse" />
+          <ScalarProperty Name="noregion" ColumnName="noregion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="region">
+      <EntityTypeMapping TypeName="IsTypeOf(bddEQLModel.region)">
+        <MappingFragment StoreEntitySet="region">
+          <ScalarProperty Name="idregion" ColumnName="idregion" />
+          <ScalarProperty Name="nomregion" ColumnName="nomregion" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="TelephoneSet">
+      <EntityTypeMapping TypeName="IsTypeOf(bddEQLModel.Telephone)">
+        <MappingFragment StoreEntitySet="TelephoneSet">
+          <ScalarProperty Name="IdTelephone" ColumnName="IdTelephone" />
+          <ScalarProperty Name="NumeroTel" ColumnName="NumeroTel" />
+          <ScalarProperty Name="TypeNumero" ColumnName="TypeNumero" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+          <FunctionImportMapping FunctionImportName="GetClientAndRegion" FunctionName="bddEQLModel.Store.GetClientAndRegion">
+            <ResultMapping>
+              <ComplexTypeMapping TypeName="bddEQLModel.GetClientAndRegion_Result">
+                <ScalarProperty Name="nom" ColumnName="nom" />
+                <ScalarProperty Name="adresse" ColumnName="adresse" />
+                <ScalarProperty Name="nomregion" ColumnName="nomregion" />
+              </ComplexTypeMapping>
+            </ResultMapping>
+          </FunctionImportMapping>
+  </EntityContainerMapping>
+</Mapping></edmx:Mappings>
+  </edmx:Runtime>
+  <!-- EF Designer content (DO NOT EDIT MANUALLY BELOW HERE) -->
+  <Designer xmlns="http://schemas.microsoft.com/ado/2009/11/edmx">
+    <Connection>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="MetadataArtifactProcessing" Value="EmbedInOutputAssembly" />
+      </DesignerInfoPropertySet>
+    </Connection>
+    <Options>
+      <DesignerInfoPropertySet>
+        <DesignerProperty Name="ValidateOnBuild" Value="true" />
+        <DesignerProperty Name="EnablePluralization" Value="false" />
+        <DesignerProperty Name="IncludeForeignKeysInModel" Value="true" />
+        <DesignerProperty Name="UseLegacyProvider" Value="False" />
+        <DesignerProperty Name="CodeGenerationStrategy" Value="Aucun" />
+      </DesignerInfoPropertySet>
+    </Options>
+    <!-- Diagram content (shape and connector positions) -->
+    <Diagrams></Diagrams>
+  </Designer>
+</edmx:Edmx>
