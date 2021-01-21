@@ -125,11 +125,15 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\BddClient.designer.cs">
+    <Compile Include="Models\BddMember.cs">
+      <DependentUpon>BddMember.dbml</DependentUpon>
+    </Compile>
+    <Compile Include="Models\BddMember.designer.cs">
       <AutoGen>True</AutoGen>
       <DesignTime>True</DesignTime>
-      <DependentUpon>BddClient.dbml</DependentUpon>
+      <DependentUpon>BddMember.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Member.cs" />
     <Compile Include="Models\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
@@ -144,13 +148,13 @@
     <Content Include="Content\Site.css" />
     <Content Include="Scripts\bootstrap.js" />
     <Content Include="Scripts\bootstrap.min.js" />
-    <Content Include="Models\BddClient.dbml">
+    <Content Include="Models\BddMember.dbml">
       <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>BddClient.designer.cs</LastGenOutput>
+      <LastGenOutput>BddMember.designer.cs</LastGenOutput>
       <SubType>Designer</SubType>
     </Content>
-    <None Include="Models\BddClient.dbml.layout">
-      <DependentUpon>BddClient.dbml</DependentUpon>
+    <None Include="Models\BddMember.dbml.layout">
+      <DependentUpon>BddMember.dbml</DependentUpon>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />

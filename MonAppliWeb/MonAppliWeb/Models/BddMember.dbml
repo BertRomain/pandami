@@ -1,0 +1,34 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddPandami" Class="BddMemberDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=FORM226\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddEQLConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.member" Member="member">
+    <Type Name="member">
+      <Column Name="memberID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="firstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="birthdate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cityFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="city_member" Member="city" ThisKey="cityFK" OtherKey="cityID" Type="city" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.city" Member="city">
+    <Type Name="city">
+      <Column Name="cityID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="zipCodeFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="cityName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="city_member" Member="member" ThisKey="cityID" OtherKey="cityFK" Type="member" />
+      <Association Name="zipCode_city" Member="zipCode" ThisKey="zipCodeFK" OtherKey="zipCodeID" Type="zipCode" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zipCode" Member="zipCode">
+    <Type Name="zipCode">
+      <Column Name="zipCodeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="zipCode" Member="zipCode1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="zipCode_city" Member="city" ThisKey="zipCodeID" OtherKey="zipCodeFK" Type="city" />
+    </Type>
+  </Table>
+</Database>
