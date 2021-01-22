@@ -28,12 +28,41 @@ namespace MonAppliWeb.Models
         public int City { get; set; }
 
         //Création d'un membre
-        void CreateMember()
+        void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, string login, string city, string password)
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
-                
+                //Récupération du CityID à partir du string city
+                FetchFkId(city, cityFK, cityID, cityName);
+
+                var reqC = from ville in dm.city where ville.cityName == city select ville;
+                city CityBdd = reqC.FirstOrDefault();
+                int CityFK = CityBdd.cityID;
+
+                //Récupération MemberID
+               //expliquer manip à Romain pour auto incrément PK
+
+                //
+                member newMb = new member() {
+                    firstName = firstname, 
+                    lastName = lastname, 
+                    birthdate = birthdate,
+                    email = email,
+                    phone = phone, address = address,
+                    login = login,
+                    cityFK = CityFK,
+                    password = password};
+              
+                dm.member.InsertOnSubmit(newMb);
             }
+        }
+
+        public int FetchFkId (string table, int FK, int PK, string Link)
+        {
+            var req = from element in dm.table where element.Link == table select element;
+            table tableBdd = req.FirstOrDefault();
+            int FK = tableBdd.PK;
+            return FK;
         }
 
         public Member()

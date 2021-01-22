@@ -7,7 +7,7 @@ using MonAppliWeb.Models;
 
 namespace MonAppliWeb.Controllers
 {
-    public class HomeController : Controller
+    public class ServiceController : Controller
     {
         public ActionResult Index()
         {

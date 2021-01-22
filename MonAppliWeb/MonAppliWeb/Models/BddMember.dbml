@@ -1,8 +1,8 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddPandami" Class="BddMemberDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=FORM226\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddEQLConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=FORM227\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddEQLConnectionString" Provider="System.Data.SqlClient" />
   <Table Name="dbo.member" Member="member">
     <Type Name="member">
-      <Column Name="memberID" Type="System.String" DbType="VarChar(50) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="memberID" Type="System.String" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="firstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="lastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="birthdate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />

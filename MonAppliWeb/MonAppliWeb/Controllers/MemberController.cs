@@ -7,7 +7,7 @@ using MonAppliWeb.Models;
 
 namespace MonAppliWeb.Controllers
 {
-    public class ProfilController : Controller
+    public class MemberController : Controller
     {
         // GET: Profil
         public ActionResult Index()
