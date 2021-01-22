@@ -121,7 +121,9 @@
     <Compile Include="App_Start\BundleConfig.cs" />
     <Compile Include="App_Start\FilterConfig.cs" />
     <Compile Include="App_Start\RouteConfig.cs" />
+    <Compile Include="Controllers\ConnexionController.cs" />
     <Compile Include="Controllers\HomeController.cs" />
+    <Compile Include="Controllers\ProfilController.cs" />
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
@@ -133,8 +135,8 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BddMember.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Member.cs" />
-    <Compile Include="Models\Client.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
@@ -178,11 +180,17 @@
     <Content Include="Views\_ViewStart.cshtml" />
     <Content Include="Views\Shared\Error.cshtml" />
     <Content Include="Views\Shared\_Layout.cshtml" />
-    <Content Include="Views\Home\About.cshtml" />
-    <Content Include="Views\Home\Contact.cshtml" />
-    <Content Include="Views\Home\Index.cshtml" />
-    <Content Include="Views\Home\Histoire.cshtml" />
-    <Content Include="Views\Home\GestionClient.cshtml" />
+    <Content Include="Views\Profil\Profile.cshtml" />
+    <Content Include="Views\Home\MesCoud%27Pat.cshtml" />
+    <Content Include="Views\Home\Aide.cshtml" />
+    <Content Include="Views\Home\Acceuil.cshtml" />
+    <Content Include="Views\Home\DonnerUnCoud%27Pat.cshtml" />
+    <Content Include="Views\Connexion\Inscription.cshtml" />
+    <Content Include="Views\Profil\MesPréférences.cshtml" />
+    <Content Include="Views\Profil\MesIndisponibilités.cshtml" />
+    <Content Include="Views\Home\ProfilH.cshtml" />
+    <Content Include="Views\Connexion\Connexion.cshtml" />
+    <Content Include="Views\Home\DemanderCoud%27Pat.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

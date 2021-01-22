@@ -30,18 +30,8 @@ namespace MonAppliWeb.Controllers
 
         public ActionResult Histoire()
         {
-         
-
             return View();
         }
-        /*
-        public ActionResult GestionClient()
-        {
-            Client monClient = new Client();
-            
-            return View(monClient);
-        }
-        */
         
         public ActionResult GestionClient(string numClient)
         {
@@ -56,6 +46,12 @@ namespace MonAppliWeb.Controllers
                 monClient = new Client(numCli);
             }
             return View(monClient);
+        }
+
+        public ActionResult Inscription()
+        {
+
+            return View();
         }
     }
 }

@@ -26,31 +26,67 @@ namespace MonAppliWeb.Models
         public string Password { get; set; }
 
         public int City { get; set; }
-    }
 
-    public Member()
-    {
-
-    }
-
-    void MemberCharge(int noMb)
-    {
-        using (BddMemberDataContext dc = new BddMemberDataContext())
+        //Création d'un membre
+        void CreateMember()
         {
-            // Récupération de la vue "profilmembre" : 
-            var req = from mb in dc.member where mb.memberID == noMb select mb;
-            member memberBdd = req.FirstOrDefault();
-            if (req.Count() > 0)
+            using (BddMemberDataContext dm = new BddMemberDataContext())
             {
-                FirstName = memberBdd.firstName;
-                LastName = memberBdd.lastName;
-                BirthDate = memberBdd.birthdate;
-                Email = memberBdd.email;
-                Address = memberBdd.address;
-                City = memberBdd.city;
-                Login = memberBdd.login;
-                Password = memberBdd.password;
+                
             }
         }
+
+        public Member()
+        {
+
+        }
+
+        //Chargement d'un membre
+        void LoadMember(int IDmember)
+        {
+            using (BddMemberDataContext dc = new BddMemberDataContext())
+            {
+                // Récupération de la vue "profilmembre" : 
+                var req = from mb in dc.member where mb.memberID == noMb select mb;
+                member memberBdd = req.FirstOrDefault();
+                if (req.Count() > 0)
+                {
+                    FirstName = memberBdd.firstName;
+                    LastName = memberBdd.lastName;
+                    BirthDate = memberBdd.birthdate;
+                    Email = memberBdd.email;
+                    Address = memberBdd.address;
+                    City = memberBdd.cityFK;
+                    Login = memberBdd.login;
+                    Password = memberBdd.password;
+                }
+            }
+        }
+
+        public int Connection(string log, string pass)
+        {
+            using (BddMemberDataContext dc = new BddMemberDataContext())
+            {
+                var req = from mb in dc.member where mb.login == log select mb;
+                member memberBdd = req.FirstOrDefault();
+                int i = 0;
+                if (pass != memberBdd.password)
+                {
+                    //TO DO : A revoir
+                    do
+                    {
+                        // "Mot de passe incorrect !";
+                        i++;
+                    } while (pass != memberBdd.password && i < 4);
+                    //Penser à mettre fnct quand mdp erroné i > 4
+                }
+                //> autre méthode ou ouvrir sur vue accueil
+                return MemberID;
+
+            }
+        }
+
     }
+
+    
 }
