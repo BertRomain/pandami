@@ -10,7 +10,7 @@ namespace MonAppliWeb.Controllers
     public class ConnexionController : Controller
     {
         // GET: Connexion
-        public ActionResult Index()
+        public ActionResult Inscription()
         {
             return View();
         }
