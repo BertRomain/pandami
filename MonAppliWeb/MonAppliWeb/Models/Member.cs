@@ -124,6 +124,15 @@ namespace MonAppliWeb.Models
             }
         }
 
+        public AfficherVilles(int codepostal)
+        {
+            using(BddMemberDataContext dc = new BddMemberDataContext())
+            {
+                var req = from villes in dc.zipCodes where villes.zipCode == codepostal select villes;
+                zipCodes zipCodesBdd = req.FirstOrDefault();
+            }
+        }
+
     }
 
     

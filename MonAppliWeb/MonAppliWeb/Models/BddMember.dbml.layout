@@ -9,13 +9,13 @@
       </nestedChildShapes>
     </classShape>
     <classShape Id="23827c42-2a39-4abb-bbee-b9f33bc47a61" absoluteBounds="7.25, 0.5, 2, 1.1939925130208333">
-      <DataClassMoniker Name="/BddMemberDataContext/zipCode" />
+      <DataClassMoniker Name="/BddMemberDataContext/zipCodes" />
       <nestedChildShapes>
         <elementListCompartment Id="007b0523-c4c4-4140-bf4a-899c367714ac" absoluteBounds="7.2650000000000006, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <associationConnector edgePoints="[(8.25 : 1.69399251302083); (8.25 : 3.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/BddMemberDataContext/zipCode/zipCode_city" />
+      <AssociationMoniker Name="/BddMemberDataContext/zipCodes/zipCode_city" />
       <nodes>
         <classShapeMoniker Id="23827c42-2a39-4abb-bbee-b9f33bc47a61" />
         <classShapeMoniker Id="c6ed01b5-28b4-4c90-91d4-4de50ded77ba" />

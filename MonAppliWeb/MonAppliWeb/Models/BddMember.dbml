@@ -20,13 +20,13 @@
       <Column Name="cityID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="zipCodeFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="cityName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="zipCode_city" Member="zipCode" ThisKey="zipCodeFK" OtherKey="zipCodeID" Type="zipCode" IsForeignKey="true" />
+      <Association Name="zipCode_city" Member="zipCodes" Storage="_zipCode" ThisKey="zipCodeFK" OtherKey="zipCodeID" Type="zipCodes" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.zipCode" Member="zipCode">
-    <Type Name="zipCode">
+  <Table Name="dbo.zipCodes" Member="zipCodes">
+    <Type Name="zipCodes">
       <Column Name="zipCodeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="zipCode" Member="zipCode1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="zipCode" Storage="_zipCode1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="zipCode_city" Member="city" ThisKey="zipCodeID" OtherKey="zipCodeFK" Type="city" />
     </Type>
   </Table>
