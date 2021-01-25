@@ -1,0 +1,44 @@
+  public int City { get; set; }
+
+        //Création d'un membre
+        void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, string login, string city, string password)
+        {
+            using (BddMemberDataContext dm = new BddMemberDataContext())
+            {
+                //Récupération du CityID à partir du string city
+                var reqC = from ville in dm.city where ville.cityName == city select ville;
+                city CityBdd = reqC.FirstOrDefault();
+                City = CityBdd.cityID;
+
+                //Récupération MemberID
+                int newNoMb = FetchLastNoMb();
+                ++newNoMb;
+
+                Member newMb = new Member();
+                newMb.MemberID = newNoMb;
+                newMb.FirstName = firstname;
+                newMb.LastName = lastname;
+                newMb.BirthDate = birthdate;
+                newMb.Email = email;
+                newMb.Phone = phone;
+                newMb.Address = address;
+                newMb.Login = login;
+                newMb.City = City;
+                newMb.Password = password;
+
+                dm.member.InsertOnSubmit(newMb);
+                
+                
+
+                //Méthode conversion string city en int city               
+                string requete = String.Format("INSERT INTO member (noMb, firstname, lastname, birthdate, email, phone, address, login, City, password) VALUES ({0}, '{1}', '{2}', {3}, '{4}', '{5}', '{6}','{7}','{8}','{9}')",
+                   
+                    monNouveauClient.Nom,
+                    monNouveauClient.Adresse,
+                    monNouveauClient.NumRegion.ToString());
+                cmd.CommandText = requete;
+                this.OuvreConnection();
+                int nbLigneAffectees = cmd.ExecuteNonQuery();
+                this.FermetureBDD();*/
+            }
+        }
