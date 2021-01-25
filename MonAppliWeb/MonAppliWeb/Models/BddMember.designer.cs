@@ -30,19 +30,19 @@ namespace MonAppliWeb.Models
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnCreated();
+    partial void Insertmember(member instance);
+    partial void Updatemember(member instance);
+    partial void Deletemember(member instance);
     partial void Insertcity(city instance);
     partial void Updatecity(city instance);
     partial void Deletecity(city instance);
     partial void InsertzipCode(zipCode instance);
     partial void UpdatezipCode(zipCode instance);
     partial void DeletezipCode(zipCode instance);
-    partial void Insertmember(member instance);
-    partial void Updatemember(member instance);
-    partial void Deletemember(member instance);
     #endregion
 		
 		public BddMemberDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddEQLConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -71,6 +71,14 @@ namespace MonAppliWeb.Models
 			OnCreated();
 		}
 		
+		public System.Data.Linq.Table<member> member
+		{
+			get
+			{
+				return this.GetTable<member>();
+			}
+		}
+		
 		public System.Data.Linq.Table<city> city
 		{
 			get
@@ -85,307 +93,6 @@ namespace MonAppliWeb.Models
 			{
 				return this.GetTable<zipCode>();
 			}
-		}
-		
-		public System.Data.Linq.Table<member> member
-		{
-			get
-			{
-				return this.GetTable<member>();
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.city")]
-	public partial class city : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _cityID;
-		
-		private System.Nullable<int> _zipCodeFK;
-		
-		private string _cityName;
-		
-		private EntitySet<member> _member;
-		
-		private EntityRef<zipCode> _zipCode;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncityIDChanging(int value);
-    partial void OncityIDChanged();
-    partial void OnzipCodeFKChanging(System.Nullable<int> value);
-    partial void OnzipCodeFKChanged();
-    partial void OncityNameChanging(string value);
-    partial void OncityNameChanged();
-    #endregion
-		
-		public city()
-		{
-			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
-			this._zipCode = default(EntityRef<zipCode>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int cityID
-		{
-			get
-			{
-				return this._cityID;
-			}
-			set
-			{
-				if ((this._cityID != value))
-				{
-					this.OncityIDChanging(value);
-					this.SendPropertyChanging();
-					this._cityID = value;
-					this.SendPropertyChanged("cityID");
-					this.OncityIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeFK", DbType="Int")]
-		public System.Nullable<int> zipCodeFK
-		{
-			get
-			{
-				return this._zipCodeFK;
-			}
-			set
-			{
-				if ((this._zipCodeFK != value))
-				{
-					if (this._zipCode.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnzipCodeFKChanging(value);
-					this.SendPropertyChanging();
-					this._zipCodeFK = value;
-					this.SendPropertyChanged("zipCodeFK");
-					this.OnzipCodeFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string cityName
-		{
-			get
-			{
-				return this._cityName;
-			}
-			set
-			{
-				if ((this._cityName != value))
-				{
-					this.OncityNameChanging(value);
-					this.SendPropertyChanging();
-					this._cityName = value;
-					this.SendPropertyChanged("cityName");
-					this.OncityNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member1", Storage="_member", ThisKey="cityID", OtherKey="cityFK")]
-		public EntitySet<member> member
-		{
-			get
-			{
-				return this._member;
-			}
-			set
-			{
-				this._member.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_zipCode", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
-		public zipCode zipCode
-		{
-			get
-			{
-				return this._zipCode.Entity;
-			}
-			set
-			{
-				zipCode previousValue = this._zipCode.Entity;
-				if (((previousValue != value) 
-							|| (this._zipCode.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zipCode.Entity = null;
-						previousValue.city.Remove(this);
-					}
-					this._zipCode.Entity = value;
-					if ((value != null))
-					{
-						value.city.Add(this);
-						this._zipCodeFK = value.zipCodeID;
-					}
-					else
-					{
-						this._zipCodeFK = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("zipCode");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_member(member entity)
-		{
-			this.SendPropertyChanging();
-			entity.city = this;
-		}
-		
-		private void detach_member(member entity)
-		{
-			this.SendPropertyChanging();
-			entity.city = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zipCode")]
-	public partial class zipCode : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _zipCodeID;
-		
-		private int _zipCode1;
-		
-		private EntitySet<city> _city;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnzipCodeIDChanging(int value);
-    partial void OnzipCodeIDChanged();
-    partial void OnzipCode1Changing(int value);
-    partial void OnzipCode1Changed();
-    #endregion
-		
-		public zipCode()
-		{
-			this._city = new EntitySet<city>(new Action<city>(this.attach_city), new Action<city>(this.detach_city));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int zipCodeID
-		{
-			get
-			{
-				return this._zipCodeID;
-			}
-			set
-			{
-				if ((this._zipCodeID != value))
-				{
-					this.OnzipCodeIDChanging(value);
-					this.SendPropertyChanging();
-					this._zipCodeID = value;
-					this.SendPropertyChanged("zipCodeID");
-					this.OnzipCodeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="zipCode", Storage="_zipCode1", DbType="Int NOT NULL")]
-		public int zipCode1
-		{
-			get
-			{
-				return this._zipCode1;
-			}
-			set
-			{
-				if ((this._zipCode1 != value))
-				{
-					this.OnzipCode1Changing(value);
-					this.SendPropertyChanging();
-					this._zipCode1 = value;
-					this.SendPropertyChanged("zipCode1");
-					this.OnzipCode1Changed();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_city", ThisKey="zipCodeID", OtherKey="zipCodeFK")]
-		public EntitySet<city> city
-		{
-			get
-			{
-				return this._city;
-			}
-			set
-			{
-				this._city.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_city(city entity)
-		{
-			this.SendPropertyChanging();
-			entity.zipCode = this;
-		}
-		
-		private void detach_city(city entity)
-		{
-			this.SendPropertyChanging();
-			entity.zipCode = null;
 		}
 	}
 	
@@ -411,7 +118,7 @@ namespace MonAppliWeb.Models
 		
 		private string _login;
 		
-		private int _cityFK;
+		private System.Nullable<int> _cityFK;
 		
 		private string _password;
 		
@@ -437,7 +144,7 @@ namespace MonAppliWeb.Models
     partial void OnaddressChanged();
     partial void OnloginChanging(string value);
     partial void OnloginChanged();
-    partial void OncityFKChanging(int value);
+    partial void OncityFKChanging(System.Nullable<int> value);
     partial void OncityFKChanged();
     partial void OnpasswordChanging(string value);
     partial void OnpasswordChanged();
@@ -609,8 +316,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityFK", DbType="Int NOT NULL")]
-		public int cityFK
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityFK", DbType="Int")]
+		public System.Nullable<int> cityFK
 		{
 			get
 			{
@@ -653,7 +360,7 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member1", Storage="_city", ThisKey="cityFK", OtherKey="cityID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_city", ThisKey="cityFK", OtherKey="cityID", IsForeignKey=true)]
 		public city city
 		{
 			get
@@ -662,26 +369,10 @@ namespace MonAppliWeb.Models
 			}
 			set
 			{
-				city previousValue = this._city.Entity;
-				if (((previousValue != value) 
-							|| (this._city.HasLoadedOrAssignedValue == false)))
+				if ((this._city.Entity != value))
 				{
 					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._city.Entity = null;
-						previousValue.member.Remove(this);
-					}
 					this._city.Entity = value;
-					if ((value != null))
-					{
-						value.member.Add(this);
-						this._cityFK = value.cityID;
-					}
-					else
-					{
-						this._cityFK = default(int);
-					}
 					this.SendPropertyChanged("city");
 				}
 			}
@@ -705,6 +396,271 @@ namespace MonAppliWeb.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.city")]
+	public partial class city : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _cityID;
+		
+		private System.Nullable<int> _zipCodeFK;
+		
+		private string _cityName;
+		
+		private EntityRef<zipCode> _zipCode;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncityIDChanging(int value);
+    partial void OncityIDChanged();
+    partial void OnzipCodeFKChanging(System.Nullable<int> value);
+    partial void OnzipCodeFKChanged();
+    partial void OncityNameChanging(string value);
+    partial void OncityNameChanged();
+    #endregion
+		
+		public city()
+		{
+			this._zipCode = default(EntityRef<zipCode>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int cityID
+		{
+			get
+			{
+				return this._cityID;
+			}
+			set
+			{
+				if ((this._cityID != value))
+				{
+					this.OncityIDChanging(value);
+					this.SendPropertyChanging();
+					this._cityID = value;
+					this.SendPropertyChanged("cityID");
+					this.OncityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeFK", DbType="Int")]
+		public System.Nullable<int> zipCodeFK
+		{
+			get
+			{
+				return this._zipCodeFK;
+			}
+			set
+			{
+				if ((this._zipCodeFK != value))
+				{
+					if (this._zipCode.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnzipCodeFKChanging(value);
+					this.SendPropertyChanging();
+					this._zipCodeFK = value;
+					this.SendPropertyChanged("zipCodeFK");
+					this.OnzipCodeFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string cityName
+		{
+			get
+			{
+				return this._cityName;
+			}
+			set
+			{
+				if ((this._cityName != value))
+				{
+					this.OncityNameChanging(value);
+					this.SendPropertyChanging();
+					this._cityName = value;
+					this.SendPropertyChanged("cityName");
+					this.OncityNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_zipCode", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
+		public zipCode zipCode
+		{
+			get
+			{
+				return this._zipCode.Entity;
+			}
+			set
+			{
+				zipCode previousValue = this._zipCode.Entity;
+				if (((previousValue != value) 
+							|| (this._zipCode.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zipCode.Entity = null;
+						previousValue.city.Remove(this);
+					}
+					this._zipCode.Entity = value;
+					if ((value != null))
+					{
+						value.city.Add(this);
+						this._zipCodeFK = value.zipCodeID;
+					}
+					else
+					{
+						this._zipCodeFK = default(Nullable<int>);
+					}
+					this.SendPropertyChanged("zipCode");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zipCode")]
+	public partial class zipCode : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _zipCodeID;
+		
+		private int _zipCode1;
+		
+		private EntitySet<city> _city;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnzipCodeIDChanging(int value);
+    partial void OnzipCodeIDChanged();
+    partial void OnzipCode1Changing(int value);
+    partial void OnzipCode1Changed();
+    #endregion
+		
+		public zipCode()
+		{
+			this._city = new EntitySet<city>(new Action<city>(this.attach_city), new Action<city>(this.detach_city));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeID", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int zipCodeID
+		{
+			get
+			{
+				return this._zipCodeID;
+			}
+			set
+			{
+				if ((this._zipCodeID != value))
+				{
+					this.OnzipCodeIDChanging(value);
+					this.SendPropertyChanging();
+					this._zipCodeID = value;
+					this.SendPropertyChanged("zipCodeID");
+					this.OnzipCodeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="zipCode", Storage="_zipCode1", DbType="Int NOT NULL")]
+		public int zipCode1
+		{
+			get
+			{
+				return this._zipCode1;
+			}
+			set
+			{
+				if ((this._zipCode1 != value))
+				{
+					this.OnzipCode1Changing(value);
+					this.SendPropertyChanging();
+					this._zipCode1 = value;
+					this.SendPropertyChanged("zipCode1");
+					this.OnzipCode1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_city", ThisKey="zipCodeID", OtherKey="zipCodeFK")]
+		public EntitySet<city> city
+		{
+			get
+			{
+				return this._city;
+			}
+			set
+			{
+				this._city.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_city(city entity)
+		{
+			this.SendPropertyChanging();
+			entity.zipCode = this;
+		}
+		
+		private void detach_city(city entity)
+		{
+			this.SendPropertyChanging();
+			entity.zipCode = null;
 		}
 	}
 }
