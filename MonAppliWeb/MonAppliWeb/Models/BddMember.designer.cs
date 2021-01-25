@@ -36,9 +36,9 @@ namespace MonAppliWeb.Models
     partial void Insertcity(city instance);
     partial void Updatecity(city instance);
     partial void Deletecity(city instance);
-    partial void InsertzipCode(zipCode instance);
-    partial void UpdatezipCode(zipCode instance);
-    partial void DeletezipCode(zipCode instance);
+    partial void InsertzipCodes(zipCodes instance);
+    partial void UpdatezipCodes(zipCodes instance);
+    partial void DeletezipCodes(zipCodes instance);
     #endregion
 		
 		public BddMemberDataContext() : 
@@ -87,11 +87,11 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<zipCode> zipCode
+		public System.Data.Linq.Table<zipCodes> zipCodes
 		{
 			get
 			{
-				return this.GetTable<zipCode>();
+				return this.GetTable<zipCodes>();
 			}
 		}
 	}
@@ -411,7 +411,7 @@ namespace MonAppliWeb.Models
 		
 		private string _cityName;
 		
-		private EntityRef<zipCode> _zipCode;
+		private EntityRef<zipCodes> _zipCode;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -427,7 +427,7 @@ namespace MonAppliWeb.Models
 		
 		public city()
 		{
-			this._zipCode = default(EntityRef<zipCode>);
+			this._zipCode = default(EntityRef<zipCodes>);
 			OnCreated();
 		}
 		
@@ -496,7 +496,7 @@ namespace MonAppliWeb.Models
 		}
 		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_zipCode", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
-		public zipCode zipCode
+		public zipCodes zipCodes
 		{
 			get
 			{
@@ -504,7 +504,7 @@ namespace MonAppliWeb.Models
 			}
 			set
 			{
-				zipCode previousValue = this._zipCode.Entity;
+				zipCodes previousValue = this._zipCode.Entity;
 				if (((previousValue != value) 
 							|| (this._zipCode.HasLoadedOrAssignedValue == false)))
 				{
@@ -524,7 +524,7 @@ namespace MonAppliWeb.Models
 					{
 						this._zipCodeFK = default(Nullable<int>);
 					}
-					this.SendPropertyChanged("zipCode");
+					this.SendPropertyChanged("zipCodes");
 				}
 			}
 		}
@@ -550,8 +550,8 @@ namespace MonAppliWeb.Models
 		}
 	}
 	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zipCode")]
-	public partial class zipCode : INotifyPropertyChanging, INotifyPropertyChanged
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zipCodes")]
+	public partial class zipCodes : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -568,11 +568,11 @@ namespace MonAppliWeb.Models
     partial void OnCreated();
     partial void OnzipCodeIDChanging(int value);
     partial void OnzipCodeIDChanged();
-    partial void OnzipCode1Changing(int value);
-    partial void OnzipCode1Changed();
+    partial void OnzipCodeChanging(int value);
+    partial void OnzipCodeChanged();
     #endregion
 		
-		public zipCode()
+		public zipCodes()
 		{
 			this._city = new EntitySet<city>(new Action<city>(this.attach_city), new Action<city>(this.detach_city));
 			OnCreated();
@@ -598,8 +598,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="zipCode", Storage="_zipCode1", DbType="Int NOT NULL")]
-		public int zipCode1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCode1", DbType="Int NOT NULL")]
+		public int zipCode
 		{
 			get
 			{
@@ -609,11 +609,11 @@ namespace MonAppliWeb.Models
 			{
 				if ((this._zipCode1 != value))
 				{
-					this.OnzipCode1Changing(value);
+					this.OnzipCodeChanging(value);
 					this.SendPropertyChanging();
 					this._zipCode1 = value;
-					this.SendPropertyChanged("zipCode1");
-					this.OnzipCode1Changed();
+					this.SendPropertyChanged("zipCode");
+					this.OnzipCodeChanged();
 				}
 			}
 		}
@@ -654,13 +654,13 @@ namespace MonAppliWeb.Models
 		private void attach_city(city entity)
 		{
 			this.SendPropertyChanging();
-			entity.zipCode = this;
+			entity.zipCodes = this;
 		}
 		
 		private void detach_city(city entity)
 		{
 			this.SendPropertyChanging();
-			entity.zipCode = null;
+			entity.zipCodes = null;
 		}
 	}
 }
