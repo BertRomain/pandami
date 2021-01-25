@@ -38,6 +38,7 @@ namespace MonAppliWeb.Models
 
                 //Villes selon CP -> récup
 
+                //A enlever
                 //Récupération du CityID à partir du string city et + du zipCode
                 var reqC = from ville in dm.city where ville.cityName == city select ville;
                 city CityBdd = reqC.FirstOrDefault();
