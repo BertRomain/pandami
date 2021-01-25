@@ -6,10 +6,10 @@
     MonAppliWeb.Models.Member newMember = new MonAppliWeb.Models.Member();
     newMember.FirstName = Request.Form["FNMb"];
     newMember.LastName = Request.Form["LNMb"];
-    
+    newMember.BirthDate = Request.Form["BDMb"];
     newMember.Address = Request.Form["AdMb"];
-
-    
+    newMember.City = Request.Form["CityMb"];
+    newMember.Phone = Request.Form["NumMb"];
     newMember.Email = Request.Form["MailMb"];
     newMember.Login = Request.Form["LogMb"];
     newMember.Password = Request.Form["PWMb"];
@@ -21,7 +21,7 @@
 <form method="post">
     <p>Nom : <input id="FNMb" name="FNMb" type="text" value="@Model.FirstName"</p>
     <p>Prénom : <input id="LNMb" name="LNMb" type="text" value="@Model.LastName"</p>
-    <p>Date de naissance : <input id="BDMb" name="BDMb" type="date" value="@Model.BirthDate"</p>
+    <p>Date de naissance : <input id="BDMb" name="BDMb" type="datetime" value="@Model.BirthDate"</p>
     <p>Adresse : <input id="AdMb" name="AdMb" type="text" value="@Model.Address"</p>
     <p>Ville : <input id="CityMb" name="CityMb" type="checkbox" value=""</p>
     <p>Code postal : <input id="ZCMb" name="ZCMb" type="checkbox" value=""</p>

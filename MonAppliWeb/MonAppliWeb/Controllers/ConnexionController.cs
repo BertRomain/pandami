@@ -12,6 +12,9 @@ namespace MonAppliWeb.Controllers
         // GET: Connexion
         public ActionResult Inscription()
         {
+            //Appelle méthode inscription
+
+
             return View();
         }
     }

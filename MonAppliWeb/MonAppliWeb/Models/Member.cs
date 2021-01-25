@@ -25,7 +25,9 @@ namespace MonAppliWeb.Models
 
         public string Password { get; set; }
 
-        public int City { get; set; }
+        public string City { get; set; }
+
+        public int ZipCode { get; set; }
 
         //Création d'un membre
         void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, string login, string city, string password)
@@ -33,16 +35,15 @@ namespace MonAppliWeb.Models
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
                 //Récupération du CityID à partir du string city
-                FetchFkId(city, cityFK, cityID, cityName);
+                //FetchFkId(city, cityFK, cityID, cityName);
 
                 var reqC = from ville in dm.city where ville.cityName == city select ville;
                 city CityBdd = reqC.FirstOrDefault();
                 int CityFK = CityBdd.cityID;
+                //Code Postal --> A vérifier
+                int CityZC = CityBdd.zipCode;
 
-                //Récupération MemberID
-               //expliquer manip à Romain pour auto incrément PK
-
-                //
+                // Création dans la BDD du membre
                 member newMb = new member() {
                     firstName = firstname, 
                     lastName = lastname, 
@@ -76,7 +77,8 @@ namespace MonAppliWeb.Models
             using (BddMemberDataContext dc = new BddMemberDataContext())
             {
                 // Récupération de la vue "profilmembre" : 
-                var req = from mb in dc.member where mb.memberID == noMb select mb;
+                var req = from mb in dc.member where mb.memberID == IDmember select mb;
+                
                 member memberBdd = req.FirstOrDefault();
                 if (req.Count() > 0)
                 {
@@ -85,6 +87,9 @@ namespace MonAppliWeb.Models
                     BirthDate = memberBdd.birthdate;
                     Email = memberBdd.email;
                     Address = memberBdd.address;
+                    int villeFK = memberBdd.cityFK;
+
+
                     City = memberBdd.cityFK;
                     Login = memberBdd.login;
                     Password = memberBdd.password;
