@@ -2,10 +2,10 @@
 <ordesignerObjectsDiagram dslVersion="1.0.0.0" absoluteBounds="0, 0, 11, 8.5" name="BddClient">
   <DataContextMoniker Name="/BddMemberDataContext" />
   <nestedChildShapes>
-    <classShape Id="c6ed01b5-28b4-4c90-91d4-4de50ded77ba" absoluteBounds="6.5, 3.5, 2, 1.3862939453125">
+    <classShape Id="c6ed01b5-28b4-4c90-91d4-4de50ded77ba" absoluteBounds="7.25, 3.5, 2, 1.3862939453125">
       <DataClassMoniker Name="/BddMemberDataContext/city" />
       <nestedChildShapes>
-        <elementListCompartment Id="a5f96479-3a81-4169-ae89-ae1ceefce1ec" absoluteBounds="6.5150000000000006, 3.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="a5f96479-3a81-4169-ae89-ae1ceefce1ec" absoluteBounds="7.2650000000000006, 3.96, 1.9700000000000002, 0.8262939453125" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
     <classShape Id="23827c42-2a39-4abb-bbee-b9f33bc47a61" absoluteBounds="7.25, 0.5, 2, 1.1939925130208333">
@@ -14,21 +14,21 @@
         <elementListCompartment Id="007b0523-c4c4-4140-bf4a-899c367714ac" absoluteBounds="7.2650000000000006, 0.96, 1.9700000000000002, 0.63399251302083326" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(7.875 : 1.69399251302083); (7.875 : 3.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+    <associationConnector edgePoints="[(8.25 : 1.69399251302083); (8.25 : 3.5)]" fixedFrom="Algorithm" fixedTo="Algorithm">
       <AssociationMoniker Name="/BddMemberDataContext/zipCode/zipCode_city" />
       <nodes>
         <classShapeMoniker Id="23827c42-2a39-4abb-bbee-b9f33bc47a61" />
         <classShapeMoniker Id="c6ed01b5-28b4-4c90-91d4-4de50ded77ba" />
       </nodes>
     </associationConnector>
-    <classShape Id="47e664dc-44e3-4b30-bf27-1d8dd0196870" absoluteBounds="2, 1.625, 2, 2.7324039713541666">
+    <classShape Id="47e664dc-44e3-4b30-bf27-1d8dd0196870" absoluteBounds="3.75, 0.75, 2, 2.7324039713541666">
       <DataClassMoniker Name="/BddMemberDataContext/member" />
       <nestedChildShapes>
-        <elementListCompartment Id="83f54aa3-4bad-4cbe-8cc0-63552040ed8d" absoluteBounds="2.0149999999999997, 2.085, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
+        <elementListCompartment Id="83f54aa3-4bad-4cbe-8cc0-63552040ed8d" absoluteBounds="3.7649999999999997, 1.21, 1.9700000000000002, 2.1724039713541665" name="DataPropertiesCompartment" titleTextColor="Black" itemTextColor="Black" />
       </nestedChildShapes>
     </classShape>
-    <associationConnector edgePoints="[(6.5 : 3.92870198567708); (4 : 3.92870198567708)]" fixedFrom="Algorithm" fixedTo="Algorithm">
-      <AssociationMoniker Name="/BddMemberDataContext/city/city_member1" />
+    <associationConnector edgePoints="[(7.25 : 4.19314697265625); (4.75 : 4.19314697265625); (4.75 : 3.48240397135417)]" fixedFrom="Algorithm" fixedTo="Algorithm">
+      <AssociationMoniker Name="/BddMemberDataContext/city/city_member" />
       <nodes>
         <classShapeMoniker Id="c6ed01b5-28b4-4c90-91d4-4de50ded77ba" />
         <classShapeMoniker Id="47e664dc-44e3-4b30-bf27-1d8dd0196870" />

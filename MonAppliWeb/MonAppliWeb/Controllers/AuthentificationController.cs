@@ -7,13 +7,13 @@ using MonAppliWeb.Models;
 
 namespace MonAppliWeb.Controllers
 {
-    public class ConnexionController : Controller
+    public class AuthentificationController : Controller
     {
         // GET: Connexion
         public ActionResult Inscription()
         {
             //Appelle méthode inscription
-
+            Member NewMember = new Member();
 
             return View();
         }

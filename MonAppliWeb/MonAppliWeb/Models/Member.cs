@@ -34,14 +34,14 @@ namespace MonAppliWeb.Models
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
-                //Récupération du CityID à partir du string city
-                //FetchFkId(city, cityFK, cityID, cityName);
+                //Récupation du ZipCode
 
+                //Villes selon CP -> récup
+
+                //Récupération du CityID à partir du string city et + du zipCode
                 var reqC = from ville in dm.city where ville.cityName == city select ville;
                 city CityBdd = reqC.FirstOrDefault();
                 int CityFK = CityBdd.cityID;
-                //Code Postal --> A vérifier
-                int CityZC = CityBdd.zipCode;
 
                 // Création dans la BDD du membre
                 member newMb = new member() {
@@ -58,20 +58,23 @@ namespace MonAppliWeb.Models
             }
         }
 
-        public int FetchFkId (string table, int FK, int PK, string Link)
+        /*public int FetchFkId (string table, int FK, int PK, string Link)
         {
             var req = from element in dm.table where element.Link == table select element;
             table tableBdd = req.FirstOrDefault();
             int FK = tableBdd.PK;
             return FK;
-        }
+        }*/
+
+        //méthode private récupération
+
 
         public Member()
         {
 
         }
 
-        //Chargement d'un membre
+        /*Chargement d'un membre
         void LoadMember(int IDmember)
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
@@ -95,7 +98,7 @@ namespace MonAppliWeb.Models
                     Password = memberBdd.password;
                 }
             }
-        }
+        }*/
 
         public int Connection(string log, string pass)
         {
