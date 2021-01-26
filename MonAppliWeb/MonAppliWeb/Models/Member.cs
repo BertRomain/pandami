@@ -32,7 +32,7 @@ namespace MonAppliWeb.Models
         public int ZipCode { get; set; }
         
         //Création d'un membre
-        public void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, string city, int zipcode, string login, string password)
+        public bool CreateMember()
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
@@ -40,31 +40,32 @@ namespace MonAppliWeb.Models
                 int townFK = 0;
 
 
-                var req = from villes in dm.zipCodes where villes.zipCode == zipcode select villes;
+                var req = from villes in dm.zipCodes where villes.zipCode == ZipCode select villes;
                 zipCodes zipCodesBdd = req.FirstOrDefault();
                 int key = zipCodesBdd.zipCodeID;
 
                 var req2 = from element in dm.city where element.zipCodeFK == key select element;
                 city cityBdd = req2.FirstOrDefault();
                 string town = cityBdd.cityName;
-                if (town == city)
+                if (town == City)
                 {
                     townFK = cityBdd.cityID;
                 }
 
                 // Création dans la BDD du membre
                 member newMb = new member() {
-                    firstName = firstname,
-                    lastName = lastname,
-                    birthdate = birthdate,
-                    email = email,
-                    phone = phone,
-                    address = address,
+                    firstName = FirstName,
+                    lastName = LastName,
+                    birthdate = BirthDate,
+                    email = Email,
+                    phone = Phone,
+                    address = Address,
                     cityFK = townFK,
-                    login = login,
-                    password = password};
+                    login = Login,
+                    password = Password};
               
                 dm.member.InsertOnSubmit(newMb);
+                return true;
             }
         }
 

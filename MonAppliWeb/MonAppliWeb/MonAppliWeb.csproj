@@ -204,6 +204,7 @@
     <Content Include="Views\Home\ProfilH.cshtml" />
     <Content Include="Views\Authentification\Connexion.cshtml" />
     <Content Include="Views\Home\DemanderCoudPat.cshtml" />
+    <Content Include="Views\Home\Accueil.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

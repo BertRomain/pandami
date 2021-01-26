@@ -23,8 +23,15 @@ namespace MonAppliWeb.Controllers
 
         [HttpPost]
         public ActionResult SaveMbToBdd(Member member)
-        {
-            return View();
+        {      
+            bool rez = member.CreateMember();
+            if (!rez) //condition affichage message d'erreur
+            {  
+                string message = "Erreur lors de la création du membre";
+                return View(member);
+            } 
+            return View("~/Accueil");
+
         }
     }
 }
