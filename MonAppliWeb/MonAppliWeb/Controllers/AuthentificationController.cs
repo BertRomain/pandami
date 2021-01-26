@@ -26,13 +26,5 @@ namespace MonAppliWeb.Controllers
         {
             return View();
         }
-
-        public string IActionInvokerFactory(int ZCMb)
-        {
-            Member NewMember = new Member();
-
-            //Affichage des villes en focntions du code postal saisi
-            return  NewMember.AfficherVilles(ZCMb);
-        }
     }
 }
