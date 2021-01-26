@@ -31,7 +31,7 @@
     </p>
     <p>
         Code postal :
-        <input id="ZCMb" name="ZCMb" type="number" min="0" value="@Model.ZipCode" />
+        <input id="ZCMb" name="ZipCode" type="number" min="0" value="@Model.ZipCode" />
     </p>
     <p>
         Numéro de téléphone :
@@ -48,6 +48,14 @@
     <p>
         Mot de passe :
         <input id="PWMb" name="Password" type="password" value="@Model.Password" />
+    </p>
+    <input type="submit" value="Enregistrer" /> @message
+</form>
+
+<form method="post" action="AfficherVille">
+    <p>
+        Code postal :
+        <input id="ZCMb" name="ZipCode" type="number" min="0" value="@Model.ZipCode" />
     </p>
     <input type="submit" value="Enregistrer" /> @message
 </form>

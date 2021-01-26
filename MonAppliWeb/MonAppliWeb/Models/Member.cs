@@ -27,15 +27,31 @@ namespace MonAppliWeb.Models
 
         public string Password { get; set; }
 
-        public int City { get; set; }
+        public string City { get; set; }
 
         public int ZipCode { get; set; }
-
+        
         //Création d'un membre
-        public void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, int cityFK, string login, string password)
+        public void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, string city, int zipcode, string login, string password)
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
+                // Récupération de cityFK
+                int townFK = 0;
+
+
+                var req = from villes in dm.zipCodes where villes.zipCode == zipcode select villes;
+                zipCodes zipCodesBdd = req.FirstOrDefault();
+                int key = zipCodesBdd.zipCodeID;
+
+                var req2 = from element in dm.city where element.zipCodeFK == key select element;
+                city cityBdd = req2.FirstOrDefault();
+                string town = cityBdd.cityName;
+                if (town == city)
+                {
+                    townFK = cityBdd.cityID;
+                }
+
                 // Création dans la BDD du membre
                 member newMb = new member() {
                     firstName = firstname,
@@ -44,7 +60,7 @@ namespace MonAppliWeb.Models
                     email = email,
                     phone = phone,
                     address = address,
-                    cityFK = cityFK,
+                    cityFK = townFK,
                     login = login,
                     password = password};
               
