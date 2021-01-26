@@ -3,7 +3,7 @@
 @{
     ViewBag.Title = "Inscription";
 
-    
+    string message = "Inscription réalisée avec succès !";
 }
 
 <h2>Inscription</h2>
@@ -49,7 +49,7 @@
         Mot de passe :
         <input id="PWMb" name="Password" type="password" value="@Model.Password" />
     </p>
-    <input type="submit" value="Enregistrer" />
+    <input type="submit" value="Enregistrer" /> @message
 </form>
 
 <!--Condition Message en cas d'erreur (if) avec <div>-->
