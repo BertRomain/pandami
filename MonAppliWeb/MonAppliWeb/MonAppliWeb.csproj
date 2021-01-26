@@ -135,6 +135,11 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BddMember.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DataClasses1.designer.cs">
+      <AutoGen>True</AutoGen>
+      <DesignTime>True</DesignTime>
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
+    </Compile>
     <Compile Include="Models\Service.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -157,6 +162,14 @@
     </Content>
     <None Include="Models\BddMember.dbml.layout">
       <DependentUpon>BddMember.dbml</DependentUpon>
+    </None>
+    <Content Include="Models\DataClasses1.dbml">
+      <Generator>MSLinqToSQLGenerator</Generator>
+      <LastGenOutput>DataClasses1.designer.cs</LastGenOutput>
+      <SubType>Designer</SubType>
+    </Content>
+    <None Include="Models\DataClasses1.dbml.layout">
+      <DependentUpon>DataClasses1.dbml</DependentUpon>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
@@ -185,11 +198,11 @@
     <Content Include="Views\Home\Aide.cshtml" />
     <Content Include="Views\Home\Index.cshtml" />
     <Content Include="Views\Home\DonnerUnCoudPat.cshtml" />
-    <Content Include="Views\Connexion\Inscription.cshtml" />
+    <Content Include="Views\Authentification\Inscription.cshtml" />
     <Content Include="Views\Profil\MesPréférences.cshtml" />
     <Content Include="Views\Profil\MesIndisponibilités.cshtml" />
     <Content Include="Views\Home\ProfilH.cshtml" />
-    <Content Include="Views\Connexion\Connexion.cshtml" />
+    <Content Include="Views\Authentification\Connexion.cshtml" />
     <Content Include="Views\Home\DemanderCoudPat.cshtml" />
   </ItemGroup>
   <ItemGroup>

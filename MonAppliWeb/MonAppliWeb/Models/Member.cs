@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace MonAppliWeb.Models
 {
@@ -25,47 +27,30 @@ namespace MonAppliWeb.Models
 
         public string Password { get; set; }
 
-        public string City { get; set; }
+        public int City { get; set; }
 
         public int ZipCode { get; set; }
 
         //Création d'un membre
-        void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, string login, string city, string password)
+        public void CreateMember(string firstname, string lastname, DateTime birthdate, string email, int phone, string address, int cityFK, string login, string password)
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
-                //Récupation du ZipCode
-
-                //Villes selon CP -> récup
-
-                //A enlever
-                //Récupération du CityID à partir du string city et + du zipCode
-                var reqC = from ville in dm.city where ville.cityName == city select ville;
-                city CityBdd = reqC.FirstOrDefault();
-                int CityFK = CityBdd.cityID;
-
                 // Création dans la BDD du membre
                 member newMb = new member() {
-                    firstName = firstname, 
-                    lastName = lastname, 
+                    firstName = firstname,
+                    lastName = lastname,
                     birthdate = birthdate,
                     email = email,
-                    phone = phone, address = address,
+                    phone = phone,
+                    address = address,
+                    cityFK = cityFK,
                     login = login,
-                    cityFK = CityFK,
                     password = password};
               
                 dm.member.InsertOnSubmit(newMb);
             }
         }
-
-        /*public int FetchFkId (string table, int FK, int PK, string Link)
-        {
-            var req = from element in dm.table where element.Link == table select element;
-            table tableBdd = req.FirstOrDefault();
-            int FK = tableBdd.PK;
-            return FK;
-        }*/
 
         //méthode private récupération
 
@@ -124,14 +109,30 @@ namespace MonAppliWeb.Models
             }
         }
 
-        public AfficherVilles(int codepostal)
+        public string AfficherVilles(int codepostal)
         {
             using(BddMemberDataContext dc = new BddMemberDataContext())
             {
                 var req = from villes in dc.zipCodes where villes.zipCode == codepostal select villes;
                 zipCodes zipCodesBdd = req.FirstOrDefault();
+                int key = zipCodesBdd.zipCodeID;
+               
+                var req2 = from elmt in dc.city where elmt.zipCodeFK == key select elmt;
+                city cityBdd = req2.FirstOrDefault();
+                    return cityBdd.cityName;
+                
             }
         }
+
+      /*  public string TestVilles(int code)
+        {
+            using (DataClasses1DataContext df = new DataClasses1DataContext())
+            {
+                df.GetCityZipCode();
+                
+                return 
+            }
+        }*/
 
     }
 

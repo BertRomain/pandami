@@ -1,0 +1,12 @@
+﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddPandami" Class="DataClasses1DataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
+  <Connection Mode="WebSettings" ConnectionString="Data Source=FORM231\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddPandamiConnectionString" Provider="System.Data.SqlClient" />
+  <Table Name="dbo.GetCityZipCode" Member="GetCityZipCode">
+    <Type Name="GetCityZipCode">
+      <Column Name="Expr1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Expr4" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Expr2" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="Expr3" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="Expr5" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+    </Type>
+  </Table>
+</Database>
