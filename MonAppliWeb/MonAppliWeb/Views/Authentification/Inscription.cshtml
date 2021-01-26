@@ -1,0 +1,44 @@
+﻿@model MonAppliWeb.Models.Member
+
+@{
+    ViewBag.Title = "Inscription";
+
+    //MonAppliWeb.Models.Member newMember = new MonAppliWeb.Models.Member();
+    /*newMember.FirstName = Request.Form["FNMb"];
+    newMember.LastName = Request.Form["LNMb"];
+    newMember.BirthDate = Request.Form["BDMb"];
+    newMember.Address = Request.Form["AdMb"];
+    newMember.City = Request.Form["CityMb"];
+    newMember.Phone = Request.Form["NumMb"];
+    newMember.Email = Request.Form["MailMb"];
+    newMember.Login = Request.Form["LogMb"];
+    newMember.Password = Request.Form["PWMb"];
+    */
+    string message = "Inscription faite avec succès !";
+}
+
+<h2>Inscription</h2>
+<form method="post">
+    <p>Nom : 
+        <input id="FNMb" name="FNMb" type="text" value="@Model.FirstName"</p>
+    <p>Prénom : 
+        <input id="LNMb" name="LNMb" type="text" value="@Model.LastName"</p>
+    <p>Date de naissance : 
+        <input id="BDMb" name="BDMb" type="datetime" value="@Model.BirthDate"</p>
+    <p>Adresse : 
+        <input id="AdMb" name="AdMb" type="text" value="@Model.Address"</p>
+    <p>Ville : 
+        <input id="CityMb" name="CityMb" type="checkbox" value="@Model.City"</p>
+    <p>Code postal : 
+        <input id="ZCMb" name="ZCMb" type="int" value=""</p>
+    <p>Numéro de téléphone : 
+        <input id="NumMb" name="NumMb" type="number" value="@Model.Phone"</p>
+    <p>Adresse de méssagerie : 
+        <input id="MailMb" name="MailMb" type="email" value="@Model.Email"</p>
+    <p>Login : 
+        <input id="LogMb" name="LogMb" type="text" value="@Model.Login"</p>
+    <p>Mot de passe : 
+        <input id="PWMb" name="PWMb" type="password" value="@Model.Password"</p>
+    <input type="submit" value="Enregistrer" /> @message
+</form>
+
