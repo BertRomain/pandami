@@ -12,12 +12,7 @@ namespace MonAppliWeb.Controllers
         // GET: Connexion
         public ActionResult Inscription()
         {
-            //Appelle méthode inscription
             Member NewMember = new Member();
-
-            //Enregistrement du nouveau membre
-            //NewMember.CreateMember(FNMb, LNMb, BDMb, MailMb, NumMb, AdMb, CityMb, LogMb, PWMb);
-
             return View(NewMember);
         }
 
@@ -27,10 +22,10 @@ namespace MonAppliWeb.Controllers
             bool rez = member.CreateMember();
             if (!rez) //condition affichage message d'erreur
             {  
-                string message = "Erreur lors de la création du membre";
+                ViewBag.message = "Erreur lors de la création du membre";
                 return View(member);
             } 
-            return View("~/Accueil");
+            return View("~/Home/Accueil");
 
         }
     }

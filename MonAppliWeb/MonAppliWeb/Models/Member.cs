@@ -29,6 +29,8 @@ namespace MonAppliWeb.Models
 
         public string City { get; set; }
 
+        public int CityFK { get; set; }
+
         public int ZipCode { get; set; }
         
         //Création d'un membre
@@ -38,7 +40,6 @@ namespace MonAppliWeb.Models
             {
                 // Récupération de cityFK
                 int townFK = 0;
-
 
                 var req = from villes in dm.zipCodes where villes.zipCode == ZipCode select villes;
                 zipCodes zipCodesBdd = req.FirstOrDefault();
@@ -65,43 +66,39 @@ namespace MonAppliWeb.Models
                     password = Password};
               
                 dm.member.InsertOnSubmit(newMb);
+                newMb.memberID = MemberID;
                 return true;
             }
         }
-
-        //méthode private récupération
-
 
         public Member()
         {
 
         }
 
-        /*Chargement d'un membre
+        /*Chargement d'un membre*/
         void LoadMember(int IDmember)
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
             {
                 // Récupération de la vue "profilmembre" : 
                 var req = from mb in dc.member where mb.memberID == IDmember select mb;
-                
                 member memberBdd = req.FirstOrDefault();
                 if (req.Count() > 0)
                 {
+                    MemberID = memberBdd.memberID;
                     FirstName = memberBdd.firstName;
                     LastName = memberBdd.lastName;
                     BirthDate = memberBdd.birthdate;
                     Email = memberBdd.email;
                     Address = memberBdd.address;
-                    int villeFK = memberBdd.cityFK;
-
-
-                    City = memberBdd.cityFK;
+                    Phone = memberBdd.phone;
+                    CityFK = (int)memberBdd.cityFK;
                     Login = memberBdd.login;
                     Password = memberBdd.password;
                 }
             }
-        }*/
+        }
 
         public int Connection(string log, string pass)
         {
@@ -140,16 +137,6 @@ namespace MonAppliWeb.Models
                 
             }
         }
-
-      /*  public string TestVilles(int code)
-        {
-            using (DataClasses1DataContext df = new DataClasses1DataContext())
-            {
-                df.GetCityZipCode();
-                
-                return 
-            }
-        }*/
 
     }
 

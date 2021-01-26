@@ -14,24 +14,13 @@ namespace MonAppliWeb.Controllers
             return View();
         }
 
-        public ActionResult About()
+        public ActionResult Acceuil()
         {
-            ViewBag.Message = "Your application description page.";
+            ViewBag.Message = "...";
 
             return View();
         }
 
-        public ActionResult Contact()
-        {
-            ViewBag.Message = "Your contact page.";
-
-            return View();
-        }
-
-        public ActionResult Histoire()
-        {
-            return View();
-        }
         
         
       
