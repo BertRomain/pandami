@@ -62,7 +62,16 @@ namespace MonAppliWeb.Models
                 }
                 return voluntaryID;
             }
-            
+           //Envoyer la notification du matching
+
+
+           //Charger les ServiceRequest en Bénéficiaire
+
+
+           //Charger les ServiceRequest en Volontaire
+           
+
+
         }
 
 

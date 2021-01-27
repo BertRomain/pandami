@@ -32,6 +32,12 @@ namespace MonAppliWeb.Models
         public int CityFK { get; set; }
 
         public int ZipCode { get; set; }
+
+        public Member( string login, string password)
+        {
+            login = this.Login;
+            password = this.Password;
+        }
         
         //Création d'un membre
         public bool CreateMember()
@@ -100,25 +106,18 @@ namespace MonAppliWeb.Models
             }
         }
 
-        public int Connection(string log, string pass)
+        public bool Connection()
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
             {
-                var req = from mb in dc.member where mb.login == log select mb;
+                var req = from mb in dc.member where mb.login == Login select mb;
                 member memberBdd = req.FirstOrDefault();
-                int i = 0;
-                if (pass != memberBdd.password)
-                {
-                    //TO DO : A revoir
-                    do
-                    {
-                        // "Mot de passe incorrect !";
-                        i++;
-                    } while (pass != memberBdd.password && i < 4);
-                    //Penser à mettre fnct quand mdp erroné i > 4
-                }
-                //> autre méthode ou ouvrir sur vue accueil
-                return MemberID;
+                bool Connection = false;
+                    if (Password == memberBdd.password)
+                     {
+                    Connection = true;          
+                     }
+                return Connection;
 
             }
         }
@@ -137,6 +136,7 @@ namespace MonAppliWeb.Models
                 
             }
         }
+
 
     }
 

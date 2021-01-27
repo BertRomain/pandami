@@ -1,7 +1,19 @@
-﻿
+﻿@model MonAppliWeb.Models.Member
 @{
     ViewBag.Title = "Connexion";
 }
 
 <h2>Connexion</h2>
+<form method="post">
+    <p>
+        Login :
+        <input id="LogMb" name="Login" type="text" value="@Model.Login" />
+    </p>
+    <p>
+        Password :
+        <input id="PWMB" name="Password" type="password" value="@Model.Password" />
+    </p>
+    <input type="submit" value="Se Connecter"/>
+
+</form>
 

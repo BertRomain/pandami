@@ -14,7 +14,7 @@ namespace MonAppliWeb.Controllers
             return View();
         }
 
-        public ActionResult Acceuil()
+        public ActionResult Accueil()
         {
             
 

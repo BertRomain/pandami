@@ -4,7 +4,7 @@
 @{
     ViewBag.Title = "Inscription";
 
-    string message = "Inscription réalisée avec succès !";
+    string message = "";
    // bool rez = Model.CreateMember();
 }
 
@@ -45,7 +45,7 @@
     </p>
     <p>
         Login :
-        <input id="LogMb" name="Login" type="password" value="@Model.Login" />
+        <input id="LogMb" name="Login" type="text" value="@Model.Login" />
     </p>
     <p>
         Mot de passe :
@@ -54,7 +54,6 @@
     <input type="submit" value="Enregistrer" /> 
 </form>
 
-<!--Condition Message en cas d'erreur (if) avec <div>
-<div> 
-</div>
-    -->
+-<div>
+    @ViewBag.message
+</div> 

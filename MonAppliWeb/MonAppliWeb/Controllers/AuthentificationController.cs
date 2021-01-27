@@ -26,8 +26,19 @@ namespace MonAppliWeb.Controllers
                 return View(member);
             } 
             //Problème !!!
-            return View("~/Views/Home/Index");
+            return RedirectToAction("Accueil", "Home");
 
+        }
+        [HttpPost]
+        public ActionResult Connexion(Member member)
+        {
+            bool rez = member.Connection();
+            if (!rez)
+            {
+                ViewBag.message = "Login et/ou Mot de Passe incorrect(s)";
+                return View(member);
+            }
+            return View();
         }
     }
 }
