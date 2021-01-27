@@ -28,9 +28,41 @@ namespace MonAppliWeb.Models
         public string ServiceAddress { get; set; }
 
         //Méthode d'affiliation
-        public void Matching()
+        public int Matching(int ServiceRequest)
         {
+            
+            using (BddMemberDataContext dc = new BddMemberDataContext())
+            {
+                int voluntaryID = 0;
+                //fetch des informations de la demande de service 
+                var req = from element in dc.serviceRequest where element.serviceRequestID == ServiceRequest select element;
+                serviceRequest serviceRequestBdd = req.FirstOrDefault();
 
+                ServiceStartDate = serviceRequestBdd.serviceStartDate;
+                ServiceFK = serviceRequestBdd.serviceFK;
+                ServiceCityFK = (int)serviceRequestBdd.serviceCityFK;
+                MemberFK = serviceRequestBdd.memberFK;
+
+                var req2 = from volontaire in dc.member where volontaire.servicePrefFK == ServiceFK select volontaire;
+                member selectedMemberBDD = req2.FirstOrDefault();
+
+                int key = (int)selectedMemberBDD.dailyPrefFK;
+
+                var req3 = from jour in dc.dailyPref where jour.dailyPrefID == key select jour;
+                dailyPref dailyPrefBdd = req3.FirstOrDefault();
+
+                int key2 = dailyPrefBdd.dayFK;
+
+                if (selectedMemberBDD.cityFK == ServiceCityFK)
+                {
+                    if (key2 == (int)ServiceStartDate.DayOfWeek)
+                    {
+                        voluntaryID = selectedMemberBDD.memberID;
+                    }
+                }
+                return voluntaryID;
+            }
+            
         }
 
 

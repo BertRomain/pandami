@@ -141,16 +141,6 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
-    <Compile Include="Models\BddServiceRequest.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BddServiceRequest.dbml</DependentUpon>
-    </Compile>
-    <Compile Include="Models\BddPrefMember.designer.cs">
-      <AutoGen>True</AutoGen>
-      <DesignTime>True</DesignTime>
-      <DependentUpon>BddPrefMember.dbml</DependentUpon>
-    </Compile>
     <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -181,22 +171,6 @@
     </Content>
     <None Include="Models\DataClasses1.dbml.layout">
       <DependentUpon>DataClasses1.dbml</DependentUpon>
-    </None>
-    <Content Include="Models\BddServiceRequest.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>BddServiceRequest.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="Models\BddServiceRequest.dbml.layout">
-      <DependentUpon>BddServiceRequest.dbml</DependentUpon>
-    </None>
-    <Content Include="Models\BddPrefMember.dbml">
-      <Generator>MSLinqToSQLGenerator</Generator>
-      <LastGenOutput>BddPrefMember.designer.cs</LastGenOutput>
-      <SubType>Designer</SubType>
-    </Content>
-    <None Include="Models\BddPrefMember.dbml.layout">
-      <DependentUpon>BddPrefMember.dbml</DependentUpon>
     </None>
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
