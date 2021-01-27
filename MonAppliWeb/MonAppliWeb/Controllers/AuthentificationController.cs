@@ -25,7 +25,8 @@ namespace MonAppliWeb.Controllers
                 ViewBag.message = "Erreur lors de la création du membre";
                 return View(member);
             } 
-            return View("~/Home/Accueil");
+            //Problème !!!
+            return View("~/Views/Home/Index");
 
         }
     }

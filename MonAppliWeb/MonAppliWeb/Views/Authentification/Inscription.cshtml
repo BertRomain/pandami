@@ -1,9 +1,11 @@
 ﻿@model MonAppliWeb.Models.Member
+<!-- MonAppliWeb.Controllers.Auhtentification-->
 
 @{
     ViewBag.Title = "Inscription";
 
     string message = "Inscription réalisée avec succès !";
+   // bool rez = Model.CreateMember();
 }
 
 <h2>Inscription</h2>
@@ -49,8 +51,10 @@
         Mot de passe :
         <input id="PWMb" name="Password" type="password" value="@Model.Password" />
     </p>
-    <input type="submit" value="Enregistrer" /> @message
+    <input type="submit" value="Enregistrer" /> 
 </form>
 
-<!--Condition Message en cas d'erreur (if) avec <div>-->
-<div></div>
+<!--Condition Message en cas d'erreur (if) avec <div>
+<div> 
+</div>
+    -->

@@ -16,7 +16,7 @@ namespace MonAppliWeb.Controllers
 
         public ActionResult Acceuil()
         {
-            ViewBag.Message = "...";
+            
 
             return View();
         }

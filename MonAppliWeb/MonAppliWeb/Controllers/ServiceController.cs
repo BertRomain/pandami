@@ -35,17 +35,7 @@ namespace MonAppliWeb.Controllers
         
         public ActionResult GestionClient(string numClient)
         {
-            int numCli;
-            Client monClient;
-            if (!Int32.TryParse(numClient, out numCli))
-            {
-                monClient = new Client();
-            }
-            else
-            {
-                monClient = new Client(numCli);
-            }
-            return View(monClient);
+            return View();
         }
 
         public ActionResult Inscription()

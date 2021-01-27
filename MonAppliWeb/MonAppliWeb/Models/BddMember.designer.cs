@@ -42,7 +42,7 @@ namespace MonAppliWeb.Models
     #endregion
 		
 		public BddMemberDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddEQLConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -495,7 +495,7 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_zipCode", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_city", Storage="_zipCode", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
 		public zipCodes zipCodes
 		{
 			get
@@ -618,7 +618,7 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCode_city", Storage="_city", ThisKey="zipCodeID", OtherKey="zipCodeFK")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_city", Storage="_city", ThisKey="zipCodeID", OtherKey="zipCodeFK")]
 		public EntitySet<city> city
 		{
 			get
