@@ -69,12 +69,6 @@ namespace MonAppliWeb.Models
 
 
            //Charger les ServiceRequest en Volontaire
-           
-
-
         }
-
-
-
     }
 }

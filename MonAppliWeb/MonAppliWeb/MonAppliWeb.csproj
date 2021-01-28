@@ -206,6 +206,8 @@
     <Content Include="Views\Authentification\Connexion.cshtml" />
     <Content Include="Views\Home\DemanderCoudPat.cshtml" />
     <Content Include="Views\Home\Accueil.cshtml" />
+    <Content Include="Views\Member\Index.cshtml" />
+    <Content Include="Views\Member\Edit.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />
