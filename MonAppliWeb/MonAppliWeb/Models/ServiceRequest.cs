@@ -6,6 +6,8 @@ namespace MonAppliWeb.Models
 {
     public class ServiceRequest
     {
+        internal string ServiceCityName;
+
         public ServiceRequest()
         {
 
@@ -53,9 +55,6 @@ namespace MonAppliWeb.Models
         [Display(Name = "ID de la ville où est effectué le service")]
         public int ServiceCityFK { get; set; }
 
-        [Display(Name = "Nom de la ville du service")]
-        public string ServiceCityName { get; set; }
-
         [Display(Name = "Adresse du service")]
         public string ServiceAddress { get; set; }
 
@@ -65,6 +64,7 @@ namespace MonAppliWeb.Models
             
             using (BddMemberDataContext dc = new BddMemberDataContext())
             {
+                int voluntaryID = 0;
                 //fetch des informations de la demande de service 
                 var req = from element in dc.serviceRequest where element.serviceRequestID == ServiceRequest select element;
                 serviceRequest serviceRequestBdd = req.FirstOrDefault();
@@ -88,20 +88,19 @@ namespace MonAppliWeb.Models
                 {
                     if (key2 == (int)ServiceStartDate.DayOfWeek)
                     {
-                        VoluntaryMemberFK = selectedMemberBDD.memberID;
-                        serviceRequestBdd.voluntaryMemberFK = VoluntaryMemberFK;
+                        voluntaryID = selectedMemberBDD.memberID;
                     }
                 }
-                dc.SubmitChanges();
-                return VoluntaryMemberFK;
+                return voluntaryID;
             }
-           //Envoyer la notification du matching
-
-
-           //Charger les ServiceRequest en Bénéficiaire
-
-
-           //Charger les ServiceRequest en Volontaire
         }
+
+        //Envoyer la notification du matching
+
+
+        //Charger les ServiceRequest en Bénéficiaire
+
+
+        //Charger les ServiceRequest en Volontaire
     }
 }

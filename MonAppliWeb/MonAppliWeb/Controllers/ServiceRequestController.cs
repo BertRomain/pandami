@@ -1,11 +1,11 @@
-﻿using Microsoft.Ajax.Utilities;
-using MonAppliWeb.Models;
+﻿using MonAppliWeb.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
+//using Member = MonAppliWeb.Models.Member;
 
 namespace MonAppliWeb.Controllers
 {
@@ -83,32 +83,71 @@ namespace MonAppliWeb.Controllers
                     {
                         ServiceRequest sr = new ServiceRequest();
 
+                        //Requête permettant de faire correspondre une demande -- Le but est de sélectionner le premier membre correspondant à tous les critères
                         var test =
                             from mb in dc.member
                             from k in dc.dailyPref
-                            where mb.servicePrefFK == sr.ServiceFK && k.dailyPrefID == mb.dailyPrefFK && k
+                            from k2 in dc.days
+                                // mb.servicePrefFK = sr.ServiceFK > Quand l'une des préférences de services du membre correspond au service demandé
+                                // k.dailyPrefID = mb.dailyPrefFK > On vient récupé la table des pref correspondand à celle du membre
+                                // k.dayFK == k2.dayID > Joint les id correspondants entre les la table pref et day
+                                // k2.dayID == (int)sr.ServiceStartDate.DayOfWeek > Quand le jour pref correspond au jour du service
+                            where mb.servicePrefFK == sr.ServiceFK
+                                    && k.dailyPrefID == mb.dailyPrefFK
+                                    && k.dayFK == k2.dayID
+                                    && k2.dayID == (int)sr.ServiceStartDate.DayOfWeek
+                            select mb;
 
+                            //OU
 
-                        //fetch des informations de la demande de service 
-                        var req2 = from volontaire in dc.member where volontaire.servicePrefFK == sr.ServiceFK  select volontaire;
-                        member selectedMemberBDD = req2.FirstOrDefault();
+                        //Test requête avec join -- Si cette requête marche, à adapter dans les autres méthodes (notamment dans membre)
+                        var test2 = from mb in dc.member
+                                    where mb.servicePrefFK == sr.ServiceFK
+                                    join k in dc.dailyPref on mb.dailyPrefFK equals k.dailyPrefID
+                                    join c in dc.days on k.dayFK equals c.dayID
+                                    where c.dayID == (int)sr.ServiceStartDate.DayOfWeek
+                                    select mb;
+                        member selectMemberBdd = test2.FirstOrDefault();
 
-                        int key = (int)selectedMemberBDD.dailyPrefFK;
-
-                        var req3 = from jour in dc.dailyPref where jour.dailyPrefID == key select jour;
-                        dailyPref dailyPrefBdd = req3.FirstOrDefault();
-
-                        int key2 = dailyPrefBdd.dayFK;
-
-                        if (selectedMemberBDD.cityFK == ServiceCityFK)
+                        //Condition dans le cas où il séléctionne comme volontaire le bénéficiaire
+                        if (sr.MemberFK == selectMemberBdd.memberID)
                         {
-                            if (key2 == (int)ServiceStartDate.DayOfWeek)
-                            {
-                                VoluntaryMemberFK = selectedMemberBDD.memberID;
-                                serviceRequestBdd.voluntaryMemberFK = VoluntaryMemberFK;
-                            }
+                            //Refaire la requête en excluant ce membre
+                            //Pas trouver comment faire
                         }
+                        //Sinon
+                        //Association à la ServiceRequest l'ID du volontaire
+                        sr.VoluntaryMemberFK = selectMemberBdd.memberID;
+                        //Remplissage de voluntaryMemberFK avec l'ID dans la base de données --> A vérifier !
+                        //Comment ajouter dans la base de donnée, le voluntaryID à la table ServiceRequest ?
                         dc.SubmitChanges();
+
+                        
+
+
+
+
+                    //Ancienne Version de la méthode
+                        //fetch des informations de la demande de service 
+                        //var req2 = from volontaire in dc.member where volontaire.servicePrefFK == sr.ServiceFK  select volontaire;
+                        //member selectedMemberBDD = req2.FirstOrDefault();
+
+                        //int key = (int)selectedMemberBDD.dailyPrefFK;
+
+                        //var req3 = from jour in dc.dailyPref where jour.dailyPrefID == key select jour;
+                        //dailyPref dailyPrefBdd = req3.FirstOrDefault();
+
+                        //int key2 = dailyPrefBdd.dayFK;
+
+                        //if (selectedMemberBDD.cityFK == ServiceCityFK)
+                        //{
+                        //    if (key2 == (int)ServiceStartDate.DayOfWeek)
+                        //    {
+                        //        VoluntaryMemberFK = selectedMemberBDD.memberID;
+                        //        serviceRequestBdd.voluntaryMemberFK = VoluntaryMemberFK;
+                        //    }
+                        //}
+                        //dc.SubmitChanges();
                     }
                 }               
             }

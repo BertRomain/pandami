@@ -17,6 +17,13 @@ namespace MonAppliWeb.Models
             password = this.Password;
         }
 
+        public Member(string nom, string prenom, int ID)
+        {
+            nom = this.LastName;
+            prenom = this.FirstName;
+            ID = this.MemberID;
+        }
+
         public int MemberID { get; set; }
 
         [Display(Name ="Prénom")]
