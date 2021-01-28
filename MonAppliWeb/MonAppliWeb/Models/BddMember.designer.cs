@@ -51,13 +51,16 @@ namespace MonAppliWeb.Models
     partial void Insertmember(member instance);
     partial void Updatemember(member instance);
     partial void Deletemember(member instance);
-    partial void InsertserviceName(serviceName instance);
-    partial void UpdateserviceName(serviceName instance);
-    partial void DeleteserviceName(serviceName instance);
+    partial void InsertserviceNames(serviceNames instance);
+    partial void UpdateserviceNames(serviceNames instance);
+    partial void DeleteserviceNames(serviceNames instance);
+    partial void Insertanswer(answer instance);
+    partial void Updateanswer(answer instance);
+    partial void Deleteanswer(answer instance);
     #endregion
 		
 		public BddMemberDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddEQLConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString2"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -142,11 +145,27 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<serviceName> serviceName
+		public System.Data.Linq.Table<serviceNames> serviceNames
 		{
 			get
 			{
-				return this.GetTable<serviceName>();
+				return this.GetTable<serviceNames>();
+			}
+		}
+		
+		public System.Data.Linq.Table<requestAnswer> requestAnswer
+		{
+			get
+			{
+				return this.GetTable<requestAnswer>();
+			}
+		}
+		
+		public System.Data.Linq.Table<answer> answer
+		{
+			get
+			{
+				return this.GetTable<answer>();
 			}
 		}
 	}
@@ -460,7 +479,7 @@ namespace MonAppliWeb.Models
 		
 		private EntitySet<member> _member;
 		
-		private EntityRef<serviceName> _serviceName;
+		private EntityRef<serviceNames> _serviceName;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -479,7 +498,7 @@ namespace MonAppliWeb.Models
 		public servicePref()
 		{
 			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
-			this._serviceName = default(EntityRef<serviceName>);
+			this._serviceName = default(EntityRef<serviceNames>);
 			OnCreated();
 		}
 		
@@ -580,8 +599,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_servicePref", Storage="_serviceName", ThisKey="serviceNameFK", OtherKey="serviceID", IsForeignKey=true)]
-		public serviceName serviceName
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_servicePref", Storage="_serviceName", ThisKey="serviceNameFK", OtherKey="serviceID", IsForeignKey=true)]
+		public serviceNames serviceNames
 		{
 			get
 			{
@@ -589,7 +608,7 @@ namespace MonAppliWeb.Models
 			}
 			set
 			{
-				serviceName previousValue = this._serviceName.Entity;
+				serviceNames previousValue = this._serviceName.Entity;
 				if (((previousValue != value) 
 							|| (this._serviceName.HasLoadedOrAssignedValue == false)))
 				{
@@ -609,7 +628,7 @@ namespace MonAppliWeb.Models
 					{
 						this._serviceNameFK = default(int);
 					}
-					this.SendPropertyChanged("serviceName");
+					this.SendPropertyChanged("serviceNames");
 				}
 			}
 		}
@@ -681,7 +700,7 @@ namespace MonAppliWeb.Models
 		
 		private EntityRef<member> _member1;
 		
-		private EntityRef<serviceName> _serviceName;
+		private EntityRef<serviceNames> _serviceName;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -717,7 +736,7 @@ namespace MonAppliWeb.Models
 		{
 			this._member = default(EntityRef<member>);
 			this._member1 = default(EntityRef<member>);
-			this._serviceName = default(EntityRef<serviceName>);
+			this._serviceName = default(EntityRef<serviceNames>);
 			OnCreated();
 		}
 		
@@ -1041,8 +1060,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_serviceRequest", Storage="_serviceName", ThisKey="serviceFK", OtherKey="serviceID", IsForeignKey=true)]
-		public serviceName serviceName
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_serviceRequest", Storage="_serviceName", ThisKey="serviceFK", OtherKey="serviceID", IsForeignKey=true)]
+		public serviceNames serviceNames
 		{
 			get
 			{
@@ -1050,7 +1069,7 @@ namespace MonAppliWeb.Models
 			}
 			set
 			{
-				serviceName previousValue = this._serviceName.Entity;
+				serviceNames previousValue = this._serviceName.Entity;
 				if (((previousValue != value) 
 							|| (this._serviceName.HasLoadedOrAssignedValue == false)))
 				{
@@ -1070,7 +1089,7 @@ namespace MonAppliWeb.Models
 					{
 						this._serviceFK = default(int);
 					}
-					this.SendPropertyChanged("serviceName");
+					this.SendPropertyChanged("serviceNames");
 				}
 			}
 		}
@@ -1943,7 +1962,7 @@ namespace MonAppliWeb.Models
 	}
 	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.serviceName")]
-	public partial class serviceName : INotifyPropertyChanging, INotifyPropertyChanged
+	public partial class serviceNames : INotifyPropertyChanging, INotifyPropertyChanged
 	{
 		
 		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
@@ -1964,13 +1983,13 @@ namespace MonAppliWeb.Models
     partial void OnCreated();
     partial void OnserviceIDChanging(int value);
     partial void OnserviceIDChanged();
-    partial void OnserviceName1Changing(string value);
-    partial void OnserviceName1Changed();
+    partial void OnserviceNameChanging(string value);
+    partial void OnserviceNameChanged();
     partial void OnserviceCategoryFKChanging(int value);
     partial void OnserviceCategoryFKChanged();
     #endregion
 		
-		public serviceName()
+		public serviceNames()
 		{
 			this._servicePref = new EntitySet<servicePref>(new Action<servicePref>(this.attach_servicePref), new Action<servicePref>(this.detach_servicePref));
 			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
@@ -1997,8 +2016,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="serviceName", Storage="_serviceName1", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string serviceName1
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceName1", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string serviceName
 		{
 			get
 			{
@@ -2008,11 +2027,11 @@ namespace MonAppliWeb.Models
 			{
 				if ((this._serviceName1 != value))
 				{
-					this.OnserviceName1Changing(value);
+					this.OnserviceNameChanging(value);
 					this.SendPropertyChanging();
 					this._serviceName1 = value;
-					this.SendPropertyChanged("serviceName1");
-					this.OnserviceName1Changed();
+					this.SendPropertyChanged("serviceName");
+					this.OnserviceNameChanged();
 				}
 			}
 		}
@@ -2037,7 +2056,7 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_servicePref", Storage="_servicePref", ThisKey="serviceID", OtherKey="serviceNameFK")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_servicePref", Storage="_servicePref", ThisKey="serviceID", OtherKey="serviceNameFK")]
 		public EntitySet<servicePref> servicePref
 		{
 			get
@@ -2050,7 +2069,7 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_serviceRequest", Storage="_serviceRequest", ThisKey="serviceID", OtherKey="serviceFK")]
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_serviceRequest", Storage="_serviceRequest", ThisKey="serviceID", OtherKey="serviceFK")]
 		public EntitySet<serviceRequest> serviceRequest
 		{
 			get
@@ -2086,25 +2105,228 @@ namespace MonAppliWeb.Models
 		private void attach_servicePref(servicePref entity)
 		{
 			this.SendPropertyChanging();
-			entity.serviceName = this;
+			entity.serviceNames = this;
 		}
 		
 		private void detach_servicePref(servicePref entity)
 		{
 			this.SendPropertyChanging();
-			entity.serviceName = null;
+			entity.serviceNames = null;
 		}
 		
 		private void attach_serviceRequest(serviceRequest entity)
 		{
 			this.SendPropertyChanging();
-			entity.serviceName = this;
+			entity.serviceNames = this;
 		}
 		
 		private void detach_serviceRequest(serviceRequest entity)
 		{
 			this.SendPropertyChanging();
-			entity.serviceName = null;
+			entity.serviceNames = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.requestAnswer")]
+	public partial class requestAnswer
+	{
+		
+		private System.Nullable<System.DateTime> _refusalDate;
+		
+		private System.Nullable<System.DateTime> _acceptanceDate;
+		
+		private System.Nullable<System.DateTime> _cancelDate;
+		
+		private System.DateTime _answerDate;
+		
+		private int _serviceRFK;
+		
+		private string _answerFK;
+		
+		public requestAnswer()
+		{
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_refusalDate", DbType="Date")]
+		public System.Nullable<System.DateTime> refusalDate
+		{
+			get
+			{
+				return this._refusalDate;
+			}
+			set
+			{
+				if ((this._refusalDate != value))
+				{
+					this._refusalDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_acceptanceDate", DbType="Date")]
+		public System.Nullable<System.DateTime> acceptanceDate
+		{
+			get
+			{
+				return this._acceptanceDate;
+			}
+			set
+			{
+				if ((this._acceptanceDate != value))
+				{
+					this._acceptanceDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cancelDate", DbType="Date")]
+		public System.Nullable<System.DateTime> cancelDate
+		{
+			get
+			{
+				return this._cancelDate;
+			}
+			set
+			{
+				if ((this._cancelDate != value))
+				{
+					this._cancelDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerDate", DbType="Date NOT NULL")]
+		public System.DateTime answerDate
+		{
+			get
+			{
+				return this._answerDate;
+			}
+			set
+			{
+				if ((this._answerDate != value))
+				{
+					this._answerDate = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceRFK", DbType="Int NOT NULL")]
+		public int serviceRFK
+		{
+			get
+			{
+				return this._serviceRFK;
+			}
+			set
+			{
+				if ((this._serviceRFK != value))
+				{
+					this._serviceRFK = value;
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerFK", DbType="NChar(10)")]
+		public string answerFK
+		{
+			get
+			{
+				return this._answerFK;
+			}
+			set
+			{
+				if ((this._answerFK != value))
+				{
+					this._answerFK = value;
+				}
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.answer")]
+	public partial class answer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _answerID;
+		
+		private string _answer1;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnanswerIDChanging(string value);
+    partial void OnanswerIDChanged();
+    partial void Onanswer1Changing(string value);
+    partial void Onanswer1Changed();
+    #endregion
+		
+		public answer()
+		{
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerID", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string answerID
+		{
+			get
+			{
+				return this._answerID;
+			}
+			set
+			{
+				if ((this._answerID != value))
+				{
+					this.OnanswerIDChanging(value);
+					this.SendPropertyChanging();
+					this._answerID = value;
+					this.SendPropertyChanged("answerID");
+					this.OnanswerIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="answer", Storage="_answer1", DbType="NVarChar(3)")]
+		public string answer1
+		{
+			get
+			{
+				return this._answer1;
+			}
+			set
+			{
+				if ((this._answer1 != value))
+				{
+					this.Onanswer1Changing(value);
+					this.SendPropertyChanging();
+					this._answer1 = value;
+					this.SendPropertyChanged("answer1");
+					this.Onanswer1Changed();
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
 		}
 	}
 }

@@ -1,5 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddPandami" Class="BddMemberDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
-  <Connection Mode="WebSettings" ConnectionString="Data Source=FORM226\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddEQLConnectionString" Provider="System.Data.SqlClient" />
+  <Connection Mode="WebSettings" ConnectionString="Data Source=FORM226\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True;Connect Timeout=30;Encrypt=False;TrustServerCertificate=False" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddPandamiConnectionString2" Provider="System.Data.SqlClient" />
   <Table Name="dbo.city" Member="city">
     <Type Name="city">
       <Column Name="cityID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
@@ -23,7 +23,7 @@
       <Column Name="choiceEndDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="serviceNameFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="servicePref_member" Member="member" ThisKey="servicePrefID" OtherKey="servicePrefFK" Type="member" />
-      <Association Name="serviceName_servicePref" Member="serviceName" ThisKey="serviceNameFK" OtherKey="serviceID" Type="serviceName" IsForeignKey="true" />
+      <Association Name="serviceNames_servicePref" Member="serviceNames" Storage="_serviceName" ThisKey="serviceNameFK" OtherKey="serviceID" Type="serviceNames" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.serviceRequest" Member="serviceRequest">
@@ -40,9 +40,10 @@
       <Column Name="serviceCityFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
       <Column Name="memberFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="voluntaryMemberFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Association Name="serviceRequest_requestAnswer" Member="requestAnswer" ThisKey="serviceRequestID" OtherKey="serviceRFK" Type="requestAnswer" />
       <Association Name="member_serviceRequest" Member="member" ThisKey="memberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
       <Association Name="member_serviceRequest1" Member="member1" ThisKey="voluntaryMemberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
-      <Association Name="serviceName_serviceRequest" Member="serviceName" ThisKey="serviceFK" OtherKey="serviceID" Type="serviceName" IsForeignKey="true" />
+      <Association Name="serviceNames_serviceRequest" Member="serviceNames" Storage="_serviceName" ThisKey="serviceFK" OtherKey="serviceID" Type="serviceNames" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.dailyPref" Member="dailyPref">
@@ -84,13 +85,32 @@
       <Association Name="servicePref_member" Member="servicePref" ThisKey="servicePrefFK" OtherKey="servicePrefID" Type="servicePref" IsForeignKey="true" />
     </Type>
   </Table>
-  <Table Name="dbo.serviceName" Member="serviceName">
-    <Type Name="serviceName">
+  <Table Name="dbo.serviceName" Member="serviceNames">
+    <Type Name="serviceNames">
       <Column Name="serviceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="serviceName" Member="serviceName1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="serviceName" Storage="_serviceName1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="serviceCategoryFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="serviceName_servicePref" Member="servicePref" ThisKey="serviceID" OtherKey="serviceNameFK" Type="servicePref" />
-      <Association Name="serviceName_serviceRequest" Member="serviceRequest" ThisKey="serviceID" OtherKey="serviceFK" Type="serviceRequest" />
+      <Association Name="serviceNames_servicePref" Member="servicePref" ThisKey="serviceID" OtherKey="serviceNameFK" Type="servicePref" />
+      <Association Name="serviceNames_serviceRequest" Member="serviceRequest" ThisKey="serviceID" OtherKey="serviceFK" Type="serviceRequest" />
+    </Type>
+  </Table>
+  <Table Name="dbo.requestAnswer" Member="requestAnswer">
+    <Type Name="requestAnswer">
+      <Column Name="refusalDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="acceptanceDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="cancelDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
+      <Column Name="answerDate" Type="System.DateTime" DbType="Date NOT NULL" CanBeNull="false" />
+      <Column Name="serviceRFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="answerFK" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
+      <Association Name="serviceRequest_requestAnswer" Member="serviceRequest" ThisKey="serviceRFK" OtherKey="serviceRequestID" Type="serviceRequest" IsForeignKey="true" />
+      <Association Name="answer_requestAnswer" Member="answer" ThisKey="answerFK" OtherKey="answerID" Type="answer" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.answer" Member="answer">
+    <Type Name="answer">
+      <Column Name="answerID" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
+      <Column Name="answer" Member="answer1" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
+      <Association Name="answer_requestAnswer" Member="requestAnswer" ThisKey="answerID" OtherKey="answerFK" Type="requestAnswer" />
     </Type>
   </Table>
 </Database>
