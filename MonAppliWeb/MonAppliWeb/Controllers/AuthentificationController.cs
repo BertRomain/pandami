@@ -25,10 +25,9 @@ namespace MonAppliWeb.Controllers
                 ViewBag.message = "Erreur lors de la création du membre";
                 return View(member);
             } 
-            //Problème !!!
-            return RedirectToAction("Accueil", "Home");
-
+            return RedirectToAction("Index", "Member");
         }
+
         [HttpPost]
         public ActionResult Connexion(Member member)
         {

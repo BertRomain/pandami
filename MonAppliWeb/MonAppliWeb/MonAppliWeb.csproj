@@ -208,6 +208,7 @@
     <Content Include="Views\Home\Accueil.cshtml" />
     <Content Include="Views\Member\Index.cshtml" />
     <Content Include="Views\Member\Edit.cshtml" />
+    <Content Include="Views\ServiceRequest\ListServiceRequest.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

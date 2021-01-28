@@ -1,0 +1,81 @@
+﻿@model IEnumerable<MonAppliWeb.Models.ServiceRequest>
+
+@{
+    ViewBag.Title = "Liste des services";
+}
+
+<h2>Liste des services</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceFK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceStartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceEndDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceRequestCreationDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CancelDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.MemberFK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoluntaryMemberFK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceCityFK)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceAddress)
+        </th>
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceFK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceStartDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceEndDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceRequestCreationDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CancelDate)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.MemberFK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoluntaryMemberFK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceCityFK)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceAddress)
+        </td>
+        <td>
+            @Html.ActionLink("Modifier", "Edit", new { id=item.ServiceRequestID }, new {@class = "btn btn-primary"}) |
+            @Html.ActionLink("Details", "Details", new { id=item.ServiceRequestID }, new {@class = "btn" }) |
+            @Html.ActionLink("Annuler", "Delete", new { id=item.ServiceRequestID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
+}
+
+</table>

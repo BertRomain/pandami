@@ -92,7 +92,7 @@ namespace MonAppliWeb.Models
                 };
 
                 dm.member.InsertOnSubmit(newMb);
-                newMb.memberID = MemberID;
+                dm.SubmitChanges();
                 return true;
             }
         }
