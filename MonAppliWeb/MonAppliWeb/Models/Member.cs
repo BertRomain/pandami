@@ -1,45 +1,63 @@
 ﻿using System;
-using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
-using System.Web;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace MonAppliWeb.Models
 {
     public class Member
     {
-        public int MemberID { get; set; }
+        public Member() //Convention de création de class
+        {
 
-        public string FirstName { get; set; }
+        }
 
-        public string LastName { get; set; }
-
-        public DateTime BirthDate { get; set; }
-        
-        public string Email { get; set; }
-
-        public int Phone { get; set; }
-
-        public string Address { get; set; }
-
-        public string Login { get; set; }
-
-        public string Password { get; set; }
-
-        public string City { get; set; }
-
-        public int CityFK { get; set; }
-
-        public int ZipCode { get; set; }
-
-        public Member( string login, string password)
+        public Member(string login, string password)
         {
             login = this.Login;
             password = this.Password;
         }
-        
-        //Création d'un membre
+
+        public int MemberID { get; set; }
+
+        [Display(Name ="Prénom")]
+        [Required]
+        public string FirstName { get; set; }
+
+        [Display(Name = "Nom")]
+        [Required]
+        public string LastName { get; set; }
+
+        [Display(Name = "Date de naissance")]
+        [Required]
+        public DateTime BirthDate { get; set; }
+
+        [Display(Name = "Email")]
+        [Required]
+        public string Email { get; set; }
+
+        [Display(Name = "Téléphone")]
+        public int Phone { get; set; }
+
+        [Display(Name = "Adresse")]
+        [Required]
+        public string Address { get; set; }
+
+        [Display(Name = "Login")]
+        public string Login { get; set; }
+
+        [Display(Name = "Mot de passe")]
+        public string Password { get; set; }
+
+        [Display(Name = "Ville")]
+        [Required]
+        public string CityName { get; set; }
+
+        public int CityFK { get; set; }
+
+        [Display(Name = "Code postal")]
+        [Required]
+        public int ZipCode { get; set; }
+
         public bool CreateMember()
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
@@ -54,13 +72,14 @@ namespace MonAppliWeb.Models
                 var req2 = from element in dm.city where element.zipCodeFK == key select element;
                 city cityBdd = req2.FirstOrDefault();
                 string town = cityBdd.cityName;
-                if (town == City)
+                if (town == CityName)
                 {
                     townFK = cityBdd.cityID;
                 }
 
                 // Création dans la BDD du membre
-                member newMb = new member() {
+                member newMb = new member()
+                {
                     firstName = FirstName,
                     lastName = LastName,
                     birthdate = BirthDate,
@@ -69,21 +88,17 @@ namespace MonAppliWeb.Models
                     address = Address,
                     cityFK = townFK,
                     login = Login,
-                    password = Password};
-              
+                    password = Password
+                };
+
                 dm.member.InsertOnSubmit(newMb);
                 newMb.memberID = MemberID;
                 return true;
             }
         }
 
-        public Member()
-        {
-
-        }
-
         /*Chargement d'un membre*/
-        void LoadMember(int IDmember)
+        void LoadMember(int IDmember) // Appeler GetMember pour convention de nommage 
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
             {
