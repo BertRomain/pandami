@@ -65,46 +65,7 @@ namespace MonAppliWeb.Models
         [Required]
         public int ZipCode { get; set; }
 
-        public bool CreateMember() // Action à déplacer dans le controller
-        {
-            using (BddMemberDataContext dm = new BddMemberDataContext())
-            {
-                // Récupération de cityFK
-                int townFK = 0;
-
-                var req = from villes in dm.zipCodes where villes.zipCode == ZipCode select villes;
-                zipCodes zipCodesBdd = req.FirstOrDefault();
-                int key = zipCodesBdd.zipCodeID;
-
-                var req2 = from element in dm.city where element.zipCodeFK == key select element;
-                city cityBdd = req2.FirstOrDefault();
-                string town = cityBdd.cityName;
-                if (town == CityName)
-                {
-                    townFK = cityBdd.cityID;
-                }
-
-                // Création dans la BDD du membre
-                member newMb = new member()
-                {
-                    firstName = FirstName,
-                    lastName = LastName,
-                    birthdate = BirthDate,
-                    email = Email,
-                    phone = Phone,
-                    address = Address,
-                    cityFK = townFK,
-                    login = Login,
-                    password = Password
-                };
-
-                dm.member.InsertOnSubmit(newMb);
-                dm.SubmitChanges();
-                return true;
-            }
-        }
-
-        /*Chargement d'un membre*/
+        /*Chargement d'un membre  -- Méthode inutilisé >> A SUP ?*/
         void LoadMember(int IDmember) // Appeler GetMember pour convention de nommage 
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
@@ -128,6 +89,7 @@ namespace MonAppliWeb.Models
             }
         }
 
+        //Méthode inutilisé >> A SUP ?
         public bool Connection()
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
@@ -144,6 +106,7 @@ namespace MonAppliWeb.Models
             }
         }
 
+        //Méthode inutilisé >> A SUP ?
         public string AfficherVilles(int codepostal)
         {
             using(BddMemberDataContext dc = new BddMemberDataContext())
