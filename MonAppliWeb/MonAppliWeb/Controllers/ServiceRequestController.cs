@@ -14,36 +14,8 @@ namespace MonAppliWeb.Controllers
         [HttpGet]
         public ActionResult ListServiceRequest()
         {
-            using (BddMemberDataContext dm = new BddMemberDataContext())
-            {
-                //Récupération des demandes de services présentes dans la BDD dans une liste
-                var dbServices = dm.serviceRequest.ToList();
-                var requests = new List<ServiceRequest>();
-
-                foreach (var dbService in dbServices)
-                {
-                    var dbMemberBen = dm.member.FirstOrDefault(x => x.memberID == dbService.memberFK);
-                    // var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
-                    var dbServiceName = dm.serviceName.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
-                    var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbService.serviceCityFK);
-                    requests.Add(new ServiceRequest
-                    {
-                        ServiceRequestID = dbService.serviceRequestID,
-                        ServiceStartDate = dbService.serviceStartDate,
-                        ServiceName = dbServiceName.serviceName1, //remettre serviceName dans BDD & mettre schéma à jour
-                        MemberFK = dbService.memberFK,
-                        BeneficiaryFName = dbMemberBen.firstName,
-                        BeneficiaryLName = dbMemberBen.lastName,
-                        VoluntaryMemberFK = dbService.memberFK,
-                        //VoluntaryFName = dbMemberVol.firstName,
-                        //VoluntaryLName = dbMemberVol.lastName,
-                        ServiceAddress = dbService.serviceAddress,
-                        ServiceCityName = dbCity.cityName,
-                    });
-                }
-                return View(requests);
-            }
-
+            DAOSR daoSR = new DAOSR();
+            return View(daoSR.GetAllServiceRequests());
         }
 
         [HttpGet]
@@ -80,6 +52,7 @@ namespace MonAppliWeb.Controllers
             return View();
         }
 
+        //Les quelques lignes de méthodes sont présentes dans la DAO
         //private int Matching(ServiceRequest serviceRequest)
         private List<int> Matching(ServiceRequest serviceRequest)
         {
@@ -272,8 +245,6 @@ namespace MonAppliWeb.Controllers
                 return View();
             }
         }
-
-        //private void
 
     }
 }

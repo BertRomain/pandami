@@ -4,6 +4,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using MonAppliWeb.Models;
+using MonAppliWeb.Models.DAO;
 
 namespace MonAppliWeb.Controllers
 {
@@ -18,8 +19,9 @@ namespace MonAppliWeb.Controllers
 
         [HttpPost]
         public ActionResult SaveMbToBdd(Member member)
-        {      
-            bool rez = member.CreateMember();
+        {
+            DAOMember daoM = new DAOMember();
+            bool rez = daoM.CreateMember(member);
             if (!rez) //condition affichage message d'erreur
             {  
                 ViewBag.message = "Erreur lors de la création du membre";
@@ -28,16 +30,17 @@ namespace MonAppliWeb.Controllers
             return RedirectToAction("Index", "Member");
         }
 
-        [HttpPost]
-        public ActionResult Connexion(Member member)
-        {
-            bool rez = member.Connection();
-            if (!rez)
-            {
-                ViewBag.message = "Login et/ou Mot de Passe incorrect(s)";
-                return View(member);
-            }
-            return View();
-        }
+        // A supprimer > plus d'utilité
+        //[HttpPost]
+        //public ActionResult Connexion(Member member)
+        //{
+        //    bool rez = member.Connection();
+        //    if (!rez)
+        //    {
+        //        ViewBag.message = "Login et/ou Mot de Passe incorrect(s)";
+        //        return View(member);
+        //    }
+        //    return View();
+        //}
     }
 }

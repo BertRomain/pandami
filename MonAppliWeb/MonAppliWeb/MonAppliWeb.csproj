@@ -136,6 +136,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>BddMember.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\DAO\DAOMember.cs" />
     <Compile Include="Models\DAO\DAOSR.cs" />
     <Compile Include="Models\DataClasses1.designer.cs">
       <AutoGen>True</AutoGen>
