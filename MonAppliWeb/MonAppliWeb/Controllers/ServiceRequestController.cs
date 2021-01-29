@@ -5,7 +5,7 @@ using System.Linq;
 using System.Web;
 using System.Web.Mvc;
 using System.Web.Services.Description;
-//using Member = MonAppliWeb.Models.Member;
+using Member = MonAppliWeb.Models.Member;
 
 namespace MonAppliWeb.Controllers
 {
@@ -21,51 +21,17 @@ namespace MonAppliWeb.Controllers
                 var dbServices = dm.serviceRequest.ToList();
                 var requests = new List<ServiceRequest>();
 
-                foreach(var dbService in dbServices)
+                foreach (var dbService in dbServices)
                 {
                     var dbMemberBen = dm.member.FirstOrDefault(x => x.memberID == dbService.memberFK);
                     // var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
-                    var dbServiceName = dm.serviceNames.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
+                    var dbServiceName = dm.serviceName.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
                     var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbService.serviceCityFK);
                     requests.Add(new ServiceRequest
                     {
                         ServiceRequestID = dbService.serviceRequestID,
                         ServiceStartDate = dbService.serviceStartDate,
-                        ServiceName = dbServiceName.serviceName,
-                        MemberFK = dbService.memberFK,
-                        BeneficiaryFName = dbMemberBen.firstName,
-                        BeneficiaryLName = dbMemberBen.lastName,
-                        VoluntaryMemberFK = dbService.memberFK,
-                        //VoluntaryFName = dbMemberVol.firstName,
-                        //VoluntaryLName = dbMemberVol.lastName,
-                        ServiceAddress = dbService.serviceAddress,
-                        ServiceCityName = dbCity.cityName,
-                    }) ;
-                }
-                return View(requests);
-            }
-           
-        }
-
-        public ActionResult Matching()
-        {
-            using (BddMemberDataContext dc = new BddMemberDataContext())
-            {
-
-                var dbServices = dc.serviceRequest.ToList();
-                var requests = new List<ServiceRequest>();
-
-                foreach (var dbService in dbServices)
-                {
-                    var dbMemberBen = dc.member.FirstOrDefault(x => x.memberID == dbService.memberFK);
-                    // var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
-                    var dbServiceName = dc.serviceNames.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
-                    var dbCity = dc.city.FirstOrDefault(x => x.cityID == dbService.serviceCityFK);
-                    requests.Add(new ServiceRequest
-                    {
-                        ServiceRequestID = dbService.serviceRequestID,
-                        ServiceStartDate = dbService.serviceStartDate,
-                        ServiceName = dbServiceName.serviceName,
+                        ServiceName = dbServiceName.serviceName1, //remettre serviceName dans BDD & mettre schéma à jour
                         MemberFK = dbService.memberFK,
                         BeneficiaryFName = dbMemberBen.firstName,
                         BeneficiaryLName = dbMemberBen.lastName,
@@ -76,58 +42,144 @@ namespace MonAppliWeb.Controllers
                         ServiceCityName = dbCity.cityName,
                     });
                 }
+                return View(requests);
+            }
 
-                foreach (var ServiceRequest in requests)
-                {
-                    if (ServiceRequest.VoluntaryMemberFK == null)
-                    {
-                        ServiceRequest sr = new ServiceRequest();
+        }
 
-                        //Requête permettant de faire correspondre une demande -- Le but est de sélectionner le premier membre correspondant à tous les critères
-                        var test =
-                            from mb in dc.member
-                            from k in dc.dailyPref
-                            from k2 in dc.days
-                                // mb.servicePrefFK = sr.ServiceFK > Quand l'une des préférences de services du membre correspond au service demandé
-                                // k.dailyPrefID = mb.dailyPrefFK > On vient récupé la table des pref correspondand à celle du membre
-                                // k.dayFK == k2.dayID > Joint les id correspondants entre les la table pref et day
-                                // k2.dayID == (int)sr.ServiceStartDate.DayOfWeek > Quand le jour pref correspond au jour du service
-                            where mb.servicePrefFK == sr.ServiceFK
-                                    && k.dailyPrefID == mb.dailyPrefFK
-                                    && k.dayFK == k2.dayID
-                                    && k2.dayID == (int)sr.ServiceStartDate.DayOfWeek
-                            select mb;
+        [HttpGet]
+        public ActionResult Create()
+        {
+            // Instancier la classe ServiceRequest et passer a la vue
+            
+            return View(new ServiceRequest());
+        }
 
-                            //OU
+        public ActionResult Test()
+        {
+            RedirectToAction("Create", "ServiceRequest");
+        }
 
-                        //Test requête avec join -- Si cette requête marche, à adapter dans les autres méthodes (notamment dans membre)
-                        var test2 = from mb in dc.member
-                                    where mb.servicePrefFK == sr.ServiceFK
-                                    join k in dc.dailyPref on mb.dailyPrefFK equals k.dailyPrefID
-                                    join c in dc.days on k.dayFK equals c.dayID
-                                    where c.dayID == (int)sr.ServiceStartDate.DayOfWeek
-                                    select mb;
-                        member selectMemberBdd = test2.FirstOrDefault();
+        [HttpPost]
+        public ActionResult Create()
+        {
 
-                        //Condition dans le cas où il séléctionne comme volontaire le bénéficiaire
-                        if (sr.MemberFK == selectMemberBdd.memberID)
-                        {
-                            //Refaire la requête en excluant ce membre
-                            //Pas trouver comment faire
-                        }
-                        //Sinon
-                        //Association à la ServiceRequest l'ID du volontaire
-                        sr.VoluntaryMemberFK = selectMemberBdd.memberID;
-                        //Remplissage de voluntaryMemberFK avec l'ID dans la base de données --> A vérifier !
-                        //Comment ajouter dans la base de donnée, le voluntaryID à la table ServiceRequest ?
-                        dc.SubmitChanges();
+        }
 
-                        
+        [HttpPost]
+        public ActionResult CreateServiceBdd(ServiceRequest serviceRequest)
+        {
+            // Créer le serviceRequest dans la BDD
+            
+            // Utiliser serviceRequest pour appeler la méthode Matching
+
+            // Créer une notification dans la BDD pour chaque memberID récupéré par la méthode Matching
+        }
+
+        //private int Matching(ServiceRequest serviceRequest)
+        private List<int> Matching(ServiceRequest serviceRequest)
+        {
+            using (BddMemberDataContext dc = new BddMemberDataContext())
+            {
+                // Get week day from the start date. Adding one as .Net referential starts at 0 and ours starts at 1 (https://docs.microsoft.com/en-us/dotnet/api/system.dayofweek?view=net-5.0)
+                var dayOfService = (int)serviceRequest.ServiceStartDate.DayOfWeek + 1;
+
+                // Get first where:
+                // There is a day preference corresponding to the day of the service and the preference has not been ended
+                // There is a service preference corresponding to the service type and the preference has not been ended
+                // There is no existing answer from the member to this service
+                //var dbmembre = dc.member.FirstOrDefault(x => x.dailyPref.Any(d => d.dayFK == dayOfService && !d.dailyPrefEndDate.HasValue)
+                //&& x.servicePref.Any(s => s.serviceFK == serviceRequest.ServiceFK && !s.choiceEndDate.HasValue)
+                //&& !x.requestAnswer.Any(ra => ra.serviceRFK == serviceRequest.ServiceRequestID && ra.memberFK == x.memberID));
+
+                //return dbmembre.memberID;
+
+                // Get members where:
+                // There is a day preference corresponding to the day of the service and the preference has not been ended
+                // There is a service preference corresponding to the service type and the preference has not been ended
+                // There is no existing answer from the member to this service
+                var dbmemberIDs = dc.member.Where(x => x.dailyPref.Any(d => d.dayFK == dayOfService && !d.dailyPrefEndDate.HasValue)
+                && x.servicePref.Any(s => s.serviceFK == serviceRequest.ServiceFK && !s.choiceEndDate.HasValue)
+                && !x.requestAnswer.Any(ra => ra.serviceRFK == serviceRequest.ServiceRequestID && ra.memberFK == x.memberID)).Select(x => x.memberID).ToList();
+                 
+                return dbmemberIDs;
+
+                // Code suivant peut etre supprimé
+
+                //var requests = new List<ServiceRequest>();
+                //foreach (var dbService in dbServices)
+                //{
+                //    var dbMemberBen = dc.member.FirstOrDefault(x => x.memberID == dbService.memberFK);
+                //    // var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
+                //    var dbServiceName = dc.serviceNames.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
+                //    var dbCity = dc.city.FirstOrDefault(x => x.cityID == dbService.serviceCityFK);
+                //    requests.Add(new ServiceRequest
+                //    {
+                //        ServiceRequestID = dbService.serviceRequestID,
+                //        ServiceStartDate = dbService.serviceStartDate,
+                //        ServiceName = dbServiceName.serviceName,
+                //        MemberFK = dbService.memberFK,
+                //        BeneficiaryFName = dbMemberBen.firstName,
+                //        BeneficiaryLName = dbMemberBen.lastName,
+                //        VoluntaryMemberFK = dbService.memberFK,
+                //        //VoluntaryFName = dbMemberVol.firstName,
+                //        //VoluntaryLName = dbMemberVol.lastName,
+                //        ServiceAddress = dbService.serviceAddress,
+                //        ServiceCityName = dbCity.cityName,
+                //    });
+                //}
+
+                //foreach (var ServiceRequest in requests)
+                //{
+                //    if (ServiceRequest.VoluntaryMemberFK == null)
+                //    {
+                //        ServiceRequest sr = new ServiceRequest();
+
+                //        //Requête permettant de faire correspondre une demande -- Le but est de sélectionner le premier membre correspondant à tous les critères
+                //        var test =
+                //            from mb in dc.member
+                //            from k in dc.dailyPref
+                //            from k2 in dc.days
+                //                // mb.servicePrefFK = sr.ServiceFK > Quand l'une des préférences de services du membre correspond au service demandé
+                //                // k.dailyPrefID = mb.dailyPrefFK > On vient récupé la table des pref correspondand à celle du membre
+                //                // k.dayFK == k2.dayID > Joint les id correspondants entre les la table pref et day
+                //                // k2.dayID == (int)sr.ServiceStartDate.DayOfWeek > Quand le jour pref correspond au jour du service
+                //            where mb.servicePrefFK == sr.ServiceFK
+                //                    && k.dailyPrefID == mb.dailyPrefFK
+                //                    && k.dayFK == k2.dayID
+                //                    && k2.dayID == (int)sr.ServiceStartDate.DayOfWeek
+                //            select mb;
+
+                //        //OU
+
+                //        //Test requête avec join -- Si cette requête marche, à adapter dans les autres méthodes (notamment dans membre)
+                //        var test2 = from mb in dc.member
+                //                    where mb.servicePrefFK == sr.ServiceFK
+                //                    join k in dc.dailyPref on mb.dailyPrefFK equals k.dailyPrefID
+                //                    join c in dc.days on k.dayFK equals c.dayID
+                //                    where c.dayID == (int)sr.ServiceStartDate.DayOfWeek
+                //                    select mb;
+                //        member selectMemberBdd = test2.FirstOrDefault();
+
+                //        //Condition dans le cas où il séléctionne comme volontaire le bénéficiaire
+                //        if (sr.MemberFK == selectMemberBdd.memberID)
+                //        {
+                //            //Refaire la requête en excluant ce membre
+                //            //Pas trouver comment faire
+                //        }
+                //        //Sinon
+                //        //Association à la ServiceRequest l'ID du volontaire
+                //        sr.VoluntaryMemberFK = selectMemberBdd.memberID;
+                //        //Remplissage de voluntaryMemberFK avec l'ID dans la base de données --> A vérifier !
+                //        //Comment ajouter dans la base de donnée, le voluntaryID à la table ServiceRequest ?
+                //        dc.SubmitChanges();
 
 
 
 
-                    //Ancienne Version de la méthode
+
+
+                        //Ancienne Version de la méthode
                         //fetch des informations de la demande de service 
                         //var req2 = from volontaire in dc.member where volontaire.servicePrefFK == sr.ServiceFK  select volontaire;
                         //member selectedMemberBDD = req2.FirstOrDefault();
@@ -148,9 +200,10 @@ namespace MonAppliWeb.Controllers
                         //    }
                         //}
                         //dc.SubmitChanges();
-                    }
-                }               
+                    //}
+                //}
             }
+            //return View();
         }
 
         // GET: Request/Details/5
@@ -159,27 +212,21 @@ namespace MonAppliWeb.Controllers
             return View();
         }
 
-        // GET: Request/Create
-        public ActionResult Create()
-        {
-            return View();
-        }
+        //// POST: Request/Create
+        //[HttpPost]
+        //public ActionResult Create(FormCollection collection)
+        //{
+        //    try
+        //    {
+        //        // TODO: Add insert logic here
 
-        // POST: Request/Create
-        [HttpPost]
-        public ActionResult Create(FormCollection collection)
-        {
-            try
-            {
-                // TODO: Add insert logic here
-
-                return RedirectToAction("Index");
-            }
-            catch
-            {
-                return View();
-            }
-        }
+        //        return RedirectToAction("Index");
+        //    }
+        //    catch
+        //    {
+        //        return View();
+        //    }
+        //}
 
         // GET: Request/Edit/5
         public ActionResult Edit(int id)
@@ -225,6 +272,8 @@ namespace MonAppliWeb.Controllers
             }
         }
 
-        
+        //private void
+
     }
 }
+

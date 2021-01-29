@@ -28,6 +28,9 @@
                 @Html.DisplayNameFor(model => model.ServiceCityName)
             </th>
             <th>
+                @Html.DisplayNameFor(model => model.CancelDate)
+            </th>
+            <th>
                 @Html.DisplayNameFor(model => model.VoluntaryFName)
             </th>
             <th>
@@ -37,44 +40,50 @@
                 @Html.DisplayNameFor(model => model.ServiceAddress)
             </th>
             <th></th>
+            <th></th>
+            <th></th>
         </tr>
 
         @foreach (var item in Model)
         {
-            <tr>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BeneficiaryFName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.BeneficiaryLName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceStartDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceCityName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.CancelDate)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VoluntaryFName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.VoluntaryLName)
-                </td>
-                <td>
-                    @Html.DisplayFor(modelItem => item.ServiceAddress)
-                </td>
-                <td>
-                    @Html.ActionLink("Modifier", "Edit", new { id = item.ServiceRequestID }, new { @class = "btn btn-primary" }) |
-                    @Html.ActionLink("Details", "Details", new { id = item.ServiceRequestID }, new { @class = "btn" }) |
-                    @Html.ActionLink("Annuler", "Delete", new { id = item.ServiceRequestID }, new { @class = "btn btn-danger" })
-                </td>
-            </tr>
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeneficiaryFName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.BeneficiaryLName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceStartDateToDisplay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceCityName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.CancelDateToDisplay)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoluntaryFName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.VoluntaryLName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.ServiceAddress)
+        </td>
+        <td>
+            @Html.ActionLink("Details", "Details", new { id = item.ServiceRequestID }, new { @class = "btn btn-info" })
+        </td>
+        <td>
+            @Html.ActionLink("Modifier", "Edit", new { id = item.ServiceRequestID }, new { @class = "btn btn-primary" })
+        </td>
+        <td>
+            @Html.ActionLink("Annuler", "Delete", new { id = item.ServiceRequestID }, new { @class = "btn btn-danger" })
+        </td>
+    </tr>
         }
 
     </table>

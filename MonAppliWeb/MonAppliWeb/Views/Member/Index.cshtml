@@ -6,9 +6,9 @@
 
     <h2>Membres</h2>
 
-    @*<p>
-        @Html.ActionLink("Create New", "Create")
-    </p>*@
+    <p>
+        @Html.ActionLink("Ajouter un nouveau membre","Inscription", "Authentification")
+    </p>
     <div class="table-responsive">
         <table class="table">
             <tr>
@@ -79,10 +79,10 @@
                 @Html.DisplayFor(modelItem => item.ZipCode)
             </td>
             <td>
-                @Html.ActionLink("Modifier", "Edit", new { id=item.MemberID }, new {@class = "btn btn-primary"})
+                @Html.ActionLink("Modifier", "Edit", new { id = item.MemberID }, new { @class = "btn btn-primary" })
             </td>
             <td>
-                @Html.ActionLink("Supprimer", "Delete", new { id=item.MemberID }, new {@class = "btn btn-danger"})
+                @Html.ActionLink("Supprimer", "Delete", new { id = item.MemberID }, new { @class = "btn btn-danger" })
             </td>
         </tr>
 }
