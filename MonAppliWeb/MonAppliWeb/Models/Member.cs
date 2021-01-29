@@ -65,7 +65,7 @@ namespace MonAppliWeb.Models
         [Required]
         public int ZipCode { get; set; }
 
-        public bool CreateMember()
+        public bool CreateMember() // Action à déplacer dans le controller
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {

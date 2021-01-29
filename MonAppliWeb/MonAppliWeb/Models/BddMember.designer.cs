@@ -36,31 +36,34 @@ namespace MonAppliWeb.Models
     partial void InsertzipCodes(zipCodes instance);
     partial void UpdatezipCodes(zipCodes instance);
     partial void DeletezipCodes(zipCodes instance);
-    partial void InsertservicePref(servicePref instance);
-    partial void UpdateservicePref(servicePref instance);
-    partial void DeleteservicePref(servicePref instance);
-    partial void InsertserviceRequest(serviceRequest instance);
-    partial void UpdateserviceRequest(serviceRequest instance);
-    partial void DeleteserviceRequest(serviceRequest instance);
-    partial void InsertdailyPref(dailyPref instance);
-    partial void UpdatedailyPref(dailyPref instance);
-    partial void DeletedailyPref(dailyPref instance);
     partial void Insertdays(days instance);
     partial void Updatedays(days instance);
     partial void Deletedays(days instance);
     partial void Insertmember(member instance);
     partial void Updatemember(member instance);
     partial void Deletemember(member instance);
-    partial void InsertserviceNames(serviceNames instance);
-    partial void UpdateserviceNames(serviceNames instance);
-    partial void DeleteserviceNames(serviceNames instance);
+    partial void InsertserviceName(serviceName instance);
+    partial void UpdateserviceName(serviceName instance);
+    partial void DeleteserviceName(serviceName instance);
+    partial void InsertservicePref(servicePref instance);
+    partial void UpdateservicePref(servicePref instance);
+    partial void DeleteservicePref(servicePref instance);
+    partial void InsertdailyPref(dailyPref instance);
+    partial void UpdatedailyPref(dailyPref instance);
+    partial void DeletedailyPref(dailyPref instance);
+    partial void InsertrequestAnswer(requestAnswer instance);
+    partial void UpdaterequestAnswer(requestAnswer instance);
+    partial void DeleterequestAnswer(requestAnswer instance);
     partial void Insertanswer(answer instance);
     partial void Updateanswer(answer instance);
     partial void Deleteanswer(answer instance);
+    partial void InsertserviceRequest(serviceRequest instance);
+    partial void UpdateserviceRequest(serviceRequest instance);
+    partial void DeleteserviceRequest(serviceRequest instance);
     #endregion
 		
 		public BddMemberDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString2"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString3"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -105,30 +108,6 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<servicePref> servicePref
-		{
-			get
-			{
-				return this.GetTable<servicePref>();
-			}
-		}
-		
-		public System.Data.Linq.Table<serviceRequest> serviceRequest
-		{
-			get
-			{
-				return this.GetTable<serviceRequest>();
-			}
-		}
-		
-		public System.Data.Linq.Table<dailyPref> dailyPref
-		{
-			get
-			{
-				return this.GetTable<dailyPref>();
-			}
-		}
-		
 		public System.Data.Linq.Table<days> days
 		{
 			get
@@ -145,11 +124,27 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		public System.Data.Linq.Table<serviceNames> serviceNames
+		public System.Data.Linq.Table<serviceName> serviceName
 		{
 			get
 			{
-				return this.GetTable<serviceNames>();
+				return this.GetTable<serviceName>();
+			}
+		}
+		
+		public System.Data.Linq.Table<servicePref> servicePref
+		{
+			get
+			{
+				return this.GetTable<servicePref>();
+			}
+		}
+		
+		public System.Data.Linq.Table<dailyPref> dailyPref
+		{
+			get
+			{
+				return this.GetTable<dailyPref>();
 			}
 		}
 		
@@ -166,6 +161,14 @@ namespace MonAppliWeb.Models
 			get
 			{
 				return this.GetTable<answer>();
+			}
+		}
+		
+		public System.Data.Linq.Table<serviceRequest> serviceRequest
+		{
+			get
+			{
+				return this.GetTable<serviceRequest>();
 			}
 		}
 	}
@@ -463,6 +466,741 @@ namespace MonAppliWeb.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.days")]
+	public partial class days : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _dayID;
+		
+		private string _dayName;
+		
+		private EntitySet<dailyPref> _dailyPref;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OndayIDChanging(int value);
+    partial void OndayIDChanged();
+    partial void OndayNameChanging(string value);
+    partial void OndayNameChanged();
+    #endregion
+		
+		public days()
+		{
+			this._dailyPref = new EntitySet<dailyPref>(new Action<dailyPref>(this.attach_dailyPref), new Action<dailyPref>(this.detach_dailyPref));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dayID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int dayID
+		{
+			get
+			{
+				return this._dayID;
+			}
+			set
+			{
+				if ((this._dayID != value))
+				{
+					this.OndayIDChanging(value);
+					this.SendPropertyChanging();
+					this._dayID = value;
+					this.SendPropertyChanged("dayID");
+					this.OndayIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dayName", DbType="NChar(10) NOT NULL", CanBeNull=false)]
+		public string dayName
+		{
+			get
+			{
+				return this._dayName;
+			}
+			set
+			{
+				if ((this._dayName != value))
+				{
+					this.OndayNameChanging(value);
+					this.SendPropertyChanging();
+					this._dayName = value;
+					this.SendPropertyChanged("dayName");
+					this.OndayNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="days_dailyPref", Storage="_dailyPref", ThisKey="dayID", OtherKey="dayFK")]
+		public EntitySet<dailyPref> dailyPref
+		{
+			get
+			{
+				return this._dailyPref;
+			}
+			set
+			{
+				this._dailyPref.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_dailyPref(dailyPref entity)
+		{
+			this.SendPropertyChanging();
+			entity.days = this;
+		}
+		
+		private void detach_dailyPref(dailyPref entity)
+		{
+			this.SendPropertyChanging();
+			entity.days = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.member")]
+	public partial class member : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _memberID;
+		
+		private string _firstName;
+		
+		private string _lastName;
+		
+		private System.DateTime _birthdate;
+		
+		private string _email;
+		
+		private int _phone;
+		
+		private string _address;
+		
+		private string _login;
+		
+		private int _cityFK;
+		
+		private string _password;
+		
+		private System.Nullable<int> _serviceRequestFK;
+		
+		private EntitySet<servicePref> _servicePref;
+		
+		private EntitySet<dailyPref> _dailyPref;
+		
+		private EntitySet<requestAnswer> _requestAnswer;
+		
+		private EntitySet<serviceRequest> _serviceRequest;
+		
+		private EntityRef<city> _city;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnmemberIDChanging(int value);
+    partial void OnmemberIDChanged();
+    partial void OnfirstNameChanging(string value);
+    partial void OnfirstNameChanged();
+    partial void OnlastNameChanging(string value);
+    partial void OnlastNameChanged();
+    partial void OnbirthdateChanging(System.DateTime value);
+    partial void OnbirthdateChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OnphoneChanging(int value);
+    partial void OnphoneChanged();
+    partial void OnaddressChanging(string value);
+    partial void OnaddressChanged();
+    partial void OnloginChanging(string value);
+    partial void OnloginChanged();
+    partial void OncityFKChanging(int value);
+    partial void OncityFKChanged();
+    partial void OnpasswordChanging(string value);
+    partial void OnpasswordChanged();
+    partial void OnserviceRequestFKChanging(System.Nullable<int> value);
+    partial void OnserviceRequestFKChanged();
+    #endregion
+		
+		public member()
+		{
+			this._servicePref = new EntitySet<servicePref>(new Action<servicePref>(this.attach_servicePref), new Action<servicePref>(this.detach_servicePref));
+			this._dailyPref = new EntitySet<dailyPref>(new Action<dailyPref>(this.attach_dailyPref), new Action<dailyPref>(this.detach_dailyPref));
+			this._requestAnswer = new EntitySet<requestAnswer>(new Action<requestAnswer>(this.attach_requestAnswer), new Action<requestAnswer>(this.detach_requestAnswer));
+			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
+			this._city = default(EntityRef<city>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int memberID
+		{
+			get
+			{
+				return this._memberID;
+			}
+			set
+			{
+				if ((this._memberID != value))
+				{
+					this.OnmemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._memberID = value;
+					this.SendPropertyChanged("memberID");
+					this.OnmemberIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_firstName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string firstName
+		{
+			get
+			{
+				return this._firstName;
+			}
+			set
+			{
+				if ((this._firstName != value))
+				{
+					this.OnfirstNameChanging(value);
+					this.SendPropertyChanging();
+					this._firstName = value;
+					this.SendPropertyChanged("firstName");
+					this.OnfirstNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string lastName
+		{
+			get
+			{
+				return this._lastName;
+			}
+			set
+			{
+				if ((this._lastName != value))
+				{
+					this.OnlastNameChanging(value);
+					this.SendPropertyChanging();
+					this._lastName = value;
+					this.SendPropertyChanged("lastName");
+					this.OnlastNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthdate", DbType="DateTime2 NOT NULL")]
+		public System.DateTime birthdate
+		{
+			get
+			{
+				return this._birthdate;
+			}
+			set
+			{
+				if ((this._birthdate != value))
+				{
+					this.OnbirthdateChanging(value);
+					this.SendPropertyChanging();
+					this._birthdate = value;
+					this.SendPropertyChanged("birthdate");
+					this.OnbirthdateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="Int NOT NULL")]
+		public int phone
+		{
+			get
+			{
+				return this._phone;
+			}
+			set
+			{
+				if ((this._phone != value))
+				{
+					this.OnphoneChanging(value);
+					this.SendPropertyChanging();
+					this._phone = value;
+					this.SendPropertyChanged("phone");
+					this.OnphoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(120) NOT NULL", CanBeNull=false)]
+		public string address
+		{
+			get
+			{
+				return this._address;
+			}
+			set
+			{
+				if ((this._address != value))
+				{
+					this.OnaddressChanging(value);
+					this.SendPropertyChanging();
+					this._address = value;
+					this.SendPropertyChanged("address");
+					this.OnaddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string login
+		{
+			get
+			{
+				return this._login;
+			}
+			set
+			{
+				if ((this._login != value))
+				{
+					this.OnloginChanging(value);
+					this.SendPropertyChanging();
+					this._login = value;
+					this.SendPropertyChanged("login");
+					this.OnloginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityFK", DbType="Int NOT NULL")]
+		public int cityFK
+		{
+			get
+			{
+				return this._cityFK;
+			}
+			set
+			{
+				if ((this._cityFK != value))
+				{
+					if (this._city.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncityFKChanging(value);
+					this.SendPropertyChanging();
+					this._cityFK = value;
+					this.SendPropertyChanged("cityFK");
+					this.OncityFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceRequestFK", DbType="Int")]
+		public System.Nullable<int> serviceRequestFK
+		{
+			get
+			{
+				return this._serviceRequestFK;
+			}
+			set
+			{
+				if ((this._serviceRequestFK != value))
+				{
+					this.OnserviceRequestFKChanging(value);
+					this.SendPropertyChanging();
+					this._serviceRequestFK = value;
+					this.SendPropertyChanged("serviceRequestFK");
+					this.OnserviceRequestFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_servicePref", Storage="_servicePref", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<servicePref> servicePref
+		{
+			get
+			{
+				return this._servicePref;
+			}
+			set
+			{
+				this._servicePref.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_dailyPref", Storage="_dailyPref", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<dailyPref> dailyPref
+		{
+			get
+			{
+				return this._dailyPref;
+			}
+			set
+			{
+				this._dailyPref.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_requestAnswer", Storage="_requestAnswer", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<requestAnswer> requestAnswer
+		{
+			get
+			{
+				return this._requestAnswer;
+			}
+			set
+			{
+				this._requestAnswer.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_serviceRequest", Storage="_serviceRequest", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<serviceRequest> serviceRequest
+		{
+			get
+			{
+				return this._serviceRequest;
+			}
+			set
+			{
+				this._serviceRequest.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_city", ThisKey="cityFK", OtherKey="cityID", IsForeignKey=true)]
+		public city city
+		{
+			get
+			{
+				return this._city.Entity;
+			}
+			set
+			{
+				city previousValue = this._city.Entity;
+				if (((previousValue != value) 
+							|| (this._city.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._city.Entity = null;
+						previousValue.member.Remove(this);
+					}
+					this._city.Entity = value;
+					if ((value != null))
+					{
+						value.member.Add(this);
+						this._cityFK = value.cityID;
+					}
+					else
+					{
+						this._cityFK = default(int);
+					}
+					this.SendPropertyChanged("city");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_servicePref(servicePref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_servicePref(servicePref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+		
+		private void attach_dailyPref(dailyPref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_dailyPref(dailyPref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+		
+		private void attach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+		
+		private void attach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.serviceName")]
+	public partial class serviceName : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _serviceID;
+		
+		private string _serviceName1;
+		
+		private int _serviceCategoryFK;
+		
+		private EntitySet<servicePref> _servicePref;
+		
+		private EntitySet<serviceRequest> _serviceRequest;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnserviceIDChanging(int value);
+    partial void OnserviceIDChanged();
+    partial void OnserviceName1Changing(string value);
+    partial void OnserviceName1Changed();
+    partial void OnserviceCategoryFKChanging(int value);
+    partial void OnserviceCategoryFKChanged();
+    #endregion
+		
+		public serviceName()
+		{
+			this._servicePref = new EntitySet<servicePref>(new Action<servicePref>(this.attach_servicePref), new Action<servicePref>(this.detach_servicePref));
+			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int serviceID
+		{
+			get
+			{
+				return this._serviceID;
+			}
+			set
+			{
+				if ((this._serviceID != value))
+				{
+					this.OnserviceIDChanging(value);
+					this.SendPropertyChanging();
+					this._serviceID = value;
+					this.SendPropertyChanged("serviceID");
+					this.OnserviceIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="serviceName", Storage="_serviceName1", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string serviceName1
+		{
+			get
+			{
+				return this._serviceName1;
+			}
+			set
+			{
+				if ((this._serviceName1 != value))
+				{
+					this.OnserviceName1Changing(value);
+					this.SendPropertyChanging();
+					this._serviceName1 = value;
+					this.SendPropertyChanged("serviceName1");
+					this.OnserviceName1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceCategoryFK", DbType="Int NOT NULL")]
+		public int serviceCategoryFK
+		{
+			get
+			{
+				return this._serviceCategoryFK;
+			}
+			set
+			{
+				if ((this._serviceCategoryFK != value))
+				{
+					this.OnserviceCategoryFKChanging(value);
+					this.SendPropertyChanging();
+					this._serviceCategoryFK = value;
+					this.SendPropertyChanged("serviceCategoryFK");
+					this.OnserviceCategoryFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_servicePref", Storage="_servicePref", ThisKey="serviceID", OtherKey="serviceFK")]
+		public EntitySet<servicePref> servicePref
+		{
+			get
+			{
+				return this._servicePref;
+			}
+			set
+			{
+				this._servicePref.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_serviceRequest", Storage="_serviceRequest", ThisKey="serviceID", OtherKey="serviceFK")]
+		public EntitySet<serviceRequest> serviceRequest
+		{
+			get
+			{
+				return this._serviceRequest;
+			}
+			set
+			{
+				this._serviceRequest.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_servicePref(servicePref entity)
+		{
+			this.SendPropertyChanging();
+			entity.serviceName = this;
+		}
+		
+		private void detach_servicePref(servicePref entity)
+		{
+			this.SendPropertyChanging();
+			entity.serviceName = null;
+		}
+		
+		private void attach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.serviceName = this;
+		}
+		
+		private void detach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.serviceName = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.servicePref")]
 	public partial class servicePref : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -475,11 +1213,13 @@ namespace MonAppliWeb.Models
 		
 		private System.Nullable<System.DateTime> _choiceEndDate;
 		
-		private int _serviceNameFK;
+		private int _memberFK;
 		
-		private EntitySet<member> _member;
+		private int _serviceFK;
 		
-		private EntityRef<serviceNames> _serviceName;
+		private EntityRef<member> _member;
+		
+		private EntityRef<serviceName> _serviceName;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -491,14 +1231,16 @@ namespace MonAppliWeb.Models
     partial void OnchoiceStartDateChanged();
     partial void OnchoiceEndDateChanging(System.Nullable<System.DateTime> value);
     partial void OnchoiceEndDateChanged();
-    partial void OnserviceNameFKChanging(int value);
-    partial void OnserviceNameFKChanged();
+    partial void OnmemberFKChanging(int value);
+    partial void OnmemberFKChanged();
+    partial void OnserviceFKChanging(int value);
+    partial void OnserviceFKChanged();
     #endregion
 		
 		public servicePref()
 		{
-			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
-			this._serviceName = default(EntityRef<serviceNames>);
+			this._member = default(EntityRef<member>);
+			this._serviceName = default(EntityRef<serviceName>);
 			OnCreated();
 		}
 		
@@ -562,45 +1304,90 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceNameFK", DbType="Int NOT NULL")]
-		public int serviceNameFK
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberFK", DbType="Int NOT NULL")]
+		public int memberFK
 		{
 			get
 			{
-				return this._serviceNameFK;
+				return this._memberFK;
 			}
 			set
 			{
-				if ((this._serviceNameFK != value))
+				if ((this._memberFK != value))
+				{
+					if (this._member.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnmemberFKChanging(value);
+					this.SendPropertyChanging();
+					this._memberFK = value;
+					this.SendPropertyChanged("memberFK");
+					this.OnmemberFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceFK", DbType="Int NOT NULL")]
+		public int serviceFK
+		{
+			get
+			{
+				return this._serviceFK;
+			}
+			set
+			{
+				if ((this._serviceFK != value))
 				{
 					if (this._serviceName.HasLoadedOrAssignedValue)
 					{
 						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
 					}
-					this.OnserviceNameFKChanging(value);
+					this.OnserviceFKChanging(value);
 					this.SendPropertyChanging();
-					this._serviceNameFK = value;
-					this.SendPropertyChanged("serviceNameFK");
-					this.OnserviceNameFKChanged();
+					this._serviceFK = value;
+					this.SendPropertyChanged("serviceFK");
+					this.OnserviceFKChanged();
 				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="servicePref_member", Storage="_member", ThisKey="servicePrefID", OtherKey="servicePrefFK")]
-		public EntitySet<member> member
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_servicePref", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
+		public member member
 		{
 			get
 			{
-				return this._member;
+				return this._member.Entity;
 			}
 			set
 			{
-				this._member.Assign(value);
+				member previousValue = this._member.Entity;
+				if (((previousValue != value) 
+							|| (this._member.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._member.Entity = null;
+						previousValue.servicePref.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.servicePref.Add(this);
+						this._memberFK = value.memberID;
+					}
+					else
+					{
+						this._memberFK = default(int);
+					}
+					this.SendPropertyChanged("member");
+				}
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_servicePref", Storage="_serviceName", ThisKey="serviceNameFK", OtherKey="serviceID", IsForeignKey=true)]
-		public serviceNames serviceNames
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_servicePref", Storage="_serviceName", ThisKey="serviceFK", OtherKey="serviceID", IsForeignKey=true)]
+		public serviceName serviceName
 		{
 			get
 			{
@@ -608,7 +1395,7 @@ namespace MonAppliWeb.Models
 			}
 			set
 			{
-				serviceNames previousValue = this._serviceName.Entity;
+				serviceName previousValue = this._serviceName.Entity;
 				if (((previousValue != value) 
 							|| (this._serviceName.HasLoadedOrAssignedValue == false)))
 				{
@@ -622,13 +1409,13 @@ namespace MonAppliWeb.Models
 					if ((value != null))
 					{
 						value.servicePref.Add(this);
-						this._serviceNameFK = value.serviceID;
+						this._serviceFK = value.serviceID;
 					}
 					else
 					{
-						this._serviceNameFK = default(int);
+						this._serviceFK = default(int);
 					}
-					this.SendPropertyChanged("serviceNames");
+					this.SendPropertyChanged("serviceName");
 				}
 			}
 		}
@@ -652,17 +1439,688 @@ namespace MonAppliWeb.Models
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
 		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dailyPref")]
+	public partial class dailyPref : INotifyPropertyChanging, INotifyPropertyChanged
+	{
 		
-		private void attach_member(member entity)
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _dailyPrefID;
+		
+		private System.DateTime _dailyPrefStartDate;
+		
+		private System.Nullable<System.DateTime> _dailyPrefEndDate;
+		
+		private int _dayFK;
+		
+		private int _memberFK;
+		
+		private EntityRef<days> _days;
+		
+		private EntityRef<member> _member;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OndailyPrefIDChanging(int value);
+    partial void OndailyPrefIDChanged();
+    partial void OndailyPrefStartDateChanging(System.DateTime value);
+    partial void OndailyPrefStartDateChanged();
+    partial void OndailyPrefEndDateChanging(System.Nullable<System.DateTime> value);
+    partial void OndailyPrefEndDateChanged();
+    partial void OndayFKChanging(int value);
+    partial void OndayFKChanged();
+    partial void OnmemberFKChanging(int value);
+    partial void OnmemberFKChanged();
+    #endregion
+		
+		public dailyPref()
 		{
-			this.SendPropertyChanging();
-			entity.servicePref = this;
+			this._days = default(EntityRef<days>);
+			this._member = default(EntityRef<member>);
+			OnCreated();
 		}
 		
-		private void detach_member(member entity)
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int dailyPrefID
+		{
+			get
+			{
+				return this._dailyPrefID;
+			}
+			set
+			{
+				if ((this._dailyPrefID != value))
+				{
+					this.OndailyPrefIDChanging(value);
+					this.SendPropertyChanging();
+					this._dailyPrefID = value;
+					this.SendPropertyChanged("dailyPrefID");
+					this.OndailyPrefIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefStartDate", DbType="DateTime2 NOT NULL")]
+		public System.DateTime dailyPrefStartDate
+		{
+			get
+			{
+				return this._dailyPrefStartDate;
+			}
+			set
+			{
+				if ((this._dailyPrefStartDate != value))
+				{
+					this.OndailyPrefStartDateChanging(value);
+					this.SendPropertyChanging();
+					this._dailyPrefStartDate = value;
+					this.SendPropertyChanged("dailyPrefStartDate");
+					this.OndailyPrefStartDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefEndDate", DbType="DateTime2")]
+		public System.Nullable<System.DateTime> dailyPrefEndDate
+		{
+			get
+			{
+				return this._dailyPrefEndDate;
+			}
+			set
+			{
+				if ((this._dailyPrefEndDate != value))
+				{
+					this.OndailyPrefEndDateChanging(value);
+					this.SendPropertyChanging();
+					this._dailyPrefEndDate = value;
+					this.SendPropertyChanged("dailyPrefEndDate");
+					this.OndailyPrefEndDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dayFK", DbType="Int NOT NULL")]
+		public int dayFK
+		{
+			get
+			{
+				return this._dayFK;
+			}
+			set
+			{
+				if ((this._dayFK != value))
+				{
+					if (this._days.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OndayFKChanging(value);
+					this.SendPropertyChanging();
+					this._dayFK = value;
+					this.SendPropertyChanged("dayFK");
+					this.OndayFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberFK", DbType="Int NOT NULL")]
+		public int memberFK
+		{
+			get
+			{
+				return this._memberFK;
+			}
+			set
+			{
+				if ((this._memberFK != value))
+				{
+					if (this._member.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnmemberFKChanging(value);
+					this.SendPropertyChanging();
+					this._memberFK = value;
+					this.SendPropertyChanged("memberFK");
+					this.OnmemberFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="days_dailyPref", Storage="_days", ThisKey="dayFK", OtherKey="dayID", IsForeignKey=true)]
+		public days days
+		{
+			get
+			{
+				return this._days.Entity;
+			}
+			set
+			{
+				days previousValue = this._days.Entity;
+				if (((previousValue != value) 
+							|| (this._days.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._days.Entity = null;
+						previousValue.dailyPref.Remove(this);
+					}
+					this._days.Entity = value;
+					if ((value != null))
+					{
+						value.dailyPref.Add(this);
+						this._dayFK = value.dayID;
+					}
+					else
+					{
+						this._dayFK = default(int);
+					}
+					this.SendPropertyChanged("days");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_dailyPref", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
+		public member member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				member previousValue = this._member.Entity;
+				if (((previousValue != value) 
+							|| (this._member.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._member.Entity = null;
+						previousValue.dailyPref.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.dailyPref.Add(this);
+						this._memberFK = value.memberID;
+					}
+					else
+					{
+						this._memberFK = default(int);
+					}
+					this.SendPropertyChanged("member");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.requestAnswer")]
+	public partial class requestAnswer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private System.Nullable<System.DateTime> _refusalDate;
+		
+		private System.Nullable<System.DateTime> _acceptanceDate;
+		
+		private System.Nullable<System.DateTime> _cancelDate;
+		
+		private System.DateTime _answerDate;
+		
+		private int _serviceRFK;
+		
+		private string _answerFK;
+		
+		private int _memberFK;
+		
+		private EntityRef<member> _member;
+		
+		private EntityRef<answer> _answer;
+		
+		private EntityRef<serviceRequest> _serviceRequest;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnrefusalDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnrefusalDateChanged();
+    partial void OnacceptanceDateChanging(System.Nullable<System.DateTime> value);
+    partial void OnacceptanceDateChanged();
+    partial void OncancelDateChanging(System.Nullable<System.DateTime> value);
+    partial void OncancelDateChanged();
+    partial void OnanswerDateChanging(System.DateTime value);
+    partial void OnanswerDateChanged();
+    partial void OnserviceRFKChanging(int value);
+    partial void OnserviceRFKChanged();
+    partial void OnanswerFKChanging(string value);
+    partial void OnanswerFKChanged();
+    partial void OnmemberFKChanging(int value);
+    partial void OnmemberFKChanged();
+    #endregion
+		
+		public requestAnswer()
+		{
+			this._member = default(EntityRef<member>);
+			this._answer = default(EntityRef<answer>);
+			this._serviceRequest = default(EntityRef<serviceRequest>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_refusalDate", DbType="Date")]
+		public System.Nullable<System.DateTime> refusalDate
+		{
+			get
+			{
+				return this._refusalDate;
+			}
+			set
+			{
+				if ((this._refusalDate != value))
+				{
+					this.OnrefusalDateChanging(value);
+					this.SendPropertyChanging();
+					this._refusalDate = value;
+					this.SendPropertyChanged("refusalDate");
+					this.OnrefusalDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_acceptanceDate", DbType="Date")]
+		public System.Nullable<System.DateTime> acceptanceDate
+		{
+			get
+			{
+				return this._acceptanceDate;
+			}
+			set
+			{
+				if ((this._acceptanceDate != value))
+				{
+					this.OnacceptanceDateChanging(value);
+					this.SendPropertyChanging();
+					this._acceptanceDate = value;
+					this.SendPropertyChanged("acceptanceDate");
+					this.OnacceptanceDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cancelDate", DbType="Date")]
+		public System.Nullable<System.DateTime> cancelDate
+		{
+			get
+			{
+				return this._cancelDate;
+			}
+			set
+			{
+				if ((this._cancelDate != value))
+				{
+					this.OncancelDateChanging(value);
+					this.SendPropertyChanging();
+					this._cancelDate = value;
+					this.SendPropertyChanged("cancelDate");
+					this.OncancelDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerDate", DbType="Date NOT NULL")]
+		public System.DateTime answerDate
+		{
+			get
+			{
+				return this._answerDate;
+			}
+			set
+			{
+				if ((this._answerDate != value))
+				{
+					this.OnanswerDateChanging(value);
+					this.SendPropertyChanging();
+					this._answerDate = value;
+					this.SendPropertyChanged("answerDate");
+					this.OnanswerDateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceRFK", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int serviceRFK
+		{
+			get
+			{
+				return this._serviceRFK;
+			}
+			set
+			{
+				if ((this._serviceRFK != value))
+				{
+					if (this._serviceRequest.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnserviceRFKChanging(value);
+					this.SendPropertyChanging();
+					this._serviceRFK = value;
+					this.SendPropertyChanged("serviceRFK");
+					this.OnserviceRFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerFK", DbType="NChar(10)")]
+		public string answerFK
+		{
+			get
+			{
+				return this._answerFK;
+			}
+			set
+			{
+				if ((this._answerFK != value))
+				{
+					if (this._answer.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnanswerFKChanging(value);
+					this.SendPropertyChanging();
+					this._answerFK = value;
+					this.SendPropertyChanged("answerFK");
+					this.OnanswerFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberFK", DbType="Int NOT NULL", IsPrimaryKey=true)]
+		public int memberFK
+		{
+			get
+			{
+				return this._memberFK;
+			}
+			set
+			{
+				if ((this._memberFK != value))
+				{
+					if (this._member.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnmemberFKChanging(value);
+					this.SendPropertyChanging();
+					this._memberFK = value;
+					this.SendPropertyChanged("memberFK");
+					this.OnmemberFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_requestAnswer", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
+		public member member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				member previousValue = this._member.Entity;
+				if (((previousValue != value) 
+							|| (this._member.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._member.Entity = null;
+						previousValue.requestAnswer.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.requestAnswer.Add(this);
+						this._memberFK = value.memberID;
+					}
+					else
+					{
+						this._memberFK = default(int);
+					}
+					this.SendPropertyChanged("member");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="answer_requestAnswer", Storage="_answer", ThisKey="answerFK", OtherKey="answerID", IsForeignKey=true)]
+		public answer answer
+		{
+			get
+			{
+				return this._answer.Entity;
+			}
+			set
+			{
+				answer previousValue = this._answer.Entity;
+				if (((previousValue != value) 
+							|| (this._answer.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._answer.Entity = null;
+						previousValue.requestAnswer.Remove(this);
+					}
+					this._answer.Entity = value;
+					if ((value != null))
+					{
+						value.requestAnswer.Add(this);
+						this._answerFK = value.answerID;
+					}
+					else
+					{
+						this._answerFK = default(string);
+					}
+					this.SendPropertyChanged("answer");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceRequest_requestAnswer", Storage="_serviceRequest", ThisKey="serviceRFK", OtherKey="serviceRequestID", IsForeignKey=true)]
+		public serviceRequest serviceRequest
+		{
+			get
+			{
+				return this._serviceRequest.Entity;
+			}
+			set
+			{
+				serviceRequest previousValue = this._serviceRequest.Entity;
+				if (((previousValue != value) 
+							|| (this._serviceRequest.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._serviceRequest.Entity = null;
+						previousValue.requestAnswer.Remove(this);
+					}
+					this._serviceRequest.Entity = value;
+					if ((value != null))
+					{
+						value.requestAnswer.Add(this);
+						this._serviceRFK = value.serviceRequestID;
+					}
+					else
+					{
+						this._serviceRFK = default(int);
+					}
+					this.SendPropertyChanged("serviceRequest");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.answer")]
+	public partial class answer : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private string _answerID;
+		
+		private string _answer1;
+		
+		private EntitySet<requestAnswer> _requestAnswer;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnanswerIDChanging(string value);
+    partial void OnanswerIDChanged();
+    partial void Onanswer1Changing(string value);
+    partial void Onanswer1Changed();
+    #endregion
+		
+		public answer()
+		{
+			this._requestAnswer = new EntitySet<requestAnswer>(new Action<requestAnswer>(this.attach_requestAnswer), new Action<requestAnswer>(this.detach_requestAnswer));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerID", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
+		public string answerID
+		{
+			get
+			{
+				return this._answerID;
+			}
+			set
+			{
+				if ((this._answerID != value))
+				{
+					this.OnanswerIDChanging(value);
+					this.SendPropertyChanging();
+					this._answerID = value;
+					this.SendPropertyChanged("answerID");
+					this.OnanswerIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="answer", Storage="_answer1", DbType="NVarChar(3)")]
+		public string answer1
+		{
+			get
+			{
+				return this._answer1;
+			}
+			set
+			{
+				if ((this._answer1 != value))
+				{
+					this.Onanswer1Changing(value);
+					this.SendPropertyChanging();
+					this._answer1 = value;
+					this.SendPropertyChanged("answer1");
+					this.Onanswer1Changed();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="answer_requestAnswer", Storage="_requestAnswer", ThisKey="answerID", OtherKey="answerFK")]
+		public EntitySet<requestAnswer> requestAnswer
+		{
+			get
+			{
+				return this._requestAnswer;
+			}
+			set
+			{
+				this._requestAnswer.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_requestAnswer(requestAnswer entity)
 		{
 			this.SendPropertyChanging();
-			entity.servicePref = null;
+			entity.answer = this;
+		}
+		
+		private void detach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.answer = null;
 		}
 	}
 	
@@ -696,11 +2154,11 @@ namespace MonAppliWeb.Models
 		
 		private System.Nullable<int> _voluntaryMemberFK;
 		
+		private EntitySet<requestAnswer> _requestAnswer;
+		
 		private EntityRef<member> _member;
 		
-		private EntityRef<member> _member1;
-		
-		private EntityRef<serviceNames> _serviceName;
+		private EntityRef<serviceName> _serviceName;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -734,9 +2192,9 @@ namespace MonAppliWeb.Models
 		
 		public serviceRequest()
 		{
+			this._requestAnswer = new EntitySet<requestAnswer>(new Action<requestAnswer>(this.attach_requestAnswer), new Action<requestAnswer>(this.detach_requestAnswer));
 			this._member = default(EntityRef<member>);
-			this._member1 = default(EntityRef<member>);
-			this._serviceName = default(EntityRef<serviceNames>);
+			this._serviceName = default(EntityRef<serviceName>);
 			OnCreated();
 		}
 		
@@ -979,16 +2437,25 @@ namespace MonAppliWeb.Models
 			{
 				if ((this._voluntaryMemberFK != value))
 				{
-					if (this._member1.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
 					this.OnvoluntaryMemberFKChanging(value);
 					this.SendPropertyChanging();
 					this._voluntaryMemberFK = value;
 					this.SendPropertyChanged("voluntaryMemberFK");
 					this.OnvoluntaryMemberFKChanged();
 				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceRequest_requestAnswer", Storage="_requestAnswer", ThisKey="serviceRequestID", OtherKey="serviceRFK")]
+		public EntitySet<requestAnswer> requestAnswer
+		{
+			get
+			{
+				return this._requestAnswer;
+			}
+			set
+			{
+				this._requestAnswer.Assign(value);
 			}
 		}
 		
@@ -1026,42 +2493,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_serviceRequest1", Storage="_member1", ThisKey="voluntaryMemberFK", OtherKey="memberID", IsForeignKey=true)]
-		public member member1
-		{
-			get
-			{
-				return this._member1.Entity;
-			}
-			set
-			{
-				member previousValue = this._member1.Entity;
-				if (((previousValue != value) 
-							|| (this._member1.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._member1.Entity = null;
-						previousValue.serviceRequest1.Remove(this);
-					}
-					this._member1.Entity = value;
-					if ((value != null))
-					{
-						value.serviceRequest1.Add(this);
-						this._voluntaryMemberFK = value.memberID;
-					}
-					else
-					{
-						this._voluntaryMemberFK = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("member1");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_serviceRequest", Storage="_serviceName", ThisKey="serviceFK", OtherKey="serviceID", IsForeignKey=true)]
-		public serviceNames serviceNames
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_serviceRequest", Storage="_serviceName", ThisKey="serviceFK", OtherKey="serviceID", IsForeignKey=true)]
+		public serviceName serviceName
 		{
 			get
 			{
@@ -1069,7 +2502,7 @@ namespace MonAppliWeb.Models
 			}
 			set
 			{
-				serviceNames previousValue = this._serviceName.Entity;
+				serviceName previousValue = this._serviceName.Entity;
 				if (((previousValue != value) 
 							|| (this._serviceName.HasLoadedOrAssignedValue == false)))
 				{
@@ -1089,1222 +2522,7 @@ namespace MonAppliWeb.Models
 					{
 						this._serviceFK = default(int);
 					}
-					this.SendPropertyChanged("serviceNames");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.dailyPref")]
-	public partial class dailyPref : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _dailyPrefID;
-		
-		private System.DateTime _dailyPrefStartDate;
-		
-		private System.Nullable<System.DateTime> _dailyPrefEndDate;
-		
-		private int _dayFK;
-		
-		private EntitySet<member> _member;
-		
-		private EntityRef<days> _days;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OndailyPrefIDChanging(int value);
-    partial void OndailyPrefIDChanged();
-    partial void OndailyPrefStartDateChanging(System.DateTime value);
-    partial void OndailyPrefStartDateChanged();
-    partial void OndailyPrefEndDateChanging(System.Nullable<System.DateTime> value);
-    partial void OndailyPrefEndDateChanged();
-    partial void OndayFKChanging(int value);
-    partial void OndayFKChanged();
-    #endregion
-		
-		public dailyPref()
-		{
-			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
-			this._days = default(EntityRef<days>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int dailyPrefID
-		{
-			get
-			{
-				return this._dailyPrefID;
-			}
-			set
-			{
-				if ((this._dailyPrefID != value))
-				{
-					this.OndailyPrefIDChanging(value);
-					this.SendPropertyChanging();
-					this._dailyPrefID = value;
-					this.SendPropertyChanged("dailyPrefID");
-					this.OndailyPrefIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefStartDate", DbType="DateTime2 NOT NULL")]
-		public System.DateTime dailyPrefStartDate
-		{
-			get
-			{
-				return this._dailyPrefStartDate;
-			}
-			set
-			{
-				if ((this._dailyPrefStartDate != value))
-				{
-					this.OndailyPrefStartDateChanging(value);
-					this.SendPropertyChanging();
-					this._dailyPrefStartDate = value;
-					this.SendPropertyChanged("dailyPrefStartDate");
-					this.OndailyPrefStartDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefEndDate", DbType="DateTime2")]
-		public System.Nullable<System.DateTime> dailyPrefEndDate
-		{
-			get
-			{
-				return this._dailyPrefEndDate;
-			}
-			set
-			{
-				if ((this._dailyPrefEndDate != value))
-				{
-					this.OndailyPrefEndDateChanging(value);
-					this.SendPropertyChanging();
-					this._dailyPrefEndDate = value;
-					this.SendPropertyChanged("dailyPrefEndDate");
-					this.OndailyPrefEndDateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dayFK", DbType="Int NOT NULL")]
-		public int dayFK
-		{
-			get
-			{
-				return this._dayFK;
-			}
-			set
-			{
-				if ((this._dayFK != value))
-				{
-					if (this._days.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OndayFKChanging(value);
-					this.SendPropertyChanging();
-					this._dayFK = value;
-					this.SendPropertyChanged("dayFK");
-					this.OndayFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="dailyPref_member", Storage="_member", ThisKey="dailyPrefID", OtherKey="dailyPrefFK")]
-		public EntitySet<member> member
-		{
-			get
-			{
-				return this._member;
-			}
-			set
-			{
-				this._member.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="days_dailyPref", Storage="_days", ThisKey="dayFK", OtherKey="dayID", IsForeignKey=true)]
-		public days days
-		{
-			get
-			{
-				return this._days.Entity;
-			}
-			set
-			{
-				days previousValue = this._days.Entity;
-				if (((previousValue != value) 
-							|| (this._days.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._days.Entity = null;
-						previousValue.dailyPref.Remove(this);
-					}
-					this._days.Entity = value;
-					if ((value != null))
-					{
-						value.dailyPref.Add(this);
-						this._dayFK = value.dayID;
-					}
-					else
-					{
-						this._dayFK = default(int);
-					}
-					this.SendPropertyChanged("days");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_member(member entity)
-		{
-			this.SendPropertyChanging();
-			entity.dailyPref = this;
-		}
-		
-		private void detach_member(member entity)
-		{
-			this.SendPropertyChanging();
-			entity.dailyPref = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.days")]
-	public partial class days : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _dayID;
-		
-		private string _dayName;
-		
-		private EntitySet<dailyPref> _dailyPref;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OndayIDChanging(int value);
-    partial void OndayIDChanged();
-    partial void OndayNameChanging(string value);
-    partial void OndayNameChanged();
-    #endregion
-		
-		public days()
-		{
-			this._dailyPref = new EntitySet<dailyPref>(new Action<dailyPref>(this.attach_dailyPref), new Action<dailyPref>(this.detach_dailyPref));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dayID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int dayID
-		{
-			get
-			{
-				return this._dayID;
-			}
-			set
-			{
-				if ((this._dayID != value))
-				{
-					this.OndayIDChanging(value);
-					this.SendPropertyChanging();
-					this._dayID = value;
-					this.SendPropertyChanged("dayID");
-					this.OndayIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dayName", DbType="NChar(10) NOT NULL", CanBeNull=false)]
-		public string dayName
-		{
-			get
-			{
-				return this._dayName;
-			}
-			set
-			{
-				if ((this._dayName != value))
-				{
-					this.OndayNameChanging(value);
-					this.SendPropertyChanging();
-					this._dayName = value;
-					this.SendPropertyChanged("dayName");
-					this.OndayNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="days_dailyPref", Storage="_dailyPref", ThisKey="dayID", OtherKey="dayFK")]
-		public EntitySet<dailyPref> dailyPref
-		{
-			get
-			{
-				return this._dailyPref;
-			}
-			set
-			{
-				this._dailyPref.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_dailyPref(dailyPref entity)
-		{
-			this.SendPropertyChanging();
-			entity.days = this;
-		}
-		
-		private void detach_dailyPref(dailyPref entity)
-		{
-			this.SendPropertyChanging();
-			entity.days = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.member")]
-	public partial class member : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _memberID;
-		
-		private string _firstName;
-		
-		private string _lastName;
-		
-		private System.DateTime _birthdate;
-		
-		private string _email;
-		
-		private int _phone;
-		
-		private string _address;
-		
-		private string _login;
-		
-		private int _cityFK;
-		
-		private string _password;
-		
-		private System.Nullable<int> _serviceRequestFK;
-		
-		private System.Nullable<int> _dailyPrefFK;
-		
-		private System.Nullable<int> _servicePrefFK;
-		
-		private EntitySet<serviceRequest> _serviceRequest;
-		
-		private EntitySet<serviceRequest> _serviceRequest1;
-		
-		private EntityRef<city> _city;
-		
-		private EntityRef<dailyPref> _dailyPref;
-		
-		private EntityRef<servicePref> _servicePref;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnmemberIDChanging(int value);
-    partial void OnmemberIDChanged();
-    partial void OnfirstNameChanging(string value);
-    partial void OnfirstNameChanged();
-    partial void OnlastNameChanging(string value);
-    partial void OnlastNameChanged();
-    partial void OnbirthdateChanging(System.DateTime value);
-    partial void OnbirthdateChanged();
-    partial void OnemailChanging(string value);
-    partial void OnemailChanged();
-    partial void OnphoneChanging(int value);
-    partial void OnphoneChanged();
-    partial void OnaddressChanging(string value);
-    partial void OnaddressChanged();
-    partial void OnloginChanging(string value);
-    partial void OnloginChanged();
-    partial void OncityFKChanging(int value);
-    partial void OncityFKChanged();
-    partial void OnpasswordChanging(string value);
-    partial void OnpasswordChanged();
-    partial void OnserviceRequestFKChanging(System.Nullable<int> value);
-    partial void OnserviceRequestFKChanged();
-    partial void OndailyPrefFKChanging(System.Nullable<int> value);
-    partial void OndailyPrefFKChanged();
-    partial void OnservicePrefFKChanging(System.Nullable<int> value);
-    partial void OnservicePrefFKChanged();
-    #endregion
-		
-		public member()
-		{
-			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
-			this._serviceRequest1 = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest1), new Action<serviceRequest>(this.detach_serviceRequest1));
-			this._city = default(EntityRef<city>);
-			this._dailyPref = default(EntityRef<dailyPref>);
-			this._servicePref = default(EntityRef<servicePref>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int memberID
-		{
-			get
-			{
-				return this._memberID;
-			}
-			set
-			{
-				if ((this._memberID != value))
-				{
-					this.OnmemberIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberID = value;
-					this.SendPropertyChanged("memberID");
-					this.OnmemberIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_firstName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string firstName
-		{
-			get
-			{
-				return this._firstName;
-			}
-			set
-			{
-				if ((this._firstName != value))
-				{
-					this.OnfirstNameChanging(value);
-					this.SendPropertyChanging();
-					this._firstName = value;
-					this.SendPropertyChanged("firstName");
-					this.OnfirstNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string lastName
-		{
-			get
-			{
-				return this._lastName;
-			}
-			set
-			{
-				if ((this._lastName != value))
-				{
-					this.OnlastNameChanging(value);
-					this.SendPropertyChanging();
-					this._lastName = value;
-					this.SendPropertyChanged("lastName");
-					this.OnlastNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthdate", DbType="DateTime2 NOT NULL")]
-		public System.DateTime birthdate
-		{
-			get
-			{
-				return this._birthdate;
-			}
-			set
-			{
-				if ((this._birthdate != value))
-				{
-					this.OnbirthdateChanging(value);
-					this.SendPropertyChanging();
-					this._birthdate = value;
-					this.SendPropertyChanged("birthdate");
-					this.OnbirthdateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string email
-		{
-			get
-			{
-				return this._email;
-			}
-			set
-			{
-				if ((this._email != value))
-				{
-					this.OnemailChanging(value);
-					this.SendPropertyChanging();
-					this._email = value;
-					this.SendPropertyChanged("email");
-					this.OnemailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="Int NOT NULL")]
-		public int phone
-		{
-			get
-			{
-				return this._phone;
-			}
-			set
-			{
-				if ((this._phone != value))
-				{
-					this.OnphoneChanging(value);
-					this.SendPropertyChanging();
-					this._phone = value;
-					this.SendPropertyChanged("phone");
-					this.OnphoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(120) NOT NULL", CanBeNull=false)]
-		public string address
-		{
-			get
-			{
-				return this._address;
-			}
-			set
-			{
-				if ((this._address != value))
-				{
-					this.OnaddressChanging(value);
-					this.SendPropertyChanging();
-					this._address = value;
-					this.SendPropertyChanged("address");
-					this.OnaddressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string login
-		{
-			get
-			{
-				return this._login;
-			}
-			set
-			{
-				if ((this._login != value))
-				{
-					this.OnloginChanging(value);
-					this.SendPropertyChanging();
-					this._login = value;
-					this.SendPropertyChanged("login");
-					this.OnloginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityFK", DbType="Int NOT NULL")]
-		public int cityFK
-		{
-			get
-			{
-				return this._cityFK;
-			}
-			set
-			{
-				if ((this._cityFK != value))
-				{
-					if (this._city.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncityFKChanging(value);
-					this.SendPropertyChanging();
-					this._cityFK = value;
-					this.SendPropertyChanged("cityFK");
-					this.OncityFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string password
-		{
-			get
-			{
-				return this._password;
-			}
-			set
-			{
-				if ((this._password != value))
-				{
-					this.OnpasswordChanging(value);
-					this.SendPropertyChanging();
-					this._password = value;
-					this.SendPropertyChanged("password");
-					this.OnpasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceRequestFK", DbType="Int")]
-		public System.Nullable<int> serviceRequestFK
-		{
-			get
-			{
-				return this._serviceRequestFK;
-			}
-			set
-			{
-				if ((this._serviceRequestFK != value))
-				{
-					this.OnserviceRequestFKChanging(value);
-					this.SendPropertyChanging();
-					this._serviceRequestFK = value;
-					this.SendPropertyChanged("serviceRequestFK");
-					this.OnserviceRequestFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_dailyPrefFK", DbType="Int")]
-		public System.Nullable<int> dailyPrefFK
-		{
-			get
-			{
-				return this._dailyPrefFK;
-			}
-			set
-			{
-				if ((this._dailyPrefFK != value))
-				{
-					if (this._dailyPref.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OndailyPrefFKChanging(value);
-					this.SendPropertyChanging();
-					this._dailyPrefFK = value;
-					this.SendPropertyChanged("dailyPrefFK");
-					this.OndailyPrefFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_servicePrefFK", DbType="Int")]
-		public System.Nullable<int> servicePrefFK
-		{
-			get
-			{
-				return this._servicePrefFK;
-			}
-			set
-			{
-				if ((this._servicePrefFK != value))
-				{
-					if (this._servicePref.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnservicePrefFKChanging(value);
-					this.SendPropertyChanging();
-					this._servicePrefFK = value;
-					this.SendPropertyChanged("servicePrefFK");
-					this.OnservicePrefFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_serviceRequest", Storage="_serviceRequest", ThisKey="memberID", OtherKey="memberFK")]
-		public EntitySet<serviceRequest> serviceRequest
-		{
-			get
-			{
-				return this._serviceRequest;
-			}
-			set
-			{
-				this._serviceRequest.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_serviceRequest1", Storage="_serviceRequest1", ThisKey="memberID", OtherKey="voluntaryMemberFK")]
-		public EntitySet<serviceRequest> serviceRequest1
-		{
-			get
-			{
-				return this._serviceRequest1;
-			}
-			set
-			{
-				this._serviceRequest1.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_city", ThisKey="cityFK", OtherKey="cityID", IsForeignKey=true)]
-		public city city
-		{
-			get
-			{
-				return this._city.Entity;
-			}
-			set
-			{
-				city previousValue = this._city.Entity;
-				if (((previousValue != value) 
-							|| (this._city.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._city.Entity = null;
-						previousValue.member.Remove(this);
-					}
-					this._city.Entity = value;
-					if ((value != null))
-					{
-						value.member.Add(this);
-						this._cityFK = value.cityID;
-					}
-					else
-					{
-						this._cityFK = default(int);
-					}
-					this.SendPropertyChanged("city");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="dailyPref_member", Storage="_dailyPref", ThisKey="dailyPrefFK", OtherKey="dailyPrefID", IsForeignKey=true)]
-		public dailyPref dailyPref
-		{
-			get
-			{
-				return this._dailyPref.Entity;
-			}
-			set
-			{
-				dailyPref previousValue = this._dailyPref.Entity;
-				if (((previousValue != value) 
-							|| (this._dailyPref.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._dailyPref.Entity = null;
-						previousValue.member.Remove(this);
-					}
-					this._dailyPref.Entity = value;
-					if ((value != null))
-					{
-						value.member.Add(this);
-						this._dailyPrefFK = value.dailyPrefID;
-					}
-					else
-					{
-						this._dailyPrefFK = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("dailyPref");
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="servicePref_member", Storage="_servicePref", ThisKey="servicePrefFK", OtherKey="servicePrefID", IsForeignKey=true)]
-		public servicePref servicePref
-		{
-			get
-			{
-				return this._servicePref.Entity;
-			}
-			set
-			{
-				servicePref previousValue = this._servicePref.Entity;
-				if (((previousValue != value) 
-							|| (this._servicePref.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._servicePref.Entity = null;
-						previousValue.member.Remove(this);
-					}
-					this._servicePref.Entity = value;
-					if ((value != null))
-					{
-						value.member.Add(this);
-						this._servicePrefFK = value.servicePrefID;
-					}
-					else
-					{
-						this._servicePrefFK = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("servicePref");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_serviceRequest(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = this;
-		}
-		
-		private void detach_serviceRequest(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = null;
-		}
-		
-		private void attach_serviceRequest1(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.member1 = this;
-		}
-		
-		private void detach_serviceRequest1(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.member1 = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.serviceName")]
-	public partial class serviceNames : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _serviceID;
-		
-		private string _serviceName1;
-		
-		private int _serviceCategoryFK;
-		
-		private EntitySet<servicePref> _servicePref;
-		
-		private EntitySet<serviceRequest> _serviceRequest;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnserviceIDChanging(int value);
-    partial void OnserviceIDChanged();
-    partial void OnserviceNameChanging(string value);
-    partial void OnserviceNameChanged();
-    partial void OnserviceCategoryFKChanging(int value);
-    partial void OnserviceCategoryFKChanged();
-    #endregion
-		
-		public serviceNames()
-		{
-			this._servicePref = new EntitySet<servicePref>(new Action<servicePref>(this.attach_servicePref), new Action<servicePref>(this.detach_servicePref));
-			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int serviceID
-		{
-			get
-			{
-				return this._serviceID;
-			}
-			set
-			{
-				if ((this._serviceID != value))
-				{
-					this.OnserviceIDChanging(value);
-					this.SendPropertyChanging();
-					this._serviceID = value;
-					this.SendPropertyChanged("serviceID");
-					this.OnserviceIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceName1", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string serviceName
-		{
-			get
-			{
-				return this._serviceName1;
-			}
-			set
-			{
-				if ((this._serviceName1 != value))
-				{
-					this.OnserviceNameChanging(value);
-					this.SendPropertyChanging();
-					this._serviceName1 = value;
 					this.SendPropertyChanged("serviceName");
-					this.OnserviceNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceCategoryFK", DbType="Int NOT NULL")]
-		public int serviceCategoryFK
-		{
-			get
-			{
-				return this._serviceCategoryFK;
-			}
-			set
-			{
-				if ((this._serviceCategoryFK != value))
-				{
-					this.OnserviceCategoryFKChanging(value);
-					this.SendPropertyChanging();
-					this._serviceCategoryFK = value;
-					this.SendPropertyChanged("serviceCategoryFK");
-					this.OnserviceCategoryFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_servicePref", Storage="_servicePref", ThisKey="serviceID", OtherKey="serviceNameFK")]
-		public EntitySet<servicePref> servicePref
-		{
-			get
-			{
-				return this._servicePref;
-			}
-			set
-			{
-				this._servicePref.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceNames_serviceRequest", Storage="_serviceRequest", ThisKey="serviceID", OtherKey="serviceFK")]
-		public EntitySet<serviceRequest> serviceRequest
-		{
-			get
-			{
-				return this._serviceRequest;
-			}
-			set
-			{
-				this._serviceRequest.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_servicePref(servicePref entity)
-		{
-			this.SendPropertyChanging();
-			entity.serviceNames = this;
-		}
-		
-		private void detach_servicePref(servicePref entity)
-		{
-			this.SendPropertyChanging();
-			entity.serviceNames = null;
-		}
-		
-		private void attach_serviceRequest(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.serviceNames = this;
-		}
-		
-		private void detach_serviceRequest(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.serviceNames = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.requestAnswer")]
-	public partial class requestAnswer
-	{
-		
-		private System.Nullable<System.DateTime> _refusalDate;
-		
-		private System.Nullable<System.DateTime> _acceptanceDate;
-		
-		private System.Nullable<System.DateTime> _cancelDate;
-		
-		private System.DateTime _answerDate;
-		
-		private int _serviceRFK;
-		
-		private string _answerFK;
-		
-		public requestAnswer()
-		{
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_refusalDate", DbType="Date")]
-		public System.Nullable<System.DateTime> refusalDate
-		{
-			get
-			{
-				return this._refusalDate;
-			}
-			set
-			{
-				if ((this._refusalDate != value))
-				{
-					this._refusalDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_acceptanceDate", DbType="Date")]
-		public System.Nullable<System.DateTime> acceptanceDate
-		{
-			get
-			{
-				return this._acceptanceDate;
-			}
-			set
-			{
-				if ((this._acceptanceDate != value))
-				{
-					this._acceptanceDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cancelDate", DbType="Date")]
-		public System.Nullable<System.DateTime> cancelDate
-		{
-			get
-			{
-				return this._cancelDate;
-			}
-			set
-			{
-				if ((this._cancelDate != value))
-				{
-					this._cancelDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerDate", DbType="Date NOT NULL")]
-		public System.DateTime answerDate
-		{
-			get
-			{
-				return this._answerDate;
-			}
-			set
-			{
-				if ((this._answerDate != value))
-				{
-					this._answerDate = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceRFK", DbType="Int NOT NULL")]
-		public int serviceRFK
-		{
-			get
-			{
-				return this._serviceRFK;
-			}
-			set
-			{
-				if ((this._serviceRFK != value))
-				{
-					this._serviceRFK = value;
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerFK", DbType="NChar(10)")]
-		public string answerFK
-		{
-			get
-			{
-				return this._answerFK;
-			}
-			set
-			{
-				if ((this._answerFK != value))
-				{
-					this._answerFK = value;
-				}
-			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.answer")]
-	public partial class answer : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private string _answerID;
-		
-		private string _answer1;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnanswerIDChanging(string value);
-    partial void OnanswerIDChanged();
-    partial void Onanswer1Changing(string value);
-    partial void Onanswer1Changed();
-    #endregion
-		
-		public answer()
-		{
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_answerID", DbType="NChar(10) NOT NULL", CanBeNull=false, IsPrimaryKey=true)]
-		public string answerID
-		{
-			get
-			{
-				return this._answerID;
-			}
-			set
-			{
-				if ((this._answerID != value))
-				{
-					this.OnanswerIDChanging(value);
-					this.SendPropertyChanging();
-					this._answerID = value;
-					this.SendPropertyChanged("answerID");
-					this.OnanswerIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Name="answer", Storage="_answer1", DbType="NVarChar(3)")]
-		public string answer1
-		{
-			get
-			{
-				return this._answer1;
-			}
-			set
-			{
-				if ((this._answer1 != value))
-				{
-					this.Onanswer1Changing(value);
-					this.SendPropertyChanging();
-					this._answer1 = value;
-					this.SendPropertyChanged("answer1");
-					this.Onanswer1Changed();
 				}
 			}
 		}
@@ -2327,6 +2545,18 @@ namespace MonAppliWeb.Models
 			{
 				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
 			}
+		}
+		
+		private void attach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.serviceRequest = this;
+		}
+		
+		private void detach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.serviceRequest = null;
 		}
 	}
 }

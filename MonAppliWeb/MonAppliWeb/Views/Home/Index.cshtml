@@ -1,17 +1,12 @@
 ﻿
 @{
-    ViewBag.Title = "Inscription ou Connexion";
+    ViewBag.Title = "Accès aux listes";
 }
 
-<h2>Inscription ou Connexion</h2>
+<h2>Accès aux listes</h2>
 
-<a href="~/authentification/inscription">Je souhaite m'inscrire</a>
+<br />
+@Html.ActionLink("Liste des membres", "Index", "Member")
 <br />
 <br />
-<a href="~/authentification/connection">J'ai deja un compte</a>
-<br />
-<br />
-@Html.ActionLink("Accéder a la liste des membres", "Index", "Member")
-<br />
-<br />
-@Html.ActionLink("Accéder à la liste des demandes de services", "ListServiceRequest", "ServiceRequest")
+@Html.ActionLink("Liste des demandes de services", "ListServiceRequest", "ServiceRequest")
