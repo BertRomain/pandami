@@ -18,9 +18,27 @@ namespace MonAppliWeb.Models.DAO
                 foreach (var dbService in dbServices)
                 {
                     var dbMemberBen = dm.member.FirstOrDefault(x => x.memberID == dbService.memberFK);
-                    // var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
+                    var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
                     var dbServiceName = dm.serviceName.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
                     var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbService.serviceCityFK);
+                    //Condition où s'il y a un volontaire associé à la serviceRequest
+                    if(dbMemberVol != null)
+                    {
+                        requests.Add(new ServiceRequest
+                        {
+                            ServiceRequestID = dbService.serviceRequestID,
+                            ServiceStartDate = dbService.serviceStartDate,
+                            ServiceName = dbServiceName.serviceName1, //remettre serviceName dans BDD & mettre schéma à jour
+                            MemberFK = dbService.memberFK,
+                            BeneficiaryFName = dbMemberBen.firstName,
+                            BeneficiaryLName = dbMemberBen.lastName,
+                            VoluntaryMemberFK = dbService.memberFK,
+                            VoluntaryFName = dbMemberVol.firstName,
+                            VoluntaryLName = dbMemberVol.lastName,
+                            ServiceAddress = dbService.serviceAddress,
+                            ServiceCityName = dbCity.cityName,
+                        });
+                    }
                     requests.Add(new ServiceRequest
                     {
                         ServiceRequestID = dbService.serviceRequestID,
@@ -30,8 +48,6 @@ namespace MonAppliWeb.Models.DAO
                         BeneficiaryFName = dbMemberBen.firstName,
                         BeneficiaryLName = dbMemberBen.lastName,
                         VoluntaryMemberFK = dbService.memberFK,
-                        //VoluntaryFName = dbMemberVol.firstName,
-                        //VoluntaryLName = dbMemberVol.lastName,
                         ServiceAddress = dbService.serviceAddress,
                         ServiceCityName = dbCity.cityName,
                     });
