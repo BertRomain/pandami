@@ -1,11 +1,10 @@
 ﻿using MonAppliWeb.Models;
+using MonAppliWeb.Models.DAO;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Web;
 using System.Web.Mvc;
-using System.Web.Services.Description;
-using Member = MonAppliWeb.Models.Member;
 
 namespace MonAppliWeb.Controllers
 {
@@ -55,25 +54,30 @@ namespace MonAppliWeb.Controllers
             return View(new ServiceRequest());
         }
 
-        public ActionResult Test()
-        {
-            RedirectToAction("Create", "ServiceRequest");
-        }
 
         [HttpPost]
-        public ActionResult Create()
+        public ActionResult Create(ServiceRequest service)
         {
-
+            //Appelle de la DAO (qui permet l'appelle à la méthode)
+            DAOSR daoSR = new DAOSR();
+            bool rez = daoSR.CreateServiceRequest(service);
+            if (!rez)
+            {
+                ViewBag.message = "Erreur lors de la création de la demande de service";
+                return View(service);
+            }
+            return RedirectToAction("ListServiceRequest","ServiceRequest");
         }
 
         [HttpPost]
         public ActionResult CreateServiceBdd(ServiceRequest serviceRequest)
         {
             // Créer le serviceRequest dans la BDD
-            
+
             // Utiliser serviceRequest pour appeler la méthode Matching
 
             // Créer une notification dans la BDD pour chaque memberID récupéré par la méthode Matching
+            return View();
         }
 
         //private int Matching(ServiceRequest serviceRequest)
@@ -173,9 +177,6 @@ namespace MonAppliWeb.Controllers
                 //        //Remplissage de voluntaryMemberFK avec l'ID dans la base de données --> A vérifier !
                 //        //Comment ajouter dans la base de donnée, le voluntaryID à la table ServiceRequest ?
                 //        dc.SubmitChanges();
-
-
-
 
 
 
