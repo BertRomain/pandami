@@ -1,67 +1,93 @@
 ﻿@model MonAppliWeb.Models.ServiceRequest
-
+@using MonAppliWeb.Utilities
 
 @{
-    ViewBag.Title = "Create";
+    ViewBag.Title = "Création";
 }
 
-<h2>Create</h2>
+<h2>Création d'une demande de service</h2>
 
-@using (Html.BeginForm()) 
+@using (Html.BeginForm())
 {
-    @Html.AntiForgeryToken()
-    
+@Html.AntiForgeryToken()
+
 <div class="form-horizontal">
-    <h4>ServiceRequest</h4>
+    @*<h4>ServiceRequest</h4>*@
     <hr />
     @Html.ValidationSummary(true, "", new { @class = "text-danger" })
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.BeneficiaryLName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BeneficiaryLName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BeneficiaryLName, "", new { @class = "text-danger" })
+            </div>
+        </div>
+
+        <div class="form-group">
+            @Html.LabelFor(model => model.BeneficiaryFName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.BeneficiaryFName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.BeneficiaryFName, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
+
+    <!--Ajout de Razor-->
     <div class="form-group">
         @Html.LabelFor(model => model.BeneficiaryLName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.BeneficiaryLName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BeneficiaryLName, "", new { @class = "text-danger" })
+            @Html.DropDownList("MemberFK",
+                                DropDownListData.GetAllMembers(),
+                                "Sélectionnez un membre",
+                                new { @class = "form-control", @required = "required" })
         </div>
     </div>
 
-    <div class="form-group">
-        @Html.LabelFor(model => model.BeneficiaryFName, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.BeneficiaryFName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.BeneficiaryFName, "", new { @class = "text-danger" })
-        </div>
-    </div>
+    @*<div class="form-group">
+            @Html.LabelFor(model => model.ServiceName, htmlAttributes: new { @class = "control-label col-md-2" })
+            <div class="col-md-10">
+                @Html.EditorFor(model => model.ServiceName, new { htmlAttributes = new { @class = "form-control" } })
+                @Html.ValidationMessageFor(model => model.ServiceName, "", new { @class = "text-danger" })
+            </div>
+        </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ServiceName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
-            @Html.EditorFor(model => model.ServiceName, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ServiceName, "", new { @class = "text-danger" })
+            @Html.DropDownList("ServiceFK",
+                                DropDownListData.GetAllServices(),
+                                "Sélectionnez un service",
+                                new { @class = "form-control", @required = "required" })
         </div>
     </div>
 
     <div class="form-group">
         @Html.LabelFor(model => model.ServiceStartDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ServiceStartDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ServiceStartDate, "", new { @class = "text-danger" })
+        <div class="input-group date" id="datetimepicker1" data-target-input="nearest">
+            <input id="ServiceStartDate" name="ServiceStartDate" type="text" class="form-control" data-target="#datetimepicker1" />
+            <span class="input-group-addon" data-target="#datetimepicker1" data-toggle="datetimepicker">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
         </div>
     </div>
 
-    <div class="form-group">
+    @*<div class="form-group">
         @Html.LabelFor(model => model.ServiceEndDate, htmlAttributes: new { @class = "control-label col-md-2" })
-        <div class="col-md-10">
-            @Html.EditorFor(model => model.ServiceEndDate, new { htmlAttributes = new { @class = "form-control" } })
-            @Html.ValidationMessageFor(model => model.ServiceEndDate, "", new { @class = "text-danger" })
+        <div class="input-group date" id="datetimepicker2" data-target-input="nearest">
+            <input id="ServiceEndDate" name="ServiceEndDate" type="text" class="form-control" data-target="#datetimepicker2" />
+            <span class="input-group-addon" data-target="#datetimepicker2" data-toggle="datetimepicker">
+                <span class="glyphicon glyphicon-calendar"></span>
+            </span>
         </div>
-    </div>
-    <!--Automatiser la date de création de la demande -->
-    <div class="form-group">
+    </div>*@
+
+    <!--Automatiser la date de création de la demande... NB Fait dans le Model -->
+    @*<div class="form-group">
         @Html.LabelFor(model => model.ServiceRequestCreationDate, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ServiceRequestCreationDate, new { htmlAttributes = new { @class = "form-control" } })
             @Html.ValidationMessageFor(model => model.ServiceRequestCreationDate, "", new { @class = "text-danger" })
         </div>
-    </div>
+    </div>*@
 
     <div class="form-group">
         @Html.LabelFor(model => model.ServiceAddress, htmlAttributes: new { @class = "control-label col-md-2" })
@@ -72,6 +98,14 @@
     </div>
 
     <div class="form-group">
+        @Html.LabelFor(model => model.ServiceZipCode, htmlAttributes: new { @class = "control-label col-md-2" })
+        <div class="col-md-10">
+            @Html.EditorFor(model => model.ServiceZipCode, new { htmlAttributes = new { @class = "form-control" } })
+            @Html.ValidationMessageFor(model => model.ServiceZipCode, "", new { @class = "text-danger" })
+        </div>
+    </div>
+    
+    <div class="form-group">
         @Html.LabelFor(model => model.ServiceCityName, htmlAttributes: new { @class = "control-label col-md-2" })
         <div class="col-md-10">
             @Html.EditorFor(model => model.ServiceCityName, new { htmlAttributes = new { @class = "form-control" } })
@@ -81,12 +115,15 @@
 
     <div class="form-group">
         <div class="col-md-offset-2 col-md-10">
-            <input type="submit" value="Create" class="btn btn-default" />
+            <input type="submit" value="Créer" class="btn btn-success" />
         </div>
     </div>
 </div>
 }
 
 <div>
-    @Html.ActionLink("Back to List", "Index")
+    @Html.ActionLink("Retour à la liste", "Index", null, new { @class = "btn btn-default" })
 </div>
+
+<script type="text/javascript">
+</script>

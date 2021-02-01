@@ -65,6 +65,8 @@ namespace MonAppliWeb.Models
         [Required]
         public int ZipCode { get; set; }
 
+        public int ZipCodeFK { get; set; }
+
         /*Chargement d'un membre  -- Méthode inutilisé >> A SUP ?*/
         void LoadMember(int IDmember) // Appeler GetMember pour convention de nommage 
         {
@@ -90,37 +92,37 @@ namespace MonAppliWeb.Models
         }
 
         //Méthode inutilisé >> A SUP ?
-        public bool Connection()
-        {
-            using (BddMemberDataContext dc = new BddMemberDataContext())
-            {
-                var req = from mb in dc.member where mb.login == Login select mb;
-                member memberBdd = req.FirstOrDefault();
-                bool Connection = false;
-                    if (Password == memberBdd.password)
-                     {
-                    Connection = true;          
-                     }
-                return Connection;
+        //public bool Connection()
+        //{
+        //    using (BddMemberDataContext dc = new BddMemberDataContext())
+        //    {
+        //        var req = from mb in dc.member where mb.login == Login select mb;
+        //        member memberBdd = req.FirstOrDefault();
+        //        bool Connection = false;
+        //            if (Password == memberBdd.password)
+        //             {
+        //            Connection = true;          
+        //             }
+        //        return Connection;
 
-            }
-        }
+        //    }
+        //}
 
         //Méthode inutilisé >> A SUP ?
-        public string AfficherVilles(int codepostal)
-        {
-            using(BddMemberDataContext dc = new BddMemberDataContext())
-            {
-                var req = from villes in dc.zipCodes where villes.zipCode == codepostal select villes;
-                zipCodes zipCodesBdd = req.FirstOrDefault();
-                int key = zipCodesBdd.zipCodeID;
+        //public string AfficherVilles(int codepostal)
+        //{
+        //    using(BddMemberDataContext dc = new BddMemberDataContext())
+        //    {
+        //        var req = from villes in dc.zipCodes where villes.zipCode == codepostal select villes;
+        //        zipCodes zipCodesBdd = req.FirstOrDefault();
+        //        int key = zipCodesBdd.zipCodeID;
                
-                var req2 = from elmt in dc.city where elmt.zipCodeFK == key select elmt;
-                city cityBdd = req2.FirstOrDefault();
-                    return cityBdd.cityName;
+        //        var req2 = from elmt in dc.city where elmt.zipCodeFK == key select elmt;
+        //        city cityBdd = req2.FirstOrDefault();
+        //            return cityBdd.cityName;
                 
-            }
-        }
+        //    }
+        //}
 
 
     }

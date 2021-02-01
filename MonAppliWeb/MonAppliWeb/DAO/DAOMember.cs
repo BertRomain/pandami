@@ -1,9 +1,8 @@
-﻿using System;
+﻿using MonAppliWeb.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
-namespace MonAppliWeb.Models.DAO
+namespace MonAppliWeb.DAO
 {
     public class DAOMember
     {
@@ -18,7 +17,7 @@ namespace MonAppliWeb.Models.DAO
                 foreach (var dbMember in dbMembers)
                 {
                     var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbMember.cityFK);
-                    var dbZipCode = dm.zipCodes.FirstOrDefault(x => x.zipCodeID == dbCity.zipCodeFK);
+                    var dbZipCode = dm.zipCodes.FirstOrDefault(x => x.zipCodeID == dbMember.zipCodeFK);
                     members.Add(new Member
                     {
                         Address = dbMember.address,
@@ -63,26 +62,21 @@ namespace MonAppliWeb.Models.DAO
         //    }
         //}
 
-        public bool CreateMember(Member mb)
+        public int? CreateMember(Member mb)
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {
-                //Instanciation d'un membre
-                
-                // Récupération de cityFK
-                int townFK = 0;
+                // Récupération de zipCode
+                var daoZipCode = new DAOZipCode();
+                var zipCode = daoZipCode.GetZipCodeByCode(mb.ZipCode);
+                // Si Zipcode existe, récupérer ID, sinon, créer et récupérer ID
+                var zipCodeId = zipCode == null ? daoZipCode.CreateZipCode(mb.ZipCode) : zipCode.zipCodeID;
 
-                var req = from villes in dm.zipCodes where villes.zipCode == mb.ZipCode select villes;
-                zipCodes zipCodesBdd = req.FirstOrDefault();
-                int key = zipCodesBdd.zipCodeID;
-
-                var req2 = from element in dm.city where element.zipCodeFK == key select element;
-                city cityBdd = req2.FirstOrDefault();
-                string town = cityBdd.cityName;
-                if (town == mb.CityName)
-                {
-                    townFK = cityBdd.cityID;
-                }
+                // Récupération de city
+                var daoCity = new DAOCity();
+                var city = daoCity.GetCity(mb.CityName);
+                // Si Zipcode existe, récupérer ID, sinon, créer et récupérer ID
+                var cityId = city == null ? daoCity.CreateCity(mb.CityName) : city.cityID;
 
                 // Création dans la BDD du membre
                 member newMb = new member()
@@ -93,18 +87,16 @@ namespace MonAppliWeb.Models.DAO
                     email = mb.Email,
                     phone = mb.Phone,
                     address = mb.Address,
-                    cityFK = townFK,
+                    cityFK = cityId.Value,
                     login = mb.Login,
-                    password = mb.Password
+                    password = mb.Password,
+                    zipCodeFK = zipCodeId.Value
                 };
 
                 dm.member.InsertOnSubmit(newMb);
                 dm.SubmitChanges();
-                return true;
+                return newMb.memberID;
             }
         }
-
-        
-
     }
 }

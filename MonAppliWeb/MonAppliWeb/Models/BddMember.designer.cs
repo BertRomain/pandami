@@ -30,18 +30,9 @@ namespace MonAppliWeb.Models
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnCreated();
-    partial void Insertcity(city instance);
-    partial void Updatecity(city instance);
-    partial void Deletecity(city instance);
-    partial void InsertzipCodes(zipCodes instance);
-    partial void UpdatezipCodes(zipCodes instance);
-    partial void DeletezipCodes(zipCodes instance);
     partial void Insertdays(days instance);
     partial void Updatedays(days instance);
     partial void Deletedays(days instance);
-    partial void Insertmember(member instance);
-    partial void Updatemember(member instance);
-    partial void Deletemember(member instance);
     partial void InsertserviceName(serviceName instance);
     partial void UpdateserviceName(serviceName instance);
     partial void DeleteserviceName(serviceName instance);
@@ -57,13 +48,22 @@ namespace MonAppliWeb.Models
     partial void Insertanswer(answer instance);
     partial void Updateanswer(answer instance);
     partial void Deleteanswer(answer instance);
+    partial void Insertmember(member instance);
+    partial void Updatemember(member instance);
+    partial void Deletemember(member instance);
+    partial void Insertcity(city instance);
+    partial void Updatecity(city instance);
+    partial void Deletecity(city instance);
+    partial void InsertzipCodes(zipCodes instance);
+    partial void UpdatezipCodes(zipCodes instance);
+    partial void DeletezipCodes(zipCodes instance);
     partial void InsertserviceRequest(serviceRequest instance);
     partial void UpdateserviceRequest(serviceRequest instance);
     partial void DeleteserviceRequest(serviceRequest instance);
     #endregion
 		
 		public BddMemberDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString3"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
@@ -92,35 +92,11 @@ namespace MonAppliWeb.Models
 			OnCreated();
 		}
 		
-		public System.Data.Linq.Table<city> city
-		{
-			get
-			{
-				return this.GetTable<city>();
-			}
-		}
-		
-		public System.Data.Linq.Table<zipCodes> zipCodes
-		{
-			get
-			{
-				return this.GetTable<zipCodes>();
-			}
-		}
-		
 		public System.Data.Linq.Table<days> days
 		{
 			get
 			{
 				return this.GetTable<days>();
-			}
-		}
-		
-		public System.Data.Linq.Table<member> member
-		{
-			get
-			{
-				return this.GetTable<member>();
 			}
 		}
 		
@@ -164,305 +140,36 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
+		public System.Data.Linq.Table<member> member
+		{
+			get
+			{
+				return this.GetTable<member>();
+			}
+		}
+		
+		public System.Data.Linq.Table<city> city
+		{
+			get
+			{
+				return this.GetTable<city>();
+			}
+		}
+		
+		public System.Data.Linq.Table<zipCodes> zipCodes
+		{
+			get
+			{
+				return this.GetTable<zipCodes>();
+			}
+		}
+		
 		public System.Data.Linq.Table<serviceRequest> serviceRequest
 		{
 			get
 			{
 				return this.GetTable<serviceRequest>();
 			}
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.city")]
-	public partial class city : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _cityID;
-		
-		private System.Nullable<int> _zipCodeFK;
-		
-		private string _cityName;
-		
-		private EntitySet<member> _member;
-		
-		private EntityRef<zipCodes> _zipCode;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OncityIDChanging(int value);
-    partial void OncityIDChanged();
-    partial void OnzipCodeFKChanging(System.Nullable<int> value);
-    partial void OnzipCodeFKChanged();
-    partial void OncityNameChanging(string value);
-    partial void OncityNameChanged();
-    #endregion
-		
-		public city()
-		{
-			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
-			this._zipCode = default(EntityRef<zipCodes>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int cityID
-		{
-			get
-			{
-				return this._cityID;
-			}
-			set
-			{
-				if ((this._cityID != value))
-				{
-					this.OncityIDChanging(value);
-					this.SendPropertyChanging();
-					this._cityID = value;
-					this.SendPropertyChanged("cityID");
-					this.OncityIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeFK", DbType="Int")]
-		public System.Nullable<int> zipCodeFK
-		{
-			get
-			{
-				return this._zipCodeFK;
-			}
-			set
-			{
-				if ((this._zipCodeFK != value))
-				{
-					if (this._zipCode.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OnzipCodeFKChanging(value);
-					this.SendPropertyChanging();
-					this._zipCodeFK = value;
-					this.SendPropertyChanged("zipCodeFK");
-					this.OnzipCodeFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string cityName
-		{
-			get
-			{
-				return this._cityName;
-			}
-			set
-			{
-				if ((this._cityName != value))
-				{
-					this.OncityNameChanging(value);
-					this.SendPropertyChanging();
-					this._cityName = value;
-					this.SendPropertyChanged("cityName");
-					this.OncityNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_member", ThisKey="cityID", OtherKey="cityFK")]
-		public EntitySet<member> member
-		{
-			get
-			{
-				return this._member;
-			}
-			set
-			{
-				this._member.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_city", Storage="_zipCode", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
-		public zipCodes zipCodes
-		{
-			get
-			{
-				return this._zipCode.Entity;
-			}
-			set
-			{
-				zipCodes previousValue = this._zipCode.Entity;
-				if (((previousValue != value) 
-							|| (this._zipCode.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._zipCode.Entity = null;
-						previousValue.city.Remove(this);
-					}
-					this._zipCode.Entity = value;
-					if ((value != null))
-					{
-						value.city.Add(this);
-						this._zipCodeFK = value.zipCodeID;
-					}
-					else
-					{
-						this._zipCodeFK = default(Nullable<int>);
-					}
-					this.SendPropertyChanged("zipCodes");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_member(member entity)
-		{
-			this.SendPropertyChanging();
-			entity.city = this;
-		}
-		
-		private void detach_member(member entity)
-		{
-			this.SendPropertyChanging();
-			entity.city = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zipCodes")]
-	public partial class zipCodes : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _zipCodeID;
-		
-		private int _zipCode1;
-		
-		private EntitySet<city> _city;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnzipCodeIDChanging(int value);
-    partial void OnzipCodeIDChanged();
-    partial void OnzipCodeChanging(int value);
-    partial void OnzipCodeChanged();
-    #endregion
-		
-		public zipCodes()
-		{
-			this._city = new EntitySet<city>(new Action<city>(this.attach_city), new Action<city>(this.detach_city));
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeID", DbType="Int NOT NULL", IsPrimaryKey=true)]
-		public int zipCodeID
-		{
-			get
-			{
-				return this._zipCodeID;
-			}
-			set
-			{
-				if ((this._zipCodeID != value))
-				{
-					this.OnzipCodeIDChanging(value);
-					this.SendPropertyChanging();
-					this._zipCodeID = value;
-					this.SendPropertyChanged("zipCodeID");
-					this.OnzipCodeIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCode1", DbType="Int NOT NULL")]
-		public int zipCode
-		{
-			get
-			{
-				return this._zipCode1;
-			}
-			set
-			{
-				if ((this._zipCode1 != value))
-				{
-					this.OnzipCodeChanging(value);
-					this.SendPropertyChanging();
-					this._zipCode1 = value;
-					this.SendPropertyChanged("zipCode");
-					this.OnzipCodeChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_city", Storage="_city", ThisKey="zipCodeID", OtherKey="zipCodeFK")]
-		public EntitySet<city> city
-		{
-			get
-			{
-				return this._city;
-			}
-			set
-			{
-				this._city.Assign(value);
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_city(city entity)
-		{
-			this.SendPropertyChanging();
-			entity.zipCodes = this;
-		}
-		
-		private void detach_city(city entity)
-		{
-			this.SendPropertyChanging();
-			entity.zipCodes = null;
 		}
 	}
 	
@@ -577,461 +284,6 @@ namespace MonAppliWeb.Models
 		{
 			this.SendPropertyChanging();
 			entity.days = null;
-		}
-	}
-	
-	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.member")]
-	public partial class member : INotifyPropertyChanging, INotifyPropertyChanged
-	{
-		
-		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
-		
-		private int _memberID;
-		
-		private string _firstName;
-		
-		private string _lastName;
-		
-		private System.DateTime _birthdate;
-		
-		private string _email;
-		
-		private int _phone;
-		
-		private string _address;
-		
-		private string _login;
-		
-		private int _cityFK;
-		
-		private string _password;
-		
-		private System.Nullable<int> _serviceRequestFK;
-		
-		private EntitySet<servicePref> _servicePref;
-		
-		private EntitySet<dailyPref> _dailyPref;
-		
-		private EntitySet<requestAnswer> _requestAnswer;
-		
-		private EntitySet<serviceRequest> _serviceRequest;
-		
-		private EntityRef<city> _city;
-		
-    #region Définitions de méthodes d'extensibilité
-    partial void OnLoaded();
-    partial void OnValidate(System.Data.Linq.ChangeAction action);
-    partial void OnCreated();
-    partial void OnmemberIDChanging(int value);
-    partial void OnmemberIDChanged();
-    partial void OnfirstNameChanging(string value);
-    partial void OnfirstNameChanged();
-    partial void OnlastNameChanging(string value);
-    partial void OnlastNameChanged();
-    partial void OnbirthdateChanging(System.DateTime value);
-    partial void OnbirthdateChanged();
-    partial void OnemailChanging(string value);
-    partial void OnemailChanged();
-    partial void OnphoneChanging(int value);
-    partial void OnphoneChanged();
-    partial void OnaddressChanging(string value);
-    partial void OnaddressChanged();
-    partial void OnloginChanging(string value);
-    partial void OnloginChanged();
-    partial void OncityFKChanging(int value);
-    partial void OncityFKChanged();
-    partial void OnpasswordChanging(string value);
-    partial void OnpasswordChanged();
-    partial void OnserviceRequestFKChanging(System.Nullable<int> value);
-    partial void OnserviceRequestFKChanged();
-    #endregion
-		
-		public member()
-		{
-			this._servicePref = new EntitySet<servicePref>(new Action<servicePref>(this.attach_servicePref), new Action<servicePref>(this.detach_servicePref));
-			this._dailyPref = new EntitySet<dailyPref>(new Action<dailyPref>(this.attach_dailyPref), new Action<dailyPref>(this.detach_dailyPref));
-			this._requestAnswer = new EntitySet<requestAnswer>(new Action<requestAnswer>(this.attach_requestAnswer), new Action<requestAnswer>(this.detach_requestAnswer));
-			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
-			this._city = default(EntityRef<city>);
-			OnCreated();
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
-		public int memberID
-		{
-			get
-			{
-				return this._memberID;
-			}
-			set
-			{
-				if ((this._memberID != value))
-				{
-					this.OnmemberIDChanging(value);
-					this.SendPropertyChanging();
-					this._memberID = value;
-					this.SendPropertyChanged("memberID");
-					this.OnmemberIDChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_firstName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string firstName
-		{
-			get
-			{
-				return this._firstName;
-			}
-			set
-			{
-				if ((this._firstName != value))
-				{
-					this.OnfirstNameChanging(value);
-					this.SendPropertyChanging();
-					this._firstName = value;
-					this.SendPropertyChanged("firstName");
-					this.OnfirstNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string lastName
-		{
-			get
-			{
-				return this._lastName;
-			}
-			set
-			{
-				if ((this._lastName != value))
-				{
-					this.OnlastNameChanging(value);
-					this.SendPropertyChanging();
-					this._lastName = value;
-					this.SendPropertyChanged("lastName");
-					this.OnlastNameChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthdate", DbType="DateTime2 NOT NULL")]
-		public System.DateTime birthdate
-		{
-			get
-			{
-				return this._birthdate;
-			}
-			set
-			{
-				if ((this._birthdate != value))
-				{
-					this.OnbirthdateChanging(value);
-					this.SendPropertyChanging();
-					this._birthdate = value;
-					this.SendPropertyChanged("birthdate");
-					this.OnbirthdateChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
-		public string email
-		{
-			get
-			{
-				return this._email;
-			}
-			set
-			{
-				if ((this._email != value))
-				{
-					this.OnemailChanging(value);
-					this.SendPropertyChanging();
-					this._email = value;
-					this.SendPropertyChanged("email");
-					this.OnemailChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="Int NOT NULL")]
-		public int phone
-		{
-			get
-			{
-				return this._phone;
-			}
-			set
-			{
-				if ((this._phone != value))
-				{
-					this.OnphoneChanging(value);
-					this.SendPropertyChanging();
-					this._phone = value;
-					this.SendPropertyChanged("phone");
-					this.OnphoneChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(120) NOT NULL", CanBeNull=false)]
-		public string address
-		{
-			get
-			{
-				return this._address;
-			}
-			set
-			{
-				if ((this._address != value))
-				{
-					this.OnaddressChanging(value);
-					this.SendPropertyChanging();
-					this._address = value;
-					this.SendPropertyChanged("address");
-					this.OnaddressChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string login
-		{
-			get
-			{
-				return this._login;
-			}
-			set
-			{
-				if ((this._login != value))
-				{
-					this.OnloginChanging(value);
-					this.SendPropertyChanging();
-					this._login = value;
-					this.SendPropertyChanged("login");
-					this.OnloginChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityFK", DbType="Int NOT NULL")]
-		public int cityFK
-		{
-			get
-			{
-				return this._cityFK;
-			}
-			set
-			{
-				if ((this._cityFK != value))
-				{
-					if (this._city.HasLoadedOrAssignedValue)
-					{
-						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
-					}
-					this.OncityFKChanging(value);
-					this.SendPropertyChanging();
-					this._cityFK = value;
-					this.SendPropertyChanged("cityFK");
-					this.OncityFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
-		public string password
-		{
-			get
-			{
-				return this._password;
-			}
-			set
-			{
-				if ((this._password != value))
-				{
-					this.OnpasswordChanging(value);
-					this.SendPropertyChanging();
-					this._password = value;
-					this.SendPropertyChanged("password");
-					this.OnpasswordChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceRequestFK", DbType="Int")]
-		public System.Nullable<int> serviceRequestFK
-		{
-			get
-			{
-				return this._serviceRequestFK;
-			}
-			set
-			{
-				if ((this._serviceRequestFK != value))
-				{
-					this.OnserviceRequestFKChanging(value);
-					this.SendPropertyChanging();
-					this._serviceRequestFK = value;
-					this.SendPropertyChanged("serviceRequestFK");
-					this.OnserviceRequestFKChanged();
-				}
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_servicePref", Storage="_servicePref", ThisKey="memberID", OtherKey="memberFK")]
-		public EntitySet<servicePref> servicePref
-		{
-			get
-			{
-				return this._servicePref;
-			}
-			set
-			{
-				this._servicePref.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_dailyPref", Storage="_dailyPref", ThisKey="memberID", OtherKey="memberFK")]
-		public EntitySet<dailyPref> dailyPref
-		{
-			get
-			{
-				return this._dailyPref;
-			}
-			set
-			{
-				this._dailyPref.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_requestAnswer", Storage="_requestAnswer", ThisKey="memberID", OtherKey="memberFK")]
-		public EntitySet<requestAnswer> requestAnswer
-		{
-			get
-			{
-				return this._requestAnswer;
-			}
-			set
-			{
-				this._requestAnswer.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_serviceRequest", Storage="_serviceRequest", ThisKey="memberID", OtherKey="memberFK")]
-		public EntitySet<serviceRequest> serviceRequest
-		{
-			get
-			{
-				return this._serviceRequest;
-			}
-			set
-			{
-				this._serviceRequest.Assign(value);
-			}
-		}
-		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_city", ThisKey="cityFK", OtherKey="cityID", IsForeignKey=true)]
-		public city city
-		{
-			get
-			{
-				return this._city.Entity;
-			}
-			set
-			{
-				city previousValue = this._city.Entity;
-				if (((previousValue != value) 
-							|| (this._city.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._city.Entity = null;
-						previousValue.member.Remove(this);
-					}
-					this._city.Entity = value;
-					if ((value != null))
-					{
-						value.member.Add(this);
-						this._cityFK = value.cityID;
-					}
-					else
-					{
-						this._cityFK = default(int);
-					}
-					this.SendPropertyChanged("city");
-				}
-			}
-		}
-		
-		public event PropertyChangingEventHandler PropertyChanging;
-		
-		public event PropertyChangedEventHandler PropertyChanged;
-		
-		protected virtual void SendPropertyChanging()
-		{
-			if ((this.PropertyChanging != null))
-			{
-				this.PropertyChanging(this, emptyChangingEventArgs);
-			}
-		}
-		
-		protected virtual void SendPropertyChanged(String propertyName)
-		{
-			if ((this.PropertyChanged != null))
-			{
-				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
-			}
-		}
-		
-		private void attach_servicePref(servicePref entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = this;
-		}
-		
-		private void detach_servicePref(servicePref entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = null;
-		}
-		
-		private void attach_dailyPref(dailyPref entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = this;
-		}
-		
-		private void detach_dailyPref(dailyPref entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = null;
-		}
-		
-		private void attach_requestAnswer(requestAnswer entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = this;
-		}
-		
-		private void detach_requestAnswer(requestAnswer entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = null;
-		}
-		
-		private void attach_serviceRequest(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = this;
-		}
-		
-		private void detach_serviceRequest(serviceRequest entity)
-		{
-			this.SendPropertyChanging();
-			entity.member = null;
 		}
 	}
 	
@@ -1217,9 +469,9 @@ namespace MonAppliWeb.Models
 		
 		private int _serviceFK;
 		
-		private EntityRef<member> _member;
-		
 		private EntityRef<serviceName> _serviceName;
+		
+		private EntityRef<member> _member;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -1239,8 +491,8 @@ namespace MonAppliWeb.Models
 		
 		public servicePref()
 		{
-			this._member = default(EntityRef<member>);
 			this._serviceName = default(EntityRef<serviceName>);
+			this._member = default(EntityRef<member>);
 			OnCreated();
 		}
 		
@@ -1352,40 +604,6 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_servicePref", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
-		public member member
-		{
-			get
-			{
-				return this._member.Entity;
-			}
-			set
-			{
-				member previousValue = this._member.Entity;
-				if (((previousValue != value) 
-							|| (this._member.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._member.Entity = null;
-						previousValue.servicePref.Remove(this);
-					}
-					this._member.Entity = value;
-					if ((value != null))
-					{
-						value.servicePref.Add(this);
-						this._memberFK = value.memberID;
-					}
-					else
-					{
-						this._memberFK = default(int);
-					}
-					this.SendPropertyChanged("member");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceName_servicePref", Storage="_serviceName", ThisKey="serviceFK", OtherKey="serviceID", IsForeignKey=true)]
 		public serviceName serviceName
 		{
@@ -1416,6 +634,40 @@ namespace MonAppliWeb.Models
 						this._serviceFK = default(int);
 					}
 					this.SendPropertyChanged("serviceName");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_servicePref", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
+		public member member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				member previousValue = this._member.Entity;
+				if (((previousValue != value) 
+							|| (this._member.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._member.Entity = null;
+						previousValue.servicePref.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.servicePref.Add(this);
+						this._memberFK = value.memberID;
+					}
+					else
+					{
+						this._memberFK = default(int);
+					}
+					this.SendPropertyChanged("member");
 				}
 			}
 		}
@@ -1701,9 +953,9 @@ namespace MonAppliWeb.Models
 		
 		private int _memberFK;
 		
-		private EntityRef<member> _member;
-		
 		private EntityRef<answer> _answer;
+		
+		private EntityRef<member> _member;
 		
 		private EntityRef<serviceRequest> _serviceRequest;
 		
@@ -1729,8 +981,8 @@ namespace MonAppliWeb.Models
 		
 		public requestAnswer()
 		{
-			this._member = default(EntityRef<member>);
 			this._answer = default(EntityRef<answer>);
+			this._member = default(EntityRef<member>);
 			this._serviceRequest = default(EntityRef<serviceRequest>);
 			OnCreated();
 		}
@@ -1887,40 +1139,6 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_requestAnswer", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
-		public member member
-		{
-			get
-			{
-				return this._member.Entity;
-			}
-			set
-			{
-				member previousValue = this._member.Entity;
-				if (((previousValue != value) 
-							|| (this._member.HasLoadedOrAssignedValue == false)))
-				{
-					this.SendPropertyChanging();
-					if ((previousValue != null))
-					{
-						this._member.Entity = null;
-						previousValue.requestAnswer.Remove(this);
-					}
-					this._member.Entity = value;
-					if ((value != null))
-					{
-						value.requestAnswer.Add(this);
-						this._memberFK = value.memberID;
-					}
-					else
-					{
-						this._memberFK = default(int);
-					}
-					this.SendPropertyChanged("member");
-				}
-			}
-		}
-		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="answer_requestAnswer", Storage="_answer", ThisKey="answerFK", OtherKey="answerID", IsForeignKey=true)]
 		public answer answer
 		{
@@ -1951,6 +1169,40 @@ namespace MonAppliWeb.Models
 						this._answerFK = default(string);
 					}
 					this.SendPropertyChanged("answer");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_requestAnswer", Storage="_member", ThisKey="memberFK", OtherKey="memberID", IsForeignKey=true)]
+		public member member
+		{
+			get
+			{
+				return this._member.Entity;
+			}
+			set
+			{
+				member previousValue = this._member.Entity;
+				if (((previousValue != value) 
+							|| (this._member.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._member.Entity = null;
+						previousValue.requestAnswer.Remove(this);
+					}
+					this._member.Entity = value;
+					if ((value != null))
+					{
+						value.requestAnswer.Add(this);
+						this._memberFK = value.memberID;
+					}
+					else
+					{
+						this._memberFK = default(int);
+					}
+					this.SendPropertyChanged("member");
 				}
 			}
 		}
@@ -2124,6 +1376,786 @@ namespace MonAppliWeb.Models
 		}
 	}
 	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.member")]
+	public partial class member : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _memberID;
+		
+		private string _firstName;
+		
+		private string _lastName;
+		
+		private System.DateTime _birthdate;
+		
+		private string _email;
+		
+		private int _phone;
+		
+		private string _address;
+		
+		private string _login;
+		
+		private int _cityFK;
+		
+		private string _password;
+		
+		private int _zipCodeFK;
+		
+		private EntitySet<servicePref> _servicePref;
+		
+		private EntitySet<dailyPref> _dailyPref;
+		
+		private EntitySet<requestAnswer> _requestAnswer;
+		
+		private EntitySet<serviceRequest> _serviceRequest;
+		
+		private EntityRef<city> _city;
+		
+		private EntityRef<zipCodes> _zipCodes;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnmemberIDChanging(int value);
+    partial void OnmemberIDChanged();
+    partial void OnfirstNameChanging(string value);
+    partial void OnfirstNameChanged();
+    partial void OnlastNameChanging(string value);
+    partial void OnlastNameChanged();
+    partial void OnbirthdateChanging(System.DateTime value);
+    partial void OnbirthdateChanged();
+    partial void OnemailChanging(string value);
+    partial void OnemailChanged();
+    partial void OnphoneChanging(int value);
+    partial void OnphoneChanged();
+    partial void OnaddressChanging(string value);
+    partial void OnaddressChanged();
+    partial void OnloginChanging(string value);
+    partial void OnloginChanged();
+    partial void OncityFKChanging(int value);
+    partial void OncityFKChanged();
+    partial void OnpasswordChanging(string value);
+    partial void OnpasswordChanged();
+    partial void OnzipCodeFKChanging(int value);
+    partial void OnzipCodeFKChanged();
+    #endregion
+		
+		public member()
+		{
+			this._servicePref = new EntitySet<servicePref>(new Action<servicePref>(this.attach_servicePref), new Action<servicePref>(this.detach_servicePref));
+			this._dailyPref = new EntitySet<dailyPref>(new Action<dailyPref>(this.attach_dailyPref), new Action<dailyPref>(this.detach_dailyPref));
+			this._requestAnswer = new EntitySet<requestAnswer>(new Action<requestAnswer>(this.attach_requestAnswer), new Action<requestAnswer>(this.detach_requestAnswer));
+			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
+			this._city = default(EntityRef<city>);
+			this._zipCodes = default(EntityRef<zipCodes>);
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_memberID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int memberID
+		{
+			get
+			{
+				return this._memberID;
+			}
+			set
+			{
+				if ((this._memberID != value))
+				{
+					this.OnmemberIDChanging(value);
+					this.SendPropertyChanging();
+					this._memberID = value;
+					this.SendPropertyChanged("memberID");
+					this.OnmemberIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_firstName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string firstName
+		{
+			get
+			{
+				return this._firstName;
+			}
+			set
+			{
+				if ((this._firstName != value))
+				{
+					this.OnfirstNameChanging(value);
+					this.SendPropertyChanging();
+					this._firstName = value;
+					this.SendPropertyChanged("firstName");
+					this.OnfirstNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_lastName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string lastName
+		{
+			get
+			{
+				return this._lastName;
+			}
+			set
+			{
+				if ((this._lastName != value))
+				{
+					this.OnlastNameChanging(value);
+					this.SendPropertyChanging();
+					this._lastName = value;
+					this.SendPropertyChanged("lastName");
+					this.OnlastNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_birthdate", DbType="DateTime2 NOT NULL")]
+		public System.DateTime birthdate
+		{
+			get
+			{
+				return this._birthdate;
+			}
+			set
+			{
+				if ((this._birthdate != value))
+				{
+					this.OnbirthdateChanging(value);
+					this.SendPropertyChanging();
+					this._birthdate = value;
+					this.SendPropertyChanged("birthdate");
+					this.OnbirthdateChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_email", DbType="NVarChar(100) NOT NULL", CanBeNull=false)]
+		public string email
+		{
+			get
+			{
+				return this._email;
+			}
+			set
+			{
+				if ((this._email != value))
+				{
+					this.OnemailChanging(value);
+					this.SendPropertyChanging();
+					this._email = value;
+					this.SendPropertyChanged("email");
+					this.OnemailChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_phone", DbType="Int NOT NULL")]
+		public int phone
+		{
+			get
+			{
+				return this._phone;
+			}
+			set
+			{
+				if ((this._phone != value))
+				{
+					this.OnphoneChanging(value);
+					this.SendPropertyChanging();
+					this._phone = value;
+					this.SendPropertyChanged("phone");
+					this.OnphoneChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_address", DbType="NVarChar(120) NOT NULL", CanBeNull=false)]
+		public string address
+		{
+			get
+			{
+				return this._address;
+			}
+			set
+			{
+				if ((this._address != value))
+				{
+					this.OnaddressChanging(value);
+					this.SendPropertyChanging();
+					this._address = value;
+					this.SendPropertyChanged("address");
+					this.OnaddressChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_login", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string login
+		{
+			get
+			{
+				return this._login;
+			}
+			set
+			{
+				if ((this._login != value))
+				{
+					this.OnloginChanging(value);
+					this.SendPropertyChanging();
+					this._login = value;
+					this.SendPropertyChanged("login");
+					this.OnloginChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityFK", DbType="Int NOT NULL")]
+		public int cityFK
+		{
+			get
+			{
+				return this._cityFK;
+			}
+			set
+			{
+				if ((this._cityFK != value))
+				{
+					if (this._city.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OncityFKChanging(value);
+					this.SendPropertyChanging();
+					this._cityFK = value;
+					this.SendPropertyChanged("cityFK");
+					this.OncityFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_password", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string password
+		{
+			get
+			{
+				return this._password;
+			}
+			set
+			{
+				if ((this._password != value))
+				{
+					this.OnpasswordChanging(value);
+					this.SendPropertyChanging();
+					this._password = value;
+					this.SendPropertyChanged("password");
+					this.OnpasswordChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeFK", DbType="Int NOT NULL")]
+		public int zipCodeFK
+		{
+			get
+			{
+				return this._zipCodeFK;
+			}
+			set
+			{
+				if ((this._zipCodeFK != value))
+				{
+					if (this._zipCodes.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnzipCodeFKChanging(value);
+					this.SendPropertyChanging();
+					this._zipCodeFK = value;
+					this.SendPropertyChanged("zipCodeFK");
+					this.OnzipCodeFKChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_servicePref", Storage="_servicePref", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<servicePref> servicePref
+		{
+			get
+			{
+				return this._servicePref;
+			}
+			set
+			{
+				this._servicePref.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_dailyPref", Storage="_dailyPref", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<dailyPref> dailyPref
+		{
+			get
+			{
+				return this._dailyPref;
+			}
+			set
+			{
+				this._dailyPref.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_requestAnswer", Storage="_requestAnswer", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<requestAnswer> requestAnswer
+		{
+			get
+			{
+				return this._requestAnswer;
+			}
+			set
+			{
+				this._requestAnswer.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="member_serviceRequest", Storage="_serviceRequest", ThisKey="memberID", OtherKey="memberFK")]
+		public EntitySet<serviceRequest> serviceRequest
+		{
+			get
+			{
+				return this._serviceRequest;
+			}
+			set
+			{
+				this._serviceRequest.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_city", ThisKey="cityFK", OtherKey="cityID", IsForeignKey=true)]
+		public city city
+		{
+			get
+			{
+				return this._city.Entity;
+			}
+			set
+			{
+				city previousValue = this._city.Entity;
+				if (((previousValue != value) 
+							|| (this._city.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._city.Entity = null;
+						previousValue.member.Remove(this);
+					}
+					this._city.Entity = value;
+					if ((value != null))
+					{
+						value.member.Add(this);
+						this._cityFK = value.cityID;
+					}
+					else
+					{
+						this._cityFK = default(int);
+					}
+					this.SendPropertyChanged("city");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_member", Storage="_zipCodes", ThisKey="zipCodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
+		public zipCodes zipCodes
+		{
+			get
+			{
+				return this._zipCodes.Entity;
+			}
+			set
+			{
+				zipCodes previousValue = this._zipCodes.Entity;
+				if (((previousValue != value) 
+							|| (this._zipCodes.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zipCodes.Entity = null;
+						previousValue.member.Remove(this);
+					}
+					this._zipCodes.Entity = value;
+					if ((value != null))
+					{
+						value.member.Add(this);
+						this._zipCodeFK = value.zipCodeID;
+					}
+					else
+					{
+						this._zipCodeFK = default(int);
+					}
+					this.SendPropertyChanged("zipCodes");
+				}
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_servicePref(servicePref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_servicePref(servicePref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+		
+		private void attach_dailyPref(dailyPref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_dailyPref(dailyPref entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+		
+		private void attach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_requestAnswer(requestAnswer entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+		
+		private void attach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = this;
+		}
+		
+		private void detach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.member = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.city")]
+	public partial class city : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _cityID;
+		
+		private string _cityName;
+		
+		private EntitySet<member> _member;
+		
+		private EntitySet<serviceRequest> _serviceRequest;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OncityIDChanging(int value);
+    partial void OncityIDChanged();
+    partial void OncityNameChanging(string value);
+    partial void OncityNameChanged();
+    #endregion
+		
+		public city()
+		{
+			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
+			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int cityID
+		{
+			get
+			{
+				return this._cityID;
+			}
+			set
+			{
+				if ((this._cityID != value))
+				{
+					this.OncityIDChanging(value);
+					this.SendPropertyChanging();
+					this._cityID = value;
+					this.SendPropertyChanged("cityID");
+					this.OncityIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_cityName", DbType="NVarChar(50) NOT NULL", CanBeNull=false)]
+		public string cityName
+		{
+			get
+			{
+				return this._cityName;
+			}
+			set
+			{
+				if ((this._cityName != value))
+				{
+					this.OncityNameChanging(value);
+					this.SendPropertyChanging();
+					this._cityName = value;
+					this.SendPropertyChanged("cityName");
+					this.OncityNameChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_member", Storage="_member", ThisKey="cityID", OtherKey="cityFK")]
+		public EntitySet<member> member
+		{
+			get
+			{
+				return this._member;
+			}
+			set
+			{
+				this._member.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_serviceRequest", Storage="_serviceRequest", ThisKey="cityID", OtherKey="serviceCityFK")]
+		public EntitySet<serviceRequest> serviceRequest
+		{
+			get
+			{
+				return this._serviceRequest;
+			}
+			set
+			{
+				this._serviceRequest.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_member(member entity)
+		{
+			this.SendPropertyChanging();
+			entity.city = this;
+		}
+		
+		private void detach_member(member entity)
+		{
+			this.SendPropertyChanging();
+			entity.city = null;
+		}
+		
+		private void attach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.city = this;
+		}
+		
+		private void detach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.city = null;
+		}
+	}
+	
+	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.zipCodes")]
+	public partial class zipCodes : INotifyPropertyChanging, INotifyPropertyChanged
+	{
+		
+		private static PropertyChangingEventArgs emptyChangingEventArgs = new PropertyChangingEventArgs(String.Empty);
+		
+		private int _zipCodeID;
+		
+		private int _zipCode;
+		
+		private EntitySet<member> _member;
+		
+		private EntitySet<serviceRequest> _serviceRequest;
+		
+    #region Définitions de méthodes d'extensibilité
+    partial void OnLoaded();
+    partial void OnValidate(System.Data.Linq.ChangeAction action);
+    partial void OnCreated();
+    partial void OnzipCodeIDChanging(int value);
+    partial void OnzipCodeIDChanged();
+    partial void OnzipCodeChanging(int value);
+    partial void OnzipCodeChanged();
+    #endregion
+		
+		public zipCodes()
+		{
+			this._member = new EntitySet<member>(new Action<member>(this.attach_member), new Action<member>(this.detach_member));
+			this._serviceRequest = new EntitySet<serviceRequest>(new Action<serviceRequest>(this.attach_serviceRequest), new Action<serviceRequest>(this.detach_serviceRequest));
+			OnCreated();
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCodeID", AutoSync=AutoSync.OnInsert, DbType="Int NOT NULL IDENTITY", IsPrimaryKey=true, IsDbGenerated=true)]
+		public int zipCodeID
+		{
+			get
+			{
+				return this._zipCodeID;
+			}
+			set
+			{
+				if ((this._zipCodeID != value))
+				{
+					this.OnzipCodeIDChanging(value);
+					this.SendPropertyChanging();
+					this._zipCodeID = value;
+					this.SendPropertyChanged("zipCodeID");
+					this.OnzipCodeIDChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_zipCode", DbType="Int NOT NULL")]
+		public int zipCode
+		{
+			get
+			{
+				return this._zipCode;
+			}
+			set
+			{
+				if ((this._zipCode != value))
+				{
+					this.OnzipCodeChanging(value);
+					this.SendPropertyChanging();
+					this._zipCode = value;
+					this.SendPropertyChanged("zipCode");
+					this.OnzipCodeChanged();
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_member", Storage="_member", ThisKey="zipCodeID", OtherKey="zipCodeFK")]
+		public EntitySet<member> member
+		{
+			get
+			{
+				return this._member;
+			}
+			set
+			{
+				this._member.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_serviceRequest", Storage="_serviceRequest", ThisKey="zipCodeID", OtherKey="serviceZipcodeFK")]
+		public EntitySet<serviceRequest> serviceRequest
+		{
+			get
+			{
+				return this._serviceRequest;
+			}
+			set
+			{
+				this._serviceRequest.Assign(value);
+			}
+		}
+		
+		public event PropertyChangingEventHandler PropertyChanging;
+		
+		public event PropertyChangedEventHandler PropertyChanged;
+		
+		protected virtual void SendPropertyChanging()
+		{
+			if ((this.PropertyChanging != null))
+			{
+				this.PropertyChanging(this, emptyChangingEventArgs);
+			}
+		}
+		
+		protected virtual void SendPropertyChanged(String propertyName)
+		{
+			if ((this.PropertyChanged != null))
+			{
+				this.PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+			}
+		}
+		
+		private void attach_member(member entity)
+		{
+			this.SendPropertyChanging();
+			entity.zipCodes = this;
+		}
+		
+		private void detach_member(member entity)
+		{
+			this.SendPropertyChanging();
+			entity.zipCodes = null;
+		}
+		
+		private void attach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.zipCodes = this;
+		}
+		
+		private void detach_serviceRequest(serviceRequest entity)
+		{
+			this.SendPropertyChanging();
+			entity.zipCodes = null;
+		}
+	}
+	
 	[global::System.Data.Linq.Mapping.TableAttribute(Name="dbo.serviceRequest")]
 	public partial class serviceRequest : INotifyPropertyChanging, INotifyPropertyChanged
 	{
@@ -2148,17 +2180,23 @@ namespace MonAppliWeb.Models
 		
 		private int _serviceFK;
 		
-		private System.Nullable<int> _serviceCityFK;
+		private int _serviceCityFK;
 		
 		private int _memberFK;
 		
 		private System.Nullable<int> _voluntaryMemberFK;
 		
+		private int _serviceZipcodeFK;
+		
 		private EntitySet<requestAnswer> _requestAnswer;
+		
+		private EntityRef<city> _city;
 		
 		private EntityRef<member> _member;
 		
 		private EntityRef<serviceName> _serviceName;
+		
+		private EntityRef<zipCodes> _zipCodes;
 		
     #region Définitions de méthodes d'extensibilité
     partial void OnLoaded();
@@ -2182,19 +2220,23 @@ namespace MonAppliWeb.Models
     partial void OnstartTimeChanged();
     partial void OnserviceFKChanging(int value);
     partial void OnserviceFKChanged();
-    partial void OnserviceCityFKChanging(System.Nullable<int> value);
+    partial void OnserviceCityFKChanging(int value);
     partial void OnserviceCityFKChanged();
     partial void OnmemberFKChanging(int value);
     partial void OnmemberFKChanged();
     partial void OnvoluntaryMemberFKChanging(System.Nullable<int> value);
     partial void OnvoluntaryMemberFKChanged();
+    partial void OnserviceZipcodeFKChanging(int value);
+    partial void OnserviceZipcodeFKChanged();
     #endregion
 		
 		public serviceRequest()
 		{
 			this._requestAnswer = new EntitySet<requestAnswer>(new Action<requestAnswer>(this.attach_requestAnswer), new Action<requestAnswer>(this.detach_requestAnswer));
+			this._city = default(EntityRef<city>);
 			this._member = default(EntityRef<member>);
 			this._serviceName = default(EntityRef<serviceName>);
+			this._zipCodes = default(EntityRef<zipCodes>);
 			OnCreated();
 		}
 		
@@ -2382,8 +2424,8 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
-		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceCityFK", DbType="Int")]
-		public System.Nullable<int> serviceCityFK
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceCityFK", DbType="Int NOT NULL")]
+		public int serviceCityFK
 		{
 			get
 			{
@@ -2393,6 +2435,10 @@ namespace MonAppliWeb.Models
 			{
 				if ((this._serviceCityFK != value))
 				{
+					if (this._city.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
 					this.OnserviceCityFKChanging(value);
 					this.SendPropertyChanging();
 					this._serviceCityFK = value;
@@ -2446,6 +2492,30 @@ namespace MonAppliWeb.Models
 			}
 		}
 		
+		[global::System.Data.Linq.Mapping.ColumnAttribute(Storage="_serviceZipcodeFK", DbType="Int NOT NULL")]
+		public int serviceZipcodeFK
+		{
+			get
+			{
+				return this._serviceZipcodeFK;
+			}
+			set
+			{
+				if ((this._serviceZipcodeFK != value))
+				{
+					if (this._zipCodes.HasLoadedOrAssignedValue)
+					{
+						throw new System.Data.Linq.ForeignKeyReferenceAlreadyHasValueException();
+					}
+					this.OnserviceZipcodeFKChanging(value);
+					this.SendPropertyChanging();
+					this._serviceZipcodeFK = value;
+					this.SendPropertyChanged("serviceZipcodeFK");
+					this.OnserviceZipcodeFKChanged();
+				}
+			}
+		}
+		
 		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="serviceRequest_requestAnswer", Storage="_requestAnswer", ThisKey="serviceRequestID", OtherKey="serviceRFK")]
 		public EntitySet<requestAnswer> requestAnswer
 		{
@@ -2456,6 +2526,40 @@ namespace MonAppliWeb.Models
 			set
 			{
 				this._requestAnswer.Assign(value);
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="city_serviceRequest", Storage="_city", ThisKey="serviceCityFK", OtherKey="cityID", IsForeignKey=true)]
+		public city city
+		{
+			get
+			{
+				return this._city.Entity;
+			}
+			set
+			{
+				city previousValue = this._city.Entity;
+				if (((previousValue != value) 
+							|| (this._city.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._city.Entity = null;
+						previousValue.serviceRequest.Remove(this);
+					}
+					this._city.Entity = value;
+					if ((value != null))
+					{
+						value.serviceRequest.Add(this);
+						this._serviceCityFK = value.cityID;
+					}
+					else
+					{
+						this._serviceCityFK = default(int);
+					}
+					this.SendPropertyChanged("city");
+				}
 			}
 		}
 		
@@ -2523,6 +2627,40 @@ namespace MonAppliWeb.Models
 						this._serviceFK = default(int);
 					}
 					this.SendPropertyChanged("serviceName");
+				}
+			}
+		}
+		
+		[global::System.Data.Linq.Mapping.AssociationAttribute(Name="zipCodes_serviceRequest", Storage="_zipCodes", ThisKey="serviceZipcodeFK", OtherKey="zipCodeID", IsForeignKey=true)]
+		public zipCodes zipCodes
+		{
+			get
+			{
+				return this._zipCodes.Entity;
+			}
+			set
+			{
+				zipCodes previousValue = this._zipCodes.Entity;
+				if (((previousValue != value) 
+							|| (this._zipCodes.HasLoadedOrAssignedValue == false)))
+				{
+					this.SendPropertyChanging();
+					if ((previousValue != null))
+					{
+						this._zipCodes.Entity = null;
+						previousValue.serviceRequest.Remove(this);
+					}
+					this._zipCodes.Entity = value;
+					if ((value != null))
+					{
+						value.serviceRequest.Add(this);
+						this._serviceZipcodeFK = value.zipCodeID;
+					}
+					else
+					{
+						this._serviceZipcodeFK = default(int);
+					}
+					this.SendPropertyChanged("zipCodes");
 				}
 			}
 		}

@@ -1,0 +1,38 @@
+﻿@model IEnumerable<MonAppliWeb.Models.Member>
+
+@{
+    ViewBag.Title = "Matching";
+}
+
+<h2>Matching</h2>
+
+<p>
+    @Html.ActionLink("Create New", "Create")
+</p>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.FirstName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.LastName)
+        </th>       
+        <th></th>
+    </tr>
+
+@foreach (var item in Model) {
+    <tr>
+        <td>
+            @Html.DisplayFor(modelItem => item.FirstName)
+        </td>
+        <td>
+            @Html.DisplayFor(modelItem => item.LastName)
+        </td>
+        <td>
+            @Html.ActionLink("Accepter", "Edit", new { id=item.MemberID }) |
+            @Html.ActionLink("Refuser", "Delete", new { id=item.MemberID })
+        </td>
+    </tr>
+}
+
+</table>

@@ -1,10 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using MonAppliWeb.DAO;
 using MonAppliWeb.Models;
-using MonAppliWeb.Models.DAO;
+using System.Web.Mvc;
 
 namespace MonAppliWeb.Controllers
 {
@@ -21,8 +17,8 @@ namespace MonAppliWeb.Controllers
         public ActionResult SaveMbToBdd(Member member)
         {
             DAOMember daoM = new DAOMember();
-            bool rez = daoM.CreateMember(member);
-            if (!rez) //condition affichage message d'erreur
+            var rez = daoM.CreateMember(member);
+            if (!rez.HasValue) //condition affichage message d'erreur
             {  
                 ViewBag.message = "Erreur lors de la création du membre";
                 return View(member);

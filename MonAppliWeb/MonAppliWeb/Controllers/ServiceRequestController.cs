@@ -1,9 +1,7 @@
-﻿using MonAppliWeb.Models;
-using MonAppliWeb.Models.DAO;
-using System;
+﻿using MonAppliWeb.DAO;
+using MonAppliWeb.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 using System.Web.Mvc;
 
 namespace MonAppliWeb.Controllers
@@ -32,8 +30,8 @@ namespace MonAppliWeb.Controllers
         {
             //Appelle de la DAO (qui permet l'appelle à la méthode)
             DAOSR daoSR = new DAOSR();
-            bool rez = daoSR.CreateServiceRequest(service);
-            if (!rez)
+            var rez = daoSR.CreateServiceRequest(service);
+            if (!rez.HasValue)
             {
                 ViewBag.message = "Erreur lors de la création de la demande de service";
                 return View(service);
@@ -54,7 +52,7 @@ namespace MonAppliWeb.Controllers
 
         //Les quelques lignes de méthodes sont présentes dans la DAO
         //private int Matching(ServiceRequest serviceRequest)
-        private List<int> Matching(ServiceRequest serviceRequest)
+        private List<int> BetaMatching(ServiceRequest serviceRequest) // Renommer Matching
         {
             using (BddMemberDataContext dc = new BddMemberDataContext())
             {
@@ -246,6 +244,18 @@ namespace MonAppliWeb.Controllers
             }
         }
 
+        [HttpGet]
+        public ActionResult Matching(int id)
+        {
+
+            DAOSR dAOSRMatching = new DAOSR();
+
+            ServiceRequest sr = new DAOSR().GetSRById(id);
+
+            List<Member> Voluntaries = dAOSRMatching.ReturnVoluntaryOfSR(sr);
+
+            return View(Voluntaries);
+        }
     }
 }
 

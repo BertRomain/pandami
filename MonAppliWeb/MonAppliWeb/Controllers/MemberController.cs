@@ -1,10 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using System.Web.Mvc;
+﻿using MonAppliWeb.DAO;
 using MonAppliWeb.Models;
-using MonAppliWeb.Models.DAO;
+using System.Linq;
+using System.Web.Mvc;
 
 namespace MonAppliWeb.Controllers
 {
@@ -28,7 +25,7 @@ namespace MonAppliWeb.Controllers
                 //récupération du membre avec identifiants id (parametre)
                 var dbMember = dm.member.SingleOrDefault(n => n.memberID == id);
                 var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbMember.cityFK);
-                var dbZipCode = dm.zipCodes.FirstOrDefault(x => x.zipCodeID == dbCity.zipCodeFK);
+                var dbZipCode = dm.zipCodes.FirstOrDefault(x => x.zipCodeID == dbMember.zipCodeFK);
                 var member = new Member
                 {
                     Address = dbMember.address,

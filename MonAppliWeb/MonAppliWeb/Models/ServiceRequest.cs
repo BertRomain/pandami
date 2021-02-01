@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Linq;
 using System.ComponentModel.DataAnnotations;
 
 namespace MonAppliWeb.Models
@@ -9,7 +8,8 @@ namespace MonAppliWeb.Models
 
         public ServiceRequest()
         {
-
+            ServiceStartDate = DateTime.Now.Date;
+            ServiceRequestCreationDate = DateTime.Now;
         }
 
         public int ServiceRequestID { get; set; }
@@ -56,12 +56,18 @@ namespace MonAppliWeb.Models
         public string VoluntaryFName { get; set; }
 
         [Display(Name = "ID de la ville où est effectué le service")]
-        public int ServiceCityFK { get; set; }
-
-        [Display(Name = "Adresse du service")]
-        public string ServiceAddress { get; set; }
+        public int? ServiceCityFK { get; set; }
 
         [Display(Name = "Ville du service")]
         public string ServiceCityName { get; set; }
+
+        [Display(Name = "ID du code postal où est effectué le service")]
+        public int? ServiceZipCodeFK { get; set; }
+        
+        [Display(Name = "Code Postal du service")]
+        public int ServiceZipCode { get; set; }
+
+        [Display(Name = "Adresse du service")]
+        public string ServiceAddress { get; set; }
     }
 }

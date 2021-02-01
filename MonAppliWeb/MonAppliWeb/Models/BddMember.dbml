@@ -1,21 +1,5 @@
 ﻿<?xml version="1.0" encoding="utf-8"?><Database Name="bddPandami" Class="BddMemberDataContext" xmlns="http://schemas.microsoft.com/linqtosql/dbml/2007">
   <Connection Mode="WebSettings" ConnectionString="Data Source=FORM227\SQLEXPRESS;Initial Catalog=bddPandami;Integrated Security=True" SettingsObjectName="System.Configuration.ConfigurationManager.ConnectionStrings" SettingsPropertyName="bddPandamiConnectionString3" Provider="System.Data.SqlClient" />
-  <Table Name="dbo.city" Member="city">
-    <Type Name="city">
-      <Column Name="cityID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="zipCodeFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Column Name="cityName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Association Name="city_member" Member="member" ThisKey="cityID" OtherKey="cityFK" Type="member" />
-      <Association Name="zipCodes_city" Member="zipCodes" Storage="_zipCode" ThisKey="zipCodeFK" OtherKey="zipCodeID" Type="zipCodes" IsForeignKey="true" />
-    </Type>
-  </Table>
-  <Table Name="dbo.zipCodes" Member="zipCodes">
-    <Type Name="zipCodes">
-      <Column Name="zipCodeID" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Column Name="zipCode" Storage="_zipCode1" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="zipCodes_city" Member="city" ThisKey="zipCodeID" OtherKey="zipCodeFK" Type="city" />
-    </Type>
-  </Table>
   <Table Name="dbo.days" Member="days">
     <Type Name="days">
       <Column Name="dayID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
@@ -23,33 +7,13 @@
       <Association Name="days_dailyPref" Member="dailyPref" ThisKey="dayID" OtherKey="dayFK" Type="dailyPref" />
     </Type>
   </Table>
-  <Table Name="dbo.member" Member="member">
-    <Type Name="member">
-      <Column Name="memberID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
-      <Column Name="firstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="lastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="birthdate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
-      <Column Name="email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
-      <Column Name="phone" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="address" Type="System.String" DbType="NVarChar(120) NOT NULL" CanBeNull="false" />
-      <Column Name="login" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="cityFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
-      <Column Name="serviceRequestFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
-      <Association Name="member_servicePref" Member="servicePref" ThisKey="memberID" OtherKey="memberFK" Type="servicePref" />
-      <Association Name="member_dailyPref" Member="dailyPref" ThisKey="memberID" OtherKey="memberFK" Type="dailyPref" />
-      <Association Name="member_requestAnswer" Member="requestAnswer" ThisKey="memberID" OtherKey="memberFK" Type="requestAnswer" />
-      <Association Name="member_serviceRequest" Member="serviceRequest" ThisKey="memberID" OtherKey="memberFK" Type="serviceRequest" />
-      <Association Name="city_member" Member="city" ThisKey="cityFK" OtherKey="cityID" Type="city" IsForeignKey="true" />
-    </Type>
-  </Table>
   <Table Name="dbo.serviceName" Member="serviceName">
     <Type Name="serviceName">
       <Column Name="serviceID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
       <Column Name="serviceName" Member="serviceName1" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
       <Column Name="serviceCategoryFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="serviceName_serviceRequest" Member="serviceRequest" ThisKey="serviceID" OtherKey="serviceFK" Type="serviceRequest" />
       <Association Name="serviceName_servicePref" Member="servicePref" ThisKey="serviceID" OtherKey="serviceFK" Type="servicePref" />
+      <Association Name="serviceName_serviceRequest" Member="serviceRequest" ThisKey="serviceID" OtherKey="serviceFK" Type="serviceRequest" />
     </Type>
   </Table>
   <Table Name="dbo.servicePref" Member="servicePref">
@@ -59,8 +23,8 @@
       <Column Name="choiceEndDate" Type="System.DateTime" DbType="DateTime2" CanBeNull="true" />
       <Column Name="memberFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="serviceFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Association Name="member_servicePref" Member="member" ThisKey="memberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
       <Association Name="serviceName_servicePref" Member="serviceName" ThisKey="serviceFK" OtherKey="serviceID" Type="serviceName" IsForeignKey="true" />
+      <Association Name="member_servicePref" Member="member" ThisKey="memberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
     </Type>
   </Table>
   <Table Name="dbo.dailyPref" Member="dailyPref">
@@ -83,8 +47,8 @@
       <Column Name="serviceRFK" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="answerFK" Type="System.String" DbType="NChar(10)" CanBeNull="true" />
       <Column Name="memberFK" Type="System.Int32" DbType="Int NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
-      <Association Name="member_requestAnswer" Member="member" ThisKey="memberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
       <Association Name="answer_requestAnswer" Member="answer" ThisKey="answerFK" OtherKey="answerID" Type="answer" IsForeignKey="true" />
+      <Association Name="member_requestAnswer" Member="member" ThisKey="memberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
       <Association Name="serviceRequest_requestAnswer" Member="serviceRequest" ThisKey="serviceRFK" OtherKey="serviceRequestID" Type="serviceRequest" IsForeignKey="true" />
     </Type>
   </Table>
@@ -93,6 +57,43 @@
       <Column Name="answerID" Type="System.String" DbType="NChar(10) NOT NULL" IsPrimaryKey="true" CanBeNull="false" />
       <Column Name="answer" Member="answer1" Type="System.String" DbType="NVarChar(3)" CanBeNull="true" />
       <Association Name="answer_requestAnswer" Member="requestAnswer" ThisKey="answerID" OtherKey="answerFK" Type="requestAnswer" />
+    </Type>
+  </Table>
+  <Table Name="dbo.member" Member="member">
+    <Type Name="member">
+      <Column Name="memberID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="firstName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="lastName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="birthdate" Type="System.DateTime" DbType="DateTime2 NOT NULL" CanBeNull="false" />
+      <Column Name="email" Type="System.String" DbType="NVarChar(100) NOT NULL" CanBeNull="false" />
+      <Column Name="phone" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="address" Type="System.String" DbType="NVarChar(120) NOT NULL" CanBeNull="false" />
+      <Column Name="login" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="cityFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Column Name="password" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Column Name="zipCodeFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="member_servicePref" Member="servicePref" ThisKey="memberID" OtherKey="memberFK" Type="servicePref" />
+      <Association Name="member_dailyPref" Member="dailyPref" ThisKey="memberID" OtherKey="memberFK" Type="dailyPref" />
+      <Association Name="member_requestAnswer" Member="requestAnswer" ThisKey="memberID" OtherKey="memberFK" Type="requestAnswer" />
+      <Association Name="member_serviceRequest" Member="serviceRequest" ThisKey="memberID" OtherKey="memberFK" Type="serviceRequest" />
+      <Association Name="city_member" Member="city" ThisKey="cityFK" OtherKey="cityID" Type="city" IsForeignKey="true" />
+      <Association Name="zipCodes_member" Member="zipCodes" ThisKey="zipCodeFK" OtherKey="zipCodeID" Type="zipCodes" IsForeignKey="true" />
+    </Type>
+  </Table>
+  <Table Name="dbo.city" Member="city">
+    <Type Name="city">
+      <Column Name="cityID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="cityName" Type="System.String" DbType="NVarChar(50) NOT NULL" CanBeNull="false" />
+      <Association Name="city_member" Member="member" ThisKey="cityID" OtherKey="cityFK" Type="member" />
+      <Association Name="city_serviceRequest" Member="serviceRequest" ThisKey="cityID" OtherKey="serviceCityFK" Type="serviceRequest" />
+    </Type>
+  </Table>
+  <Table Name="dbo.zipCodes" Member="zipCodes">
+    <Type Name="zipCodes">
+      <Column Name="zipCodeID" Type="System.Int32" DbType="Int NOT NULL IDENTITY" IsPrimaryKey="true" IsDbGenerated="true" CanBeNull="false" />
+      <Column Name="zipCode" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
+      <Association Name="zipCodes_member" Member="member" ThisKey="zipCodeID" OtherKey="zipCodeFK" Type="member" />
+      <Association Name="zipCodes_serviceRequest" Member="serviceRequest" ThisKey="zipCodeID" OtherKey="serviceZipcodeFK" Type="serviceRequest" />
     </Type>
   </Table>
   <Table Name="dbo.serviceRequest" Member="serviceRequest">
@@ -106,12 +107,15 @@
       <Column Name="cancelDate" Type="System.DateTime" DbType="Date" CanBeNull="true" />
       <Column Name="startTime" Type="System.TimeSpan" DbType="Time" CanBeNull="true" />
       <Column Name="serviceFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
-      <Column Name="serviceCityFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="serviceCityFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="memberFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Column Name="voluntaryMemberFK" Type="System.Int32" DbType="Int" CanBeNull="true" />
+      <Column Name="serviceZipcodeFK" Type="System.Int32" DbType="Int NOT NULL" CanBeNull="false" />
       <Association Name="serviceRequest_requestAnswer" Member="requestAnswer" ThisKey="serviceRequestID" OtherKey="serviceRFK" Type="requestAnswer" />
+      <Association Name="city_serviceRequest" Member="city" ThisKey="serviceCityFK" OtherKey="cityID" Type="city" IsForeignKey="true" />
       <Association Name="member_serviceRequest" Member="member" ThisKey="memberFK" OtherKey="memberID" Type="member" IsForeignKey="true" />
       <Association Name="serviceName_serviceRequest" Member="serviceName" ThisKey="serviceFK" OtherKey="serviceID" Type="serviceName" IsForeignKey="true" />
+      <Association Name="zipCodes_serviceRequest" Member="zipCodes" ThisKey="serviceZipcodeFK" OtherKey="zipCodeID" Type="zipCodes" IsForeignKey="true" />
     </Type>
   </Table>
 </Database>

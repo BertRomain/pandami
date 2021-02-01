@@ -75,13 +75,17 @@
             @Html.DisplayFor(modelItem => item.ServiceAddress)
         </td>
         <td>
-            @Html.ActionLink("Details", "Details", new { id = item.ServiceRequestID }, new { @class = "btn btn-info" })
+            @*@Html.ActionLink("Details", "Details", new { id = item.ServiceRequestID }, new { @class = "btn btn-info" })*@
+            @Html.ActionLink("Details", "Details", new { id = item.ServiceRequestID }, new { @class = "btn btn-info", @Disabled = "disabled", @onclick = "javascript:return false;" })
         </td>
         <td>
             @Html.ActionLink("Modifier", "Edit", new { id = item.ServiceRequestID }, new { @class = "btn btn-primary" })
         </td>
         <td>
             @Html.ActionLink("Annuler", "Delete", new { id = item.ServiceRequestID }, new { @class = "btn btn-danger" })
+        </td>
+        <td>
+            @Html.ActionLink("Volontaires", "Matching", "ServiceRequest", new { id = item.ServiceRequestID }, new { @class = "btn btn-success" })
         </td>
     </tr>
         }

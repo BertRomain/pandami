@@ -21,9 +21,19 @@ namespace MonAppliWeb
 
             bundles.Add(new ScriptBundle("~/bundles/bootstrap").Include(
                       "~/Scripts/bootstrap.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/moment").Include(
+                      "~/Scripts/moment.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/dateTimePicker").Include(
+                      "~/Scripts/tempusdominus-bootstrap-3.js"));
+            
+            bundles.Add(new ScriptBundle("~/bundles/siteJS").Include(
+                      "~/Scripts/site.js"));
 
             bundles.Add(new StyleBundle("~/Content/css").Include(
                       "~/Content/bootstrap.css",
+                      "~/Content/tempusdominus-bootstrap-3.css",
                       "~/Content/site.css"));
         }
     }

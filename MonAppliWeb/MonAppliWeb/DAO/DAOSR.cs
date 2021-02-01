@@ -1,9 +1,9 @@
-﻿using System;
+﻿using MonAppliWeb.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Web;
 
-namespace MonAppliWeb.Models.DAO
+namespace MonAppliWeb.DAO
 {
     public class DAOSR
     {
@@ -21,24 +21,6 @@ namespace MonAppliWeb.Models.DAO
                     var dbMemberVol = dm.member.FirstOrDefault(x => x.memberID == dbService.voluntaryMemberFK);
                     var dbServiceName = dm.serviceName.FirstOrDefault(x => x.serviceID == dbService.serviceFK);
                     var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbService.serviceCityFK);
-                    //Condition où s'il y a un volontaire associé à la serviceRequest
-                    if(dbMemberVol != null)
-                    {
-                        requests.Add(new ServiceRequest
-                        {
-                            ServiceRequestID = dbService.serviceRequestID,
-                            ServiceStartDate = dbService.serviceStartDate,
-                            ServiceName = dbServiceName.serviceName1, //remettre serviceName dans BDD & mettre schéma à jour
-                            MemberFK = dbService.memberFK,
-                            BeneficiaryFName = dbMemberBen.firstName,
-                            BeneficiaryLName = dbMemberBen.lastName,
-                            VoluntaryMemberFK = dbService.memberFK,
-                            VoluntaryFName = dbMemberVol.firstName,
-                            VoluntaryLName = dbMemberVol.lastName,
-                            ServiceAddress = dbService.serviceAddress,
-                            ServiceCityName = dbCity.cityName,
-                        });
-                    }
                     requests.Add(new ServiceRequest
                     {
                         ServiceRequestID = dbService.serviceRequestID,
@@ -48,6 +30,8 @@ namespace MonAppliWeb.Models.DAO
                         BeneficiaryFName = dbMemberBen.firstName,
                         BeneficiaryLName = dbMemberBen.lastName,
                         VoluntaryMemberFK = dbService.memberFK,
+                        VoluntaryFName = dbMemberVol != null ? dbMemberVol.firstName : string.Empty,
+                        VoluntaryLName = dbMemberVol != null ? dbMemberVol.lastName : string.Empty,
                         ServiceAddress = dbService.serviceAddress,
                         ServiceCityName = dbCity.cityName,
                     });
@@ -56,31 +40,45 @@ namespace MonAppliWeb.Models.DAO
             }
         }
 
-        public bool CreateServiceRequest(ServiceRequest sr)
+        public int? CreateServiceRequest(ServiceRequest sr)
         {
             using (BddMemberDataContext ds = new BddMemberDataContext())
             {
+                // MemberFK déja dans l'objet ServiceRequest
                 //Récupérer les infos du membre bénéficiaire (celui "qui créée la demande") à partir du prénom et du nom
-                var req1 = from ben in ds.member
-                           where ben.firstName == sr.BeneficiaryFName
-                              && ben.lastName == sr.BeneficiaryLName
-                           select ben;
-                member memberBDD = req1.FirstOrDefault();
-                int benID = memberBDD.memberID;
+                //var req1 = from ben in ds.member
+                //           where ben.firstName == sr.BeneficiaryFName
+                //              && ben.lastName == sr.BeneficiaryLName
+                //           select ben;
+                //member memberBDD = req1.FirstOrDefault();
+                //int benID = memberBDD.memberID;
 
+                // ServiceFK déja dans l'objet ServiceRequest
                 //Récupérerer l'ID du service
-                var req2 = from ser in ds.serviceName
-                           where ser.serviceName1 == sr.ServiceName
-                           select ser;
-                serviceName serNBDD = req2.FirstOrDefault();
-                int serID = serNBDD.serviceID;
+                //var req2 = from ser in ds.serviceName
+                //           where ser.serviceName1 == sr.ServiceName
+                //           select ser;
+                //serviceName serNBDD = req2.FirstOrDefault();
+                //int serID = serNBDD.serviceID;
 
                 //Récupérer l'ID de la ville
-                var req3 = from ville in ds.city
-                           where ville.cityName == sr.ServiceCityName
-                           select ville;
-                city cityBDD = req3.FirstOrDefault();
-                int citID = cityBDD.cityID;
+                //var req3 = from ville in ds.city
+                //           where ville.cityName == sr.ServiceCityName
+                //           select ville;
+                //city cityBDD = req3.FirstOrDefault();
+                //int citID = cityBDD.cityID;
+
+                // Récupération de zipCode
+                var daoZipCode = new DAOZipCode();
+                var zipCode = daoZipCode.GetZipCodeByCode(sr.ServiceZipCode);
+                // Si Zipcode existe, récupérer ID, sinon, créer et récupérer ID
+                var zipCodeId = zipCode == null ? daoZipCode.CreateZipCode(sr.ServiceZipCode) : zipCode.zipCodeID;
+
+                // Récupération de city
+                var daoCity = new DAOCity();
+                var city = daoCity.GetCity(sr.ServiceCityName);
+                // Si Zipcode existe, récupérer ID, sinon, créer et récupérer ID
+                var cityId = city == null ? daoCity.CreateCity(sr.ServiceCityName) : city.cityID;
 
                 //Création de la demande de service
                 serviceRequest newSR = new serviceRequest()
@@ -90,49 +88,50 @@ namespace MonAppliWeb.Models.DAO
                     serviceAddress = sr.ServiceAddress,
                     creationDate = sr.ServiceRequestCreationDate,
                     cancelDate = sr.CancelDate,
-                    serviceFK = serID,
-                    serviceCityFK = citID,
-                    memberFK = benID,
+                    serviceFK = sr.ServiceFK,
+                    serviceCityFK = cityId.Value,
+                    memberFK = sr.MemberFK, 
+                    serviceZipcodeFK = zipCodeId.Value
                 };
                 ds.serviceRequest.InsertOnSubmit(newSR);
                 ds.SubmitChanges();
-                return true;
+                return newSR.serviceRequestID;
             }
         }
 
-        public List<int> ReturnIDsVolMatching(ServiceRequest serviceRequest)
+        public List<member> ReturnVolsMatching(ServiceRequest serviceRequest)
         {
-            using(BddMemberDataContext ds = new BddMemberDataContext())
+            using (BddMemberDataContext ds = new BddMemberDataContext())
             {
                 var dayOfService = (int)serviceRequest.ServiceStartDate.DayOfWeek + 1;
-
-                var dbmemberIDs = ds.member.Where(x => x.dailyPref.Any(d => d.dayFK == dayOfService && !d.dailyPrefEndDate.HasValue)
+               
+                var dbmembers = ds.member.Where(x => x.dailyPref.Any(d => d.dayFK == dayOfService && !d.dailyPrefEndDate.HasValue)
                                     && x.servicePref.Any(s => s.serviceFK == serviceRequest.ServiceFK && !s.choiceEndDate.HasValue)
-                                    && !x.requestAnswer.Any(ra => ra.serviceRFK == serviceRequest.ServiceRequestID && ra.memberFK == x.memberID)).Select(x => x.memberID).ToList();
-                return dbmemberIDs;
-            } 
+                                    && !x.requestAnswer.Any(ra => ra.serviceRFK == serviceRequest.ServiceRequestID && ra.memberFK == x.memberID)).ToList();
+                return dbmembers;
+            }
         }
-        
+
         //Retourner la liste des volontaire matchés d'une service request
-        public List<Member> ReturnVoluntaryOfSR(ServiceRequest Sr, List<int> VoluntaryIDs)
+        public List<Member> ReturnVoluntaryOfSR(ServiceRequest Sr)
         {
             using (BddMemberDataContext ds = new BddMemberDataContext())
             {
                 //Faire appel à la méthode ReturnIDsVolMatching
                 DAOSR daoSR = new DAOSR();
                 var voluntarys = new List<Member>();
-                List<int> IDVols = daoSR.ReturnIDsVolMatching(Sr);
+                List<member> Vols = daoSR.ReturnVolsMatching(Sr);
 
                 //Pour chaque ID dans la liste des IDs des volontaires
-                foreach (int IDVol in IDVols)
+                foreach (member m in Vols)
                 {
                     //Vient récuperer les informations du membre à partir de son ID
-                    var dbMember = ds.member.FirstOrDefault(x => x.memberID == IDVol);
+                    
                     voluntarys.Add(new Member
                     {
-                        FirstName = dbMember.firstName,
-                        LastName = dbMember.lastName,
-                        MemberID = dbMember.memberID,
+                        FirstName = m.firstName,
+                        LastName = m.lastName,
+                        MemberID = m.memberID,
                     });
                 }
                 return voluntarys;
@@ -183,11 +182,42 @@ namespace MonAppliWeb.Models.DAO
                 {
                     refusalDate = DateTime.Now,
                     answerDate = DateTime.Now,
-                    serviceRFK =sr.ServiceRequestID,
+                    serviceRFK = sr.ServiceRequestID,
                     memberFK = IDMember,
                     answerFK = resp.answerID,
                 };
                 ds.SubmitChanges();
+            }
+        }
+
+        public List<serviceName> GetAllServices()
+        {
+            using (BddMemberDataContext dm = new BddMemberDataContext())
+            {
+                //Récupération de la liste des services présents dans la BDD
+                return dm.serviceName.ToList();
+            }
+        }
+
+        internal ServiceRequest GetSRById(int id)
+        {
+            using (BddMemberDataContext dm = new BddMemberDataContext())
+            {
+                var dbSr = dm.serviceRequest.FirstOrDefault(x => x.serviceRequestID == id);
+                ServiceRequest serviceR = new ServiceRequest()
+                {
+                    ServiceFK = dbSr.serviceFK,
+                    ServiceRequestID = dbSr.serviceRequestID,
+                    ServiceStartDate = dbSr.serviceStartDate,
+                    ServiceEndDate = dbSr.serviceEndDate,
+                    ServiceAddress = dbSr.serviceAddress,
+                    ServiceRequestCreationDate = dbSr.creationDate,
+                    CancelDate = dbSr.cancelDate,
+                    ServiceCityFK = dbSr.serviceCityFK,
+                    MemberFK = dbSr.memberFK,
+                    VoluntaryMemberFK = dbSr.voluntaryMemberFK,
+                };
+                return serviceR;
             }
         }
     }
