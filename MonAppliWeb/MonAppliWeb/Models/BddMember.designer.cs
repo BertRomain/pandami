@@ -63,7 +63,7 @@ namespace MonAppliWeb.Models
     #endregion
 		
 		public BddMemberDataContext() : 
-				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString3"].ConnectionString, mappingSource)
+				base(global::System.Configuration.ConfigurationManager.ConnectionStrings["bddPandamiConnectionString"].ConnectionString, mappingSource)
 		{
 			OnCreated();
 		}
