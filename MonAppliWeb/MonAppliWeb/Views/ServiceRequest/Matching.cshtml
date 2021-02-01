@@ -29,7 +29,7 @@
             @Html.DisplayFor(modelItem => item.LastName)
         </td>
         <td>
-            @Html.ActionLink("Accepter", "Edit", new { id=item.MemberID }) |
+            @Html.ActionLink("Accepter", "Edit", new { id=item.MemberID, srID = ViewBag.ServiceRequestID }) |
             @Html.ActionLink("Refuser", "Delete", new { id=item.MemberID })
         </td>
     </tr>

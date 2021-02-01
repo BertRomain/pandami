@@ -207,8 +207,8 @@ namespace MonAppliWeb.Controllers
         }
 
         // POST: Request/Edit/5
-        [HttpPost]
-        public ActionResult Edit(int id, FormCollection collection)
+        [HttpGet]
+        public ActionResult Accept(int id, int srID)
         {
             try
             {
@@ -223,7 +223,7 @@ namespace MonAppliWeb.Controllers
         }
 
         // GET: Request/Delete/5
-        public ActionResult Delete(int id)
+        public ActionResult Refuse(int id)
         {
             return View();
         }
@@ -247,10 +247,12 @@ namespace MonAppliWeb.Controllers
         [HttpGet]
         public ActionResult Matching(int id)
         {
-
+            
             DAOSR dAOSRMatching = new DAOSR();
 
             ServiceRequest sr = new DAOSR().GetSRById(id);
+
+            ViewBag.ServiceRequestID = id;
 
             List<Member> Voluntaries = dAOSRMatching.ReturnVoluntaryOfSR(sr);
 
