@@ -139,16 +139,18 @@ namespace MonAppliWeb.DAO
         }
 
         //Méthode d'accepation > Quand appuie sur le btn Accepter
-        public void VoluntaryAnswerAccceptation(int IDMember, ServiceRequest sr)
+        public void VoluntaryAnswerAccceptation(int MemberID, int ServiceRequestID)
         {
             //Ajout dans la bdd serviceRequest l'ID du volontaire et la date d'acceptation
             using (BddMemberDataContext ds = new BddMemberDataContext())
             {
-                sr.VoluntaryMemberFK = IDMember;
+                DAOSR dao = new DAOSR();
+                ServiceRequest sr = dao.GetSRById(ServiceRequestID);
+                sr.VoluntaryMemberFK = MemberID;
                 //Sélectionne dans la BDD le service concerné
                 var req = from ser in ds.serviceRequest where ser.serviceRequestID == sr.ServiceRequestID select ser;
                 serviceRequest selectReq = req.FirstOrDefault();
-                selectReq.voluntaryMemberFK = IDMember;
+                selectReq.voluntaryMemberFK = MemberID;
 
                 //On récupère l'ID de "Oui" dans la table answer
                 var req2 = from a in ds.answer where a.answer1 == "Oui" select a;
@@ -161,7 +163,7 @@ namespace MonAppliWeb.DAO
                     answerDate = DateTime.Now,
                     serviceRFK = sr.ServiceRequestID,
                     //On ajoute l'ID du volontaire
-                    memberFK = IDMember,
+                    memberFK = MemberID,
                     answerFK = resp.answerID,
                 };
                 ds.SubmitChanges();
@@ -169,10 +171,11 @@ namespace MonAppliWeb.DAO
         }
 
         //Méthode de refus > Quand on appuie sur le btn Refuser
-        public void VoluntaryAnswerRejection(int IDMember, ServiceRequest sr)
+        public void VoluntaryAnswerRejection(int MemberID, int ServiceRequestID)
         {
             using (BddMemberDataContext ds = new BddMemberDataContext())
             {
+                               
                 //On récupère l'ID de "Non" dans la table answer
                 var req = from a in ds.answer where a.answer1 == "Non" select a;
                 answer resp = req.FirstOrDefault();
@@ -182,8 +185,8 @@ namespace MonAppliWeb.DAO
                 {
                     refusalDate = DateTime.Now,
                     answerDate = DateTime.Now,
-                    serviceRFK = sr.ServiceRequestID,
-                    memberFK = IDMember,
+                    serviceRFK = ServiceRequestID,
+                    memberFK = MemberID,
                     answerFK = resp.answerID,
                 };
                 ds.SubmitChanges();
