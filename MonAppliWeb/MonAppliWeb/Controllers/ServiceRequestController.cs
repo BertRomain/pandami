@@ -98,11 +98,12 @@ namespace MonAppliWeb.Controllers
 
             ServiceRequest sr = new DAOSR().GetSRById(id);
 
-            ViewBag.ServiceRequestID = id;
+            var matching = new Matching();
+            matching.ServiceRequestID = id;
 
-            List<Member> Voluntaries = dAOSRMatching.ReturnVoluntaryOfSR(sr);
+            matching.Members = dAOSRMatching.ReturnVoluntaryOfSR(sr);
 
-            return View(Voluntaries);
+            return View(matching);
         }
     }
 }

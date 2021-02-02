@@ -145,6 +145,7 @@
       <DesignTime>True</DesignTime>
       <DependentUpon>DataClasses1.dbml</DependentUpon>
     </Compile>
+    <Compile Include="Models\Matching.cs" />
     <Compile Include="Models\ServiceRequest.cs" />
     <Compile Include="Models\Member.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -220,6 +221,7 @@
     <Content Include="Views\ServiceRequest\ListServiceRequest.cshtml" />
     <Content Include="Views\ServiceRequest\Create.cshtml" />
     <Content Include="Views\ServiceRequest\Matching.cshtml" />
+    <Content Include="Views\Member\Create.cshtml" />
   </ItemGroup>
   <ItemGroup>
     <Folder Include="App_Data\" />

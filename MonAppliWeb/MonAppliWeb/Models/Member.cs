@@ -38,6 +38,8 @@ namespace MonAppliWeb.Models
         [Required]
         public DateTime BirthDate { get; set; }
 
+        public string BirthDateToDisplay { get { return BirthDate.ToString("dd/MM/yyyy"); } }
+
         [Display(Name = "Email")]
         [Required]
         public string Email { get; set; }

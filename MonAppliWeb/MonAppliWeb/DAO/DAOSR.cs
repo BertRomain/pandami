@@ -29,7 +29,7 @@ namespace MonAppliWeb.DAO
                         MemberFK = dbService.memberFK,
                         BeneficiaryFName = dbMemberBen.firstName,
                         BeneficiaryLName = dbMemberBen.lastName,
-                        VoluntaryMemberFK = dbService.memberFK,
+                        VoluntaryMemberFK = dbService.voluntaryMemberFK,
                         VoluntaryFName = dbMemberVol != null ? dbMemberVol.firstName : string.Empty,
                         VoluntaryLName = dbMemberVol != null ? dbMemberVol.lastName : string.Empty,
                         ServiceAddress = dbService.serviceAddress,
@@ -107,7 +107,8 @@ namespace MonAppliWeb.DAO
                
                 var dbmembers = ds.member.Where(x => x.dailyPref.Any(d => d.dayFK == dayOfService && !d.dailyPrefEndDate.HasValue)
                                     && x.servicePref.Any(s => s.serviceFK == serviceRequest.ServiceFK && !s.choiceEndDate.HasValue)
-                                    && !x.requestAnswer.Any(ra => ra.serviceRFK == serviceRequest.ServiceRequestID && ra.memberFK == x.memberID)).ToList();
+                                    && !x.requestAnswer.Any(ra => ra.serviceRFK == serviceRequest.ServiceRequestID && ra.memberFK == x.memberID)
+                                    && x.memberID !=serviceRequest.MemberFK).ToList();
                 return dbmembers;
             }
         }
@@ -202,7 +203,7 @@ namespace MonAppliWeb.DAO
             }
         }
 
-        internal ServiceRequest GetSRById(int id)
+        public ServiceRequest GetSRById(int id)
         {
             using (BddMemberDataContext dm = new BddMemberDataContext())
             {

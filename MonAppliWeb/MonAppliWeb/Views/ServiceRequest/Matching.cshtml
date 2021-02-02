@@ -1,4 +1,4 @@
-﻿@model IEnumerable<MonAppliWeb.Models.Member>
+﻿@model MonAppliWeb.Models.Matching
 
 @{
     ViewBag.Title = "Matching";
@@ -6,33 +6,39 @@
 
 <h2>Matching</h2>
 
-<p>
-    @Html.ActionLink("Create New", "Create")
-</p>
 <table class="table">
     <tr>
         <th>
-            @Html.DisplayNameFor(model => model.FirstName)
+            @Html.DisplayNameFor(model => model.Members[0].FirstName)
         </th>
         <th>
-            @Html.DisplayNameFor(model => model.LastName)
-        </th>       
-        <th></th>
+            @Html.DisplayNameFor(model => model.Members[0].LastName)
+        </th>
+        <th style="width: 20px;"></th>
+        <th style="width: 20px;"></th>
     </tr>
 
-@foreach (var item in Model) {
-    <tr>
-        <td>
-            @Html.DisplayFor(modelItem => item.FirstName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.LastName)
-        </td>
-        <td>
-            @Html.ActionLink("Accepter", "Accept", new { id=item.MemberID, srID = ViewBag.ServiceRequestID }) |
-            @Html.ActionLink("Refuser", "Refuse", new { id=item.MemberID, srID = ViewBag.ServiceRequestID })
-        </td>
-    </tr>
+@foreach (var item in Model.Members) {
+<tr>
+    <td>
+        @Html.DisplayFor(modelItem => item.FirstName)
+    </td>
+    <td>
+        @Html.DisplayFor(modelItem => item.LastName)
+    </td>
+    <td style="width: 20px;">
+        @*@Html.ActionLink("Accepter", "Accept", new { id = item.MemberID, srID = Model.ServiceRequestID }, new { @class = "btn btn-success" })*@ <!--Bonne pratique de passer le Model-->
+        <a class="btn btn-success"  href="@Url.Action("Accept", "ServiceRequest", new { id = item.MemberID, srID = Model.ServiceRequestID })" aria-label="Left Align">
+            <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>
+        </a>
+    </td>
+    <td style="width: 20px;">
+        @*@Html.ActionLink("Refuser", "Refuse", new { id = item.MemberID, srID = Model.ServiceRequestID }, new { @class = "btn btn-danger" })*@
+        <a class="btn btn-danger"  href="@Url.Action("Refuse", "ServiceRequest", new { id = item.MemberID, srID = Model.ServiceRequestID })" aria-label="Left Align">
+            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+        </a>
+    </td>
+</tr>
 }
 
 </table>

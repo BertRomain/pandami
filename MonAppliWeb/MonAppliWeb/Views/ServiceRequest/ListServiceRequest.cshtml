@@ -7,51 +7,45 @@
 <h2>Liste des services</h2>
 
 <p>
-    @Html.ActionLink("Ajouter une demande de service", "Create")
+    @Html.ActionLink("Ajouter une demande de service", "Create", null, new { @class = "btn btn-warning" })
 </p>
-<div class="table-responsive">
-    <table class="table">
-        <tr>
-            <th>
-                @Html.DisplayNameFor(model => model.BeneficiaryFName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.BeneficiaryLName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceStartDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceCityName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.CancelDate)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VoluntaryFName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.VoluntaryLName)
-            </th>
-            <th>
-                @Html.DisplayNameFor(model => model.ServiceAddress)
-            </th>
-            <th></th>
-            <th></th>
-            <th></th>
-        </tr>
+<table class="table">
+    <tr>
+        <th>
+            @Html.DisplayNameFor(model => model.BeneficiaryFullName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceStartDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceCityName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.CancelDate)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoluntaryFName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.VoluntaryLName)
+        </th>
+        <th>
+            @Html.DisplayNameFor(model => model.ServiceAddress)
+        </th>
+        <th></th>
+        <th></th>
+        <th></th>
+        <th></th>
+    </tr>
 
-        @foreach (var item in Model)
-        {
+@foreach (var item in Model)
+{
     <tr>
         <td>
-            @Html.DisplayFor(modelItem => item.BeneficiaryFName)
-        </td>
-        <td>
-            @Html.DisplayFor(modelItem => item.BeneficiaryLName)
+            @Html.DisplayFor(modelItem => item.BeneficiaryFullName)
         </td>
         <td>
             @Html.DisplayFor(modelItem => item.ServiceName)
@@ -79,16 +73,29 @@
             @Html.ActionLink("Details", "Details", new { id = item.ServiceRequestID }, new { @class = "btn btn-info", @Disabled = "disabled", @onclick = "javascript:return false;" })
         </td>
         <td>
-            @Html.ActionLink("Modifier", "Edit", new { id = item.ServiceRequestID }, new { @class = "btn btn-primary" })
+            @if(item.VoluntaryMemberFK.HasValue)
+            {
+                @Html.ActionLink("Modifier", "Edit", new { id = item.ServiceRequestID }, new { @class = "btn btn-default", @Disabled = "disabled", @onclick = "javascript:return false;" })
+            }
+            else
+            {
+                @Html.ActionLink("Modifier", "Edit", new { id = item.ServiceRequestID }, new { @class = "btn btn-primary" })
+            }
         </td>
         <td>
             @Html.ActionLink("Annuler", "Delete", new { id = item.ServiceRequestID }, new { @class = "btn btn-danger" })
         </td>
         <td>
-            @Html.ActionLink("Volontaires", "Matching", "ServiceRequest", new { id = item.ServiceRequestID }, new { @class = "btn btn-success" })
+            @if(item.VoluntaryMemberFK.HasValue)
+            {
+                @Html.ActionLink("Volontaires", "Matching", "ServiceRequest", new { id = item.ServiceRequestID }, new { @class = "btn btn-default", @Disabled = "disabled", @onclick = "javascript:return false;" })
+            }
+            else
+            {
+                @Html.ActionLink("Volontaires", "Matching", "ServiceRequest", new { id = item.ServiceRequestID }, new { @class = "btn btn-success" })
+            }
         </td>
     </tr>
-        }
+}
 
-    </table>
-</div>
+</table>

@@ -38,3 +38,9 @@ textarea {
 .input-group {
     padding-left: 15px;
 }
+.navbar-inverse .navbar-brand {
+    color: #afde3e;
+}
+.navbar-inverse .navbar-nav > li > a {
+    color: #ffffff;
+}

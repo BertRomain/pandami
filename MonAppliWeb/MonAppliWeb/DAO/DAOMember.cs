@@ -36,31 +36,89 @@ namespace MonAppliWeb.DAO
             }
         }
 
+        public member GetMember(int memberId)
+        {
+            using (BddMemberDataContext dm = new BddMemberDataContext())
+            {
+                var dbMember = dm.member.FirstOrDefault(x => x.memberID == memberId);
+                return dbMember;
+            }
+        }
+
         //Pb avec return > enlever mode com' quand pb résolu
-        //public member ModificationMember(int id)
-        //{
-        //    using (BddMemberDataContext dm = new BddMemberDataContext())
-        //    {
-        //        //récupération du membre avec identifiants id (parametre)
-        //        var dbMember = dm.member.SingleOrDefault(n => n.memberID == id);
-        //        var dbCity = dm.city.FirstOrDefault(x => x.cityID == dbMember.cityFK);
-        //        var dbZipCode = dm.zipCodes.FirstOrDefault(x => x.zipCodeID == dbCity.zipCodeFK);
-        //        var member = new Member
-        //        {
-        //            Address = dbMember.address,
-        //            BirthDate = dbMember.birthdate,
-        //            CityName = dbCity.cityName,
-        //            CityFK = dbMember.cityFK,
-        //            Email = dbMember.email,
-        //            FirstName = dbMember.firstName,
-        //            LastName = dbMember.lastName,
-        //            MemberID = dbMember.memberID,
-        //            Phone = dbMember.phone,
-        //            ZipCode = dbZipCode.zipCode
-        //        };
-        //        return member;
-        //    }
-        //}
+        public bool ModificationMember(Member mb)
+        {
+            using (BddMemberDataContext dm = new BddMemberDataContext())
+            {
+                // Récupération du member
+                var existingMember = this.GetMember(mb.MemberID);
+
+                // Si Zipcode a été modifiée
+                if (mb.ZipCode != existingMember.zipCodes.zipCode)
+                {
+                    // Récupérer la city a partir du nom
+                    var daoZipcode = new DAOZipCode();
+                    var zipCode = daoZipcode.GetZipCodeByCode(mb.ZipCode);
+                    if (zipCode == null)
+                    {
+                        // Si n'existe pas, créer la city
+                        var zipcodeID = daoZipcode.CreateZipCode(mb.ZipCode);
+                        if (!zipcodeID.HasValue) return false;
+                        mb.ZipCodeFK = zipcodeID.Value;
+                    }
+                    else
+                    {
+                        // Récupérer la city
+                        mb.ZipCodeFK = zipCode.zipCodeID;
+                    }
+                }
+                else
+                {
+                    // Garder la meme city
+                    mb.ZipCodeFK = existingMember.zipCodeFK;
+                }
+
+
+                // Si City a été modifiée
+                if (mb.CityName != existingMember.city.cityName)
+                {
+                    // Récupérer la city a partir du nom
+                    var daoCity = new DAOCity();
+                    var city = daoCity.GetCity(mb.CityName);
+                    if (city == null)
+                    {
+                        // Si n'existe pas, créer la city
+                        var cityId = daoCity.CreateCity(mb.CityName);
+                        if(!cityId.HasValue) return false;
+                        mb.CityFK = cityId.Value;
+                    }
+                    else
+                    {
+                        // Récupérer la city
+                        mb.CityFK = city.cityID;
+                    }
+                }
+                else
+                {
+                    // Garder la meme city
+                    mb.CityFK = existingMember.cityFK;
+                }
+
+                existingMember.address = mb.Address;
+                existingMember.birthdate = mb.BirthDate;
+                existingMember.city = null;
+                existingMember.cityFK = mb.CityFK;
+                existingMember.email = mb.Email;
+                existingMember.firstName = mb.FirstName;
+                existingMember.lastName = mb.LastName;
+                existingMember.phone = mb.Phone;
+                existingMember.zipCodes = null;
+                existingMember.zipCodeFK = mb.ZipCodeFK;
+
+                dm.SubmitChanges();
+                return true;
+            }
+        }
 
         public int? CreateMember(Member mb)
         {
@@ -88,8 +146,8 @@ namespace MonAppliWeb.DAO
                     phone = mb.Phone,
                     address = mb.Address,
                     cityFK = cityId.Value,
-                    login = mb.Login,
-                    password = mb.Password,
+                    login = mb.Email,
+                    password = string.IsNullOrWhiteSpace(mb.Password) ? "Password1" : mb.Password,
                     zipCodeFK = zipCodeId.Value
                 };
 

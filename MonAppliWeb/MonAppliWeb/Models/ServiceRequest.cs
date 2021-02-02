@@ -45,6 +45,9 @@ namespace MonAppliWeb.Models
 
         [Display(Name = "Prénom du bénéficiaire")]
         public string BeneficiaryFName { get; set; }
+        
+        [Display(Name = "Nom du bénéficiaire")]
+        public string BeneficiaryFullName { get { return $"{BeneficiaryFName} {BeneficiaryLName}"; } }
 
         [Display(Name = "ID du volontaire")]
         public int? VoluntaryMemberFK { get; set; }
